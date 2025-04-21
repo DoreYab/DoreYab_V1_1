@@ -2,6 +2,6 @@
 {
     public interface ICourseCategoryApplication
     {
-        List<CourseCategoryViewModel> GetAll();
+        List<CourseCategoryViewModel> List();
     }
 }
