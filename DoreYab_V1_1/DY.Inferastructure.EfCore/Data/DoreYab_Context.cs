@@ -1,0 +1,21 @@
+﻿using Domain.CourseCategory;
+using DY.Domain.CourseAgg;
+using Microsoft.EntityFrameworkCore;
+
+namespace DY.Inferastructure.EfCore.Data
+{
+    public class DoreYab_Context : DbContext
+    {
+        public DbSet<CourseCategory> CourseCategories{ get; set; }
+        public DbSet<Course> Courses{ get; set; }
+
+        public DoreYab_Context(DbContextOptions options) : base(options)
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}
