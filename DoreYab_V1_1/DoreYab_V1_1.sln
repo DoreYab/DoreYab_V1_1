@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DoreYab", "DoreYab", "{20393C9E-FE37-4B6E-9727-C4C7BF55F01A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DY.Domain", "DY.Domain\DY.Domain.csproj", "{29609BAC-B14B-4DED-A117-96B0F7B1F331}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "0_Framework", "0_Framework\0_Framework.csproj", "{5F4DA08C-0E0B-4CC4-A9F0-76A25D3EA66A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DY.Application.Contract", "DY.Application.Contract\DY.Application.Contract.csproj", "{57DF5542-7936-4E48-A5FE-FE45ADF9F4C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DY.Application", "DY.Application\DY.Application.csproj", "{34D6D10B-317B-4E6E-8F1A-7041533E2216}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DY.Inferastructure.EfCore", "DY.Inferastructure.EfCore\DY.Inferastructure.EfCore.csproj", "{F76E7B66-85D3-4C8A-BCB6-AC7104E2F832}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29609BAC-B14B-4DED-A117-96B0F7B1F331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29609BAC-B14B-4DED-A117-96B0F7B1F331}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29609BAC-B14B-4DED-A117-96B0F7B1F331}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29609BAC-B14B-4DED-A117-96B0F7B1F331}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F4DA08C-0E0B-4CC4-A9F0-76A25D3EA66A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F4DA08C-0E0B-4CC4-A9F0-76A25D3EA66A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F4DA08C-0E0B-4CC4-A9F0-76A25D3EA66A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F4DA08C-0E0B-4CC4-A9F0-76A25D3EA66A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57DF5542-7936-4E48-A5FE-FE45ADF9F4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57DF5542-7936-4E48-A5FE-FE45ADF9F4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57DF5542-7936-4E48-A5FE-FE45ADF9F4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57DF5542-7936-4E48-A5FE-FE45ADF9F4C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34D6D10B-317B-4E6E-8F1A-7041533E2216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34D6D10B-317B-4E6E-8F1A-7041533E2216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34D6D10B-317B-4E6E-8F1A-7041533E2216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34D6D10B-317B-4E6E-8F1A-7041533E2216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F76E7B66-85D3-4C8A-BCB6-AC7104E2F832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F76E7B66-85D3-4C8A-BCB6-AC7104E2F832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F76E7B66-85D3-4C8A-BCB6-AC7104E2F832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F76E7B66-85D3-4C8A-BCB6-AC7104E2F832}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29609BAC-B14B-4DED-A117-96B0F7B1F331} = {20393C9E-FE37-4B6E-9727-C4C7BF55F01A}
+		{5F4DA08C-0E0B-4CC4-A9F0-76A25D3EA66A} = {20393C9E-FE37-4B6E-9727-C4C7BF55F01A}
+		{57DF5542-7936-4E48-A5FE-FE45ADF9F4C1} = {20393C9E-FE37-4B6E-9727-C4C7BF55F01A}
+		{34D6D10B-317B-4E6E-8F1A-7041533E2216} = {20393C9E-FE37-4B6E-9727-C4C7BF55F01A}
+		{F76E7B66-85D3-4C8A-BCB6-AC7104E2F832} = {20393C9E-FE37-4B6E-9727-C4C7BF55F01A}
+	EndGlobalSection
+EndGlobal
