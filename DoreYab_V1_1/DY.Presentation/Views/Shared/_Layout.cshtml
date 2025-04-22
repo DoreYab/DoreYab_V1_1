@@ -1,49 +1,194 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DY.Presentation</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DY.Presentation.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="پلتفرم جمع‌آوری دوره‌های برنامه‌نویسی به زبان فارسی - پیدا کردن بهترین دوره‌های آموزشی از پلتفرم‌های مختلف">
+    <title>@ViewData["Title"] دوره‌های برنامه‌نویسی | آموزش آنلاین</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn/matn@latest/fonts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" src="~/css/Site.css" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DY.Presentation</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Navigation Bar -->
+    <nav class="navbar fixed top-0 right-0 left-0 z-50 bg-white shadow-md dark:bg-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/40" alt="لوگو" class="h-10 w-10 rounded-full">
+                <span class="mr-2 text-xl font-bold text-gray-800 dark:text-white">کدآموز</span>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a>
+                <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">دسته‌بندی</a>
+                <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">درباره ما</a>
+                <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">تماس با ما</a>
+            </div>
+
+            <!-- Theme and Mobile Menu -->
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <button id="themeToggle" class="theme-toggle p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-300">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg">
+            <div class="container mx-auto px-4 py-2 flex flex-col">
+                <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a>
+                <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">دسته‌بندی</a>
+                <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">درباره ما</a>
+                <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">تماس با ما</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="mt-20 container mx-auto px-4 py-6">
+        <!-- Hero Section with Search -->
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">درباره کدآموز</h3>
+                    <p class="text-gray-600 dark:text-gray-400">پلتفرم کدآموز با هدف جمع‌آوری و دسته‌بندی دوره‌های آموزشی برنامه‌نویسی از پلتفرم‌های مختلف ایجاد شده است تا یادگیری را برای شما آسان‌تر کند.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">لینک‌های سریع</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">دوره‌ها</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">مقالات</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">درباره ما</a></li>
                     </ul>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - DY.Presentation - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">دسته‌بندی‌ها</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">فرانت‌اند</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">بک‌اند</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">هوش مصنوعی</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">دیتابیس</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">تماس با ما</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope ml-2 text-gray-600 dark:text-gray-400"></i>
+                            <span class="text-gray-600 dark:text-gray-400">info@codeamooz.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone ml-2 text-gray-600 dark:text-gray-400"></i>
+                            <span class="text-gray-600 dark:text-gray-400">021-12345678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt ml-2 text-gray-600 dark:text-gray-400"></i>
+                            <span class="text-gray-600 dark:text-gray-400">تهران، خیابان آزادی</span>
+                        </li>
+                    </ul>
+
+                    <div class="mt-4 flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"><i class="fab fa-telegram text-xl"></i></a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"><i class="fab fa-linkedin text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-center text-gray-600 dark:text-gray-400">
+                <p>© ۱۴۰۲ کدآموز - تمامی حقوق محفوظ است.</p>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Filter Dropdowns
+        const languageFilterBtn = document.getElementById('languageFilterBtn');
+        const languageFilterDropdown = document.getElementById('languageFilterDropdown');
+
+        const platformFilterBtn = document.getElementById('platformFilterBtn');
+        const platformFilterDropdown = document.getElementById('platformFilterDropdown');
+
+        const priceFilterBtn = document.getElementById('priceFilterBtn');
+        const priceFilterDropdown = document.getElementById('priceFilterDropdown');
+
+        languageFilterBtn.addEventListener('click', () => {
+            languageFilterDropdown.classList.toggle('hidden');
+            platformFilterDropdown.classList.add('hidden');
+            priceFilterDropdown.classList.add('hidden');
+        });
+
+        platformFilterBtn.addEventListener('click', () => {
+            platformFilterDropdown.classList.toggle('hidden');
+            languageFilterDropdown.classList.add('hidden');
+            priceFilterDropdown.classList.add('hidden');
+        });
+
+        priceFilterBtn.addEventListener('click', () => {
+            priceFilterDropdown.classList.toggle('hidden');
+            languageFilterDropdown.classList.add('hidden');
+            platformFilterDropdown.classList.add('hidden');
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!languageFilterBtn.contains(e.target) && !languageFilterDropdown.contains(e.target)) {
+                languageFilterDropdown.classList.add('hidden');
+            }
+
+            if (!platformFilterBtn.contains(e.target) && !platformFilterDropdown.contains(e.target)) {
+                platformFilterDropdown.classList.add('hidden');
+            }
+
+            if (!priceFilterBtn.contains(e.target) && !priceFilterDropdown.contains(e.target)) {
+                priceFilterDropdown.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
