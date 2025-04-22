@@ -1,3 +1,5 @@
+﻿using DY.Application.Contract.Course;
+using DY.Application.Contract.CourseCategory;
 using DY.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,15 +9,18 @@ namespace DY.Presentation.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICourseApplication _courseApplication;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICourseApplication courseApplication)
         {
             _logger = logger;
+            _courseApplication = courseApplication;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var courses = await _courseApplication.List(); // دریافت لیست دوره‌ها  
+            return View(courses); // ارسال لیست به View  
         }
 
         public IActionResult Privacy()
