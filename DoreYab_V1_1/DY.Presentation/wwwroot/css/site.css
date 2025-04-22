@@ -1,22 +1,63 @@
-html {
-  font-size: 14px;
+﻿body {
+    font-family: 'Vazirmatn', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.course-card {
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+.search-box {
+    transition: box-shadow 0.3s;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+    .search-box:focus-within {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+.filter-chip {
+    transition: all 0.2s;
 }
 
-body {
-  margin-bottom: 60px;
+    .filter-chip:hover {
+        transform: scale(1.05);
+    }
+
+.theme-toggle {
+    transition: transform 0.3s;
 }
+
+    .theme-toggle:hover {
+        transform: rotate(30deg);
+    }
+
+.dark {
+    background-color: #1a202c;
+    color: #f7fafc;
+}
+
+    .dark .navbar {
+        background-color: #2d3748;
+    }
+
+    .dark .course-card {
+        background-color: #2d3748;
+        border-color: #4a5568;
+    }
+
+    .dark .search-box {
+        background-color: #2d3748;
+    }
+
+    .dark .filter-chip {
+        background-color: #4a5568;
+    }
+
+    .dark .footer {
+        background-color: #2d3748;
+    }
