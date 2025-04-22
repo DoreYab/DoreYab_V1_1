@@ -1,6 +1,402 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دوره سی‌شارپ پیشرفته | پلتفرم جمع‌آوری دوره‌های برنامه‌نویسی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            transition: all 0.3s ease;
+        }
 
-<p>Use this page to detail your site's privacy policy.</p>
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructor-avatar {
+            transition: transform 0.3s ease;
+        }
+
+        .instructor-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-button {
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #3b82f6, #6366f1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .breadcrumb-item:not(:last-child)::after {
+            content: ">";
+            margin: 0 8px;
+            color: #6b7280;
+        }
+
+        media (max-width: 768px) {
+            .course-layout {
+                flex-direction: column-reverse;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <a href="#" class="text-2xl font-bold text-blue-600 flex items-center">
+                    <i class="fas fa-laptop-code mr-2"></i>
+                    <span>کدآموز</span>
+                </a>
+                <div class="hidden md:flex space-x-6 space-x-reverse">
+                    <a href="#" class="text-gray-700 hover:text-blue-600 transition">خانه</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 transition">دسته‌بندی</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 transition">درباره ما</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 transition">تماس با ما</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button class="p-2 rounded-full hover:bg-gray-100 transition">
+                    <i class="fas fa-moon text-gray-600"></i>
+                </button>
+                <button class="p-2 rounded-full hover:bg-gray-100 transition">
+                    <i class="fas fa-language text-gray-600"></i>
+                </button>
+                <button class="md:hidden p-2 rounded-full hover:bg-gray-100 transition">
+                    <i class="fas fa-bars text-gray-600"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Breadcrumb -->
+        <div class="mb-6 text-sm text-gray-600 flex items-center">
+            <a href="#" class="hover:text-blue-600 transition">خانه</a>
+            <span class="mx-2">/</span>
+            <a href="#" class="hover:text-blue-600 transition">دوره‌ها</a>
+            <span class="mx-2">/</span>
+            <span class="text-gray-800 font-medium">سی‌شارپ پیشرفته</span>
+        </div>
+
+        <!-- Course Layout -->
+        <div class="flex flex-col-reverse md:flex-row-reverse gap-8 course-layout">
+            <!-- Main Course Content -->
+            <div class="flex-1">
+                <!-- Course Title -->
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">دوره پیشرفته سی‌شارپ و معماری نرم‌افزار</h1>
+
+                <!-- Course Meta -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="flex items-center text-gray-700">
+                            <i class="fas fa-tv ml-2 text-blue-500"></i>
+                            <span>یودمی</span>
+                        </div>
+                        <div class="flex items-center text-gray-700">
+                            <i class="fas fa-code ml-2 text-blue-500"></i>
+                            <span>سی‌شارپ</span>
+                        </div>
+                        <div class="flex items-center text-gray-700">
+                            <i class="fas fa-signal ml-2 text-blue-500"></i>
+                            <span>پیشرفته</span>
+                        </div>
+                        <div class="flex items-center text-gray-700">
+                            <i class="fas fa-clock ml-2 text-blue-500"></i>
+                            <span>۲۴ ساعت</span>
+                        </div>
+                        <div class="flex items-center font-bold text-green-600">
+                            <i class="fas fa-tag ml-2"></i>
+                            <span>۲۹۹,۰۰۰ تومان</span>
+                        </div>
+                    </div>
+
+                    <!-- Short Description -->
+                    <div class="mb-6">
+                        <h2 class="text-xl font-semibold mb-3">معرفی دوره</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            این دوره جامع شما را با مفاهیم پیشرفته سی‌شارپ و اصول معماری نرم‌افزار آشنا می‌کند. شما پس از این دوره قادر خواهید بود برنامه‌های پیچیده و مقیاس‌پذیر با استفاده از آخرین تکنولوژی‌های مایکروسافت توسعه دهید.
+                        </p>
+                    </div>
+
+                    <!-- Full Description -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold mb-3">توضیحات کامل دوره</h2>
+                        <div class="text-gray-700 leading-relaxed space-y-4">
+                            <p>
+                                در این دوره آموزشی، ابتدا با مفاهیم پیشرفته زبان سی‌شارپ مانند جنریک‌ها، دلیگیت‌ها، لامبدا اکسپرشن‌ها، LINQ و ویژگی‌های جدید نسخه‌های اخیر سی‌شارپ آشنا خواهید شد.
+                            </p>
+                            <p>
+                                سپس به سراغ معماری نرم‌افزار و طراحی سیستم‌های مقیاس‌پذیر می‌رویم. در این بخش با الگوهای طراحی، اصول SOLID، معماری لایه‌ای، معماری دامنه محور (DDD) و میکروسرویس‌ها کار خواهیم کرد.
+                            </p>
+                            <p>
+                                در بخش پایانی دوره، یک پروژه عملی از صفر تا صد پیاده‌سازی خواهد شد که تمامی مفاهیم آموزش داده شده را در عمل به کار می‌گیرد. این پروژه شامل پیاده‌سازی سرویس‌های بک‌اند، ارتباط با دیتابیس و پیاده‌سازی واسط کاربری خواهد بود.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Instructor -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h2 class="text-xl font-semibold mb-4">مدرس دوره</h2>
+                        <div class="flex items-center space-x-4 space-x-reverse">
+                            <div class="instructor-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="مدرس دوره" class="w-20 h-20 rounded-full object-cover border-2 border-blue-200">
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">دکتر امیر حسینی</h3>
+                                <p class="text-gray-600 text-sm mb-2">مدرس ارشد یودمی با ۱۰+ سال سابقه تدریس</p>
+                                <p class="text-gray-700 text-sm">
+                                    دکتر حسینی دارای مدرک دکترای نرم‌افزار از دانشگاه تهران بوده و بیش از ۱۵ سال سابقه کار در شرکت‌های معتبر بین‌المللی دارد. ایشان تاکنون به بیش از ۵۰,۰۰۰ دانشجو در سراسر جهان آموزش داده‌اند.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Original Platform Button -->
+                    <div class="mt-8">
+                        <a href="#" class="inline-flex items-center px-6 py-3 border border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50 transition">
+                            <i class="fas fa-external-link-alt ml-2"></i>
+                            مشاهده در سایت اصلی
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Related Courses -->
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold mb-6">دوره‌های مشابه</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Course Card 1 -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden course-card transition">
+                            <img src="https://via.placeholder.com/400x225" alt="دوره برنامه‌نویسی" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">آموزش جامع ASP.NET Core</h3>
+                                <div class="flex items-center text-sm text-gray-600 mb-3">
+                                    <span class="ml-2">یودمی</span>
+                                    <span class="mx-2">•</span>
+                                    <span>۲۸ ساعت</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-green-600">۱۹۹,۰۰۰ تومان</span>
+                                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">پیشرفته</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Course Card 2 -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden course-card transition">
+                            <img src="https://via.placeholder.com/400x225" alt="دوره برنامه‌نویسی" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">الگوهای طراحی در سی‌شارپ</h3>
+                                <div class="flex items-center text-sm text-gray-600 mb-3">
+                                    <span class="ml-2">فرادرس</span>
+                                    <span class="mx-2">•</span>
+                                    <span>۱۸ ساعت</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-green-600">رایگان</span>
+                                    <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">متوسط</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Course Card 3 -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden course-card transition">
+                            <img src="https://via.placeholder.com/400x225" alt="دوره برنامه‌نویسی" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-2">Entity Framework Core پیشرفته</h3>
+                                <div class="flex items-center text-sm text-gray-600 mb-3">
+                                    <span class="ml-2">یودمی</span>
+                                    <span class="mx-2">•</span>
+                                    <span>۱۵ ساعت</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-green-600">۲۴۹,۰۰۰ تومان</span>
+                                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">پیشرفته</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="md:w-80 flex-shrink-0">
+                <div class="bg-white rounded-lg shadow-sm sticky top-24 p-6">
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-4">خلاصه دوره</h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 ml-2"></i>
+                                <span>۲۴ ساعت آموزش ویدیویی</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 ml-2"></i>
+                                <span>۱۰ پروژه عملی</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 ml-2"></i>
+                                <span>پشتیبانی مستقیم مدرس</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 ml-2"></i>
+                                <span>گواهینامه پایان دوره</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 ml-2"></i>
+                                <span>دسترسی مادام‌العمر</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-4">سرفصل‌های دوره</h3>
+                        <div class="space-y-2">
+                            <details class="border-b border-gray-200 pb-2">
+                                <summary class="font-medium cursor-pointer">مفاهیم پیشرفته سی‌شارپ</summary>
+                                <ul class="mt-2 text-sm text-gray-600 space-y-1 pr-4">
+                                    <li>• جنریک‌ها و کلکسیون‌ها</li>
+                                    <li>• دلیگیت‌ها و ایونت‌ها</li>
+                                    <li>• LINQ و Lambda Expressions</li>
+                                </ul>
+                            </details>
+                            <details class="border-b border-gray-200 pb-2">
+                                <summary class="font-medium cursor-pointer">معماری نرم‌افزار</summary>
+                                <ul class="mt-2 text-sm text-gray-600 space-y-1 pr-4">
+                                    <li>• اصول SOLID</li>
+                                    <li>• الگوهای طراحی</li>
+                                    <li>• معماری لایه‌ای</li>
+                                </ul>
+                            </details>
+                            <details class="border-b border-gray-200 pb-2">
+                                <summary class="font-medium cursor-pointer">پروژه عملی</summary>
+                                <ul class="mt-2 text-sm text-gray-600 space-y-1 pr-4">
+                                    <li>• طراحی سیستم</li>
+                                    <li>• پیاده‌سازی سرویس‌ها</li>
+                                    <li>• تست و استقرار</li>
+                                </ul>
+                            </details>
+                        </div>
+                    </div>
+
+                    <button class="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold cta-button transition">
+                        شروع یادگیری
+                    </button>
+
+                    <div class="mt-4 text-center text-sm text-gray-500">
+                        <p>۷ روز ضمانت بازگشت وجه</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-laptop-code ml-2"></i>
+                        <span>کدآموز</span>
+                    </h3>
+                    <p class="text-gray-400">
+                        پلتفرم تخصصی جمع‌آوری و معرفی بهترین دوره‌های برنامه‌نویسی به زبان فارسی و انگلیسی
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">لینک‌های مفید</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">خانه</a></li>
+                        <li><a href="#" class="hover:text-white transition">دوره‌ها</a></li>
+                        <li><a href="#" class="hover:text-white transition">مقالات</a></li>
+                        <li><a href="#" class="hover:text-white transition">وبلاگ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">پلتفرم‌ها</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">یودمی</a></li>
+                        <li><a href="#" class="hover:text-white transition">کورسرا</a></li>
+                        <li><a href="#" class="hover:text-white transition">فرادرس</a></li>
+                        <li><a href="#" class="hover:text-white transition">مکتب‌خونه</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">ارتباط با ما</h4>
+                    <div class="space-y-3 text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope ml-2"></i>
+                            <span>info@codamooz.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone ml-2"></i>
+                            <span>۰۲۱-۱۲۳۴۵۶۷۸</span>
+                        </div>
+                        <div class="flex space-x-4 space-x-reverse mt-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 transition">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>© ۱۴۰۲ تمامی حقوق برای پلتفرم کدآموز محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple theme switcher
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeBtn = document.querySelector('[aria-label="Toggle theme"]');
+
+            themeBtn.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark');
+
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeBtn.innerHTML = '<i class="fas fa-sun text-yellow-400"></i>';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeBtn.innerHTML = '<i class="fas fa-moon text-gray-600"></i>';
+                }
+            });
+
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark' ||
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeBtn.innerHTML = '<i class="fas fa-sun text-yellow-400"></i>';
+            }
+        });
+    </script>
+</body>
+</html>

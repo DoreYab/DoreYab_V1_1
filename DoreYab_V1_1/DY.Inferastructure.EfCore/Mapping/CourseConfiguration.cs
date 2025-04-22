@@ -16,7 +16,7 @@ namespace DY.Inferastructure.EfCore.Mapping
             builder.Property(c => c.ImageUrl);
             builder.Property(c => c.IsFinished).IsRequired();
             builder.Property(c => c.Slug).IsRequired();
-            builder.Property(c => c.Price);
+            builder.Property(c => c.Price).HasColumnType("decimal(18,2)");
             builder.Property(c => c.MetaTitle);
             builder.Property(c => c.MetaDescription);
             builder.Property(c => c.MetaKeyword);

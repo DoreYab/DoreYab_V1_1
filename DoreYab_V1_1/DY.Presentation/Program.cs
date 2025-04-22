@@ -1,5 +1,8 @@
+using DY.Application.Contract.Course;
 using DY.Application.Contract.CourseCategory;
+using DY.Application.CourseApplication;
 using DY.Application.CourseCategory;
+using DY.Domain.CourseAgg;
 using DY.Domain.CourseCategoryAgg;
 using DY.Inferastructure.EfCore.Data;
 using DY.Inferastructure.EfCore.Repository;
@@ -15,6 +18,9 @@ namespace DY.Presentation
 
             builder.Services.AddTransient<ICourseCategoryRepository, CourseCategoryRepository>();
             builder.Services.AddTransient<ICourseCategoryApplication, CourseCategoryApplication>();
+            
+            builder.Services.AddTransient<ICourseRepository, CourseRepository>();
+            builder.Services.AddTransient<ICourseApplication, CourseApplication>();
 
             builder.Services.AddDbContext<DoreYab_Context>(options =>
             {

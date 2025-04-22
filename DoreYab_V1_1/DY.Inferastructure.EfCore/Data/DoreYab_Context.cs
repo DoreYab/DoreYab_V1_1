@@ -1,5 +1,6 @@
 ﻿using Domain.CourseCategory;
 using DY.Domain.CourseAgg;
+using DY.Inferastructure.EfCore.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace DY.Inferastructure.EfCore.Data
@@ -15,7 +16,8 @@ namespace DY.Inferastructure.EfCore.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new CourseCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseConfiguration());
         }
     }
 }
