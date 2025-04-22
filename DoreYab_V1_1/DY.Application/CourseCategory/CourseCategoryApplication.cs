@@ -13,7 +13,7 @@ namespace DY.Application.CourseCategory
             _categoryRepository = categoryRepository;
         }
 
-        public List<CourseCategoryViewModel> GetAll()
+        public List<CourseCategoryViewModel> List()
         {
             var courseCategories = _categoryRepository.GetAll();
             var result = new List<CourseCategoryViewModel>();
@@ -31,8 +31,5 @@ namespace DY.Application.CourseCategory
             }
             return result;
         }
-        
-        
-       
     }
 }
