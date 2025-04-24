@@ -1,6 +1,7 @@
 ﻿using DY.Application.Contract.Course;
 using DY.Domain.CourseAgg;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DY.Presentation.Area.Admin.Controllers
 {
@@ -14,10 +15,20 @@ namespace DY.Presentation.Area.Admin.Controllers
             _courseRepository = courseRepository;
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var model = new CourseViewModel();
-            return View(model);
+            if (!ModelState.IsValid)
+            {
+                var categories = await _courseRepository.GetCategoriesAsync();
+                model.Categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Title
+                }).ToList();
+
+                return View(model);
+            }
+
         }
         [HttpPost]
         public async Task<IActionResult> Create(CourseViewModel model)
