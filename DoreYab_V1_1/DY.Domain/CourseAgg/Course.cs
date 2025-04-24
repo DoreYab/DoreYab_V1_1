@@ -29,21 +29,35 @@ namespace DY.Domain.CourseAgg
 
         protected Course() { }
 
-        public Course(string title, decimal? price, string? desctiption, string? courseUrl, string siteSource, string slug, string imageUrl, string metaTitle, string metaDescription, string metaKeyword, long categoryId)
+        public Course(
+    string title,
+    decimal? price,
+    string? description,
+    string? courseUrl,
+    string siteSource,
+    string slug,
+    string imageUrl,
+    bool isFree,
+  
+    bool isFinished,
+    string metaTitle,
+    string metaDescription,
+    string metaKeyword,
+    long categoryId)
         {
             Title = title;
             Price = price;
-            Desctiption = desctiption;
+            Desctiption = description;
             CourseUrl = courseUrl;
             SiteSource = siteSource;
             Slug = slug;
             ImageUrl = imageUrl;
+            IsFree = isFree;
+            IsDeleted = false;
+            IsFinished = isFinished;
             MetaTitle = metaTitle;
             MetaDescription = metaDescription;
             MetaKeyword = metaKeyword;
-            IsDeleted = false;
-            IsFree = true;
-            IsFinished = true;
             CategoryId = categoryId;
         }
     }

@@ -4,7 +4,8 @@ namespace DY.Domain.CourseAgg
 {
     public interface ICourseRepository
     {
-        void Create(Course entity);
+        Task Addsynk(Course course);
+        Task SaveChangesAsync();
         Task<List<Course>> GetAll(); // Removed 'async' modifier and added missing semicolon
     }
 }

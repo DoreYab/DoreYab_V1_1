@@ -19,16 +19,25 @@ namespace DY.Inferastructure.EfCore.Repository
             _context = context;
         }
 
-        public void Create(Course entity)
+        public async Task Addsynk(Course course)
         {
-            _context.Courses.Add(entity);
-            _context.SaveChanges();
+            await _context.Courses.AddAsync(course);
         }
+
+        //public void Create(Course entity)
+        //{
+        //    _context.Courses.Add(entity);
+        //    _context.SaveChanges();
+        //}
 
         public async Task<List<Course>> GetAll()
         {
             return await _context.Courses.ToListAsync();
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
