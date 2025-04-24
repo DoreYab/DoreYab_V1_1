@@ -4,7 +4,7 @@ namespace DY.Application.Contract.CourseCategory
 {
     public class CourseCategoryViewModel : EntityBase
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty; // Initialize to avoid CS8618
         public string? ShortDescription { get; set; }
         public long CourseCount { get; set; }
         public bool IsDeleted { get; set; }
