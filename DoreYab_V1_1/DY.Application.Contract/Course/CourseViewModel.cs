@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 
 namespace DY.Application.Contract.Course
@@ -25,7 +26,8 @@ namespace DY.Application.Contract.Course
         public string MetaDescription { get; set; }
         public string MetaKeyword { get; set; }
         public long CategoryId { get; set; }
-        public CourseCategoryViewModel Categories { get; set; } 
+        public List<SelectListItem> Categories { get; set; } = new();
+
     }
 }
         
