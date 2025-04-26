@@ -14,16 +14,7 @@ namespace DY.Presentation.Area.Admin.Controllers
         {
             _courseRepository = courseRepository;
         }
-        [HttpGet]
-        public  IActionResult Create()
-        {
-            
-                var model = new CourseViewModel();
 
-                return View(model);
-            
-
-        }
         [HttpPost]
         public async Task<IActionResult> Create(CourseViewModel model)
         {
