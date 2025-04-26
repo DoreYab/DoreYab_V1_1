@@ -8,21 +8,82 @@ namespace DY.Inferastructure.EfCore.Mapping
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-            builder.ToTable(nameof(Course));
-            builder.HasKey(c => c.Id);
-            builder.Property(c => c.Title).IsRequired().HasMaxLength(150);
-            builder.Property(c => c.SiteSource).IsRequired();
-            builder.Property(c => c.Desctiption);
-            builder.Property(c => c.ImageUrl);
-            builder.Property(c => c.IsFinished).IsRequired();
-            builder.Property(c => c.Slug).IsRequired();
-            builder.Property(c => c.Price).HasColumnType("decimal(18,2)");
-            builder.Property(c => c.MetaTitle);
-            builder.Property(c => c.MetaDescription);
-            builder.Property(c => c.MetaKeyword);
+            // Table Name
+            builder.ToTable("Courses");
 
-            builder.HasOne(c => c.Category).WithMany(b => b.Courses).HasForeignKey(b => b.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Primary Key
+            builder.HasKey(x => x.Id);
+
+            // Properties
+            builder.Property(x => x.Title)
+                .IsRequired()
+                .HasMaxLength(300)
+                .IsUnicode(true);
+
+            builder.Property(x => x.Price)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired(false);
+
+            builder.Property(x => x.Desctiption)
+                .HasMaxLength(3000)
+                .IsUnicode(true);
+
+            builder.Property(x => x.CourseUrl)
+                .HasMaxLength(1000)
+                .IsUnicode(false);
+
+            builder.Property(x => x.SiteSource)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(true);
+
+            builder.Property(x => x.Slug)
+                .IsRequired()
+                .HasMaxLength(300)
+                .IsUnicode(false);
+
+            builder.Property(x => x.ImageUrl)
+                .IsRequired()
+                .HasMaxLength(500)
+                .IsUnicode(false);
+
+            builder.Property(x => x.IsFree)
+                .IsRequired();
+
+            builder.Property(x => x.IsDeleted)
+                .IsRequired();
+
+            builder.Property(x => x.IsFinished)
+                .IsRequired();
+
+            builder.Property(x => x.MetaTitle)
+                .IsRequired()
+                .HasMaxLength(300)
+                .IsUnicode(true);
+
+            builder.Property(x => x.MetaDescription)
+                .IsRequired()
+                .HasMaxLength(1000)
+                .IsUnicode(true);
+
+            builder.Property(x => x.MetaKeyword)
+                .IsRequired()
+                .HasMaxLength(600)
+                .IsUnicode(true);
+
+            builder.Property(x => x.CreationDate)
+                .HasColumnType("datetime2");
+
+            // Relationships
+            builder.HasOne(x => x.Category)
+                .WithMany(x => x.Courses)
+                .HasForeignKey(x => x.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict); // برای جلوگیری از پاک شدن دسته‌بندی که دوره‌ها دارن
+
+            // Indexes (برای بهبود سرعت جستجو)
+            builder.HasIndex(x => x.Slug).IsUnique();
+            builder.HasIndex(x => x.Title);
+            builder.HasIndex(x => x.SiteSource);
         }
     }
 }
