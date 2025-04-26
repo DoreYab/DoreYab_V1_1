@@ -1,10 +1,10 @@
-﻿using Domain.CourseCategory;
+﻿using DY.Domain.CourseCategoryAgg;
 
 namespace DY.Domain.CourseCategoryAgg
 {
     public interface ICourseCategoryRepository
     {
-        void Create(CourseCategory entity);
+        void Add(CourseCategory entity);
         List<CourseCategory> GetAll();
     }
 }

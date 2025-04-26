@@ -1,6 +1,5 @@
-﻿using DY.Application.Contract.CourseCategory;
-using DY.Domain.CourseCategoryAgg;
-using System.Reflection.Metadata.Ecma335;
+﻿using DY.Domain.CourseCategoryAgg;
+using DY.Application.Contract.CourseCategory;
 
 namespace DY.Application.CourseCategory
 {
@@ -11,6 +10,12 @@ namespace DY.Application.CourseCategory
         public CourseCategoryApplication(ICourseCategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
+        }
+
+        public void Create(CreateCourseCategory category)
+        {
+            var courseCategory = new DY.Domain.CourseCategoryAgg.CourseCategory(category.Title);
+            _categoryRepository.Add(courseCategory);
         }
 
         public List<CourseCategoryViewModel> List()
