@@ -5,6 +5,13 @@ namespace Domain.CourseCategory
 {
     public class CourseCategory : EntityBase
     {
+        public CourseCategory(string title)
+        {
+            Title = title;
+            IsDeleted = false;
+            Courses = new List<Course>();
+        }
+
         public string Title { get; private set; }
         public string? ShortDescription { get; private set; }
         public long CourseCount { get; private set; }
