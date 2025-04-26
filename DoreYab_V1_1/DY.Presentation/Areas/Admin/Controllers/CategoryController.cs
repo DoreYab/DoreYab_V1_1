@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DY.Presentation.Area.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         public List<CourseCategoryViewModel> CourseCategories { get; set; }
@@ -13,10 +14,17 @@ namespace DY.Presentation.Area.Admin.Controllers
             _categoryApplication = categoryApplication;
         }
 
-        public IActionResult CategoryList()
+        [HttpGet]
+        public IActionResult List()
         {
             CourseCategories = _categoryApplication.List();
             return View(CourseCategories);
-        }
+        } 
+
+        //[HttpGet]
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
     }
 }
