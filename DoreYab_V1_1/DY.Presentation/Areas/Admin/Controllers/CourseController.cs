@@ -15,19 +15,9 @@ namespace DY.Presentation.Area.Admin.Controllers
             _courseRepository = courseRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                var categories = await _courseRepository.GetCategoriesAsync();
-                model.Categories = categories.Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.Title
-                }).ToList();
-
-                return View(model);
-            }
+            return View();
 
         }
         [HttpPost]
