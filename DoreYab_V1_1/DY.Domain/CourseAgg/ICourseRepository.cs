@@ -1,4 +1,4 @@
-﻿using Domain.CourseCategory;
+﻿using DY.Domain.CourseCategoryAgg;
 
 namespace DY.Domain.CourseAgg
 {
