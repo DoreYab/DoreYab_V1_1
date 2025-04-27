@@ -1,4 +1,4 @@
-﻿using Domain.CourseCategory;
+﻿
 using DY.Domain.CourseCategoryAgg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

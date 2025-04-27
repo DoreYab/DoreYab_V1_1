@@ -1,7 +1,7 @@
 ﻿using DY.Domain.CourseAgg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+using FluentValidation;
 namespace DY.Inferastructure.EfCore.Mapping
 {
     public class CourseConfiguration : IEntityTypeConfiguration<Course>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DY.Inferastructure.EfCore.Migrations
 {
     [DbContext(typeof(DoreYab_Context))]
-    [Migration("20250427102908_Initial DB ")]
-    partial class InitialDB
+    [Migration("20250427104911_SetDefaultCreationDate")]
+    partial class SetDefaultCreationDate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,7 +119,7 @@ namespace DY.Inferastructure.EfCore.Migrations
                     b.ToTable("Courses", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.CourseCategory.CourseCategory", b =>
+            modelBuilder.Entity("DY.Domain.CourseCategoryAgg.CourseCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,7 +163,7 @@ namespace DY.Inferastructure.EfCore.Migrations
 
             modelBuilder.Entity("DY.Domain.CourseAgg.Course", b =>
                 {
-                    b.HasOne("Domain.CourseCategory.CourseCategory", "Category")
+                    b.HasOne("DY.Domain.CourseCategoryAgg.CourseCategory", "Category")
                         .WithMany("Courses")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -172,7 +172,7 @@ namespace DY.Inferastructure.EfCore.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Domain.CourseCategory.CourseCategory", b =>
+            modelBuilder.Entity("DY.Domain.CourseCategoryAgg.CourseCategory", b =>
                 {
                     b.Navigation("Courses");
                 });

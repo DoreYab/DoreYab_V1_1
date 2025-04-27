@@ -116,7 +116,7 @@ namespace DY.Inferastructure.EfCore.Migrations
                     b.ToTable("Courses", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.CourseCategory.CourseCategory", b =>
+            modelBuilder.Entity("DY.Domain.CourseCategoryAgg.CourseCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,7 +160,7 @@ namespace DY.Inferastructure.EfCore.Migrations
 
             modelBuilder.Entity("DY.Domain.CourseAgg.Course", b =>
                 {
-                    b.HasOne("Domain.CourseCategory.CourseCategory", "Category")
+                    b.HasOne("DY.Domain.CourseCategoryAgg.CourseCategory", "Category")
                         .WithMany("Courses")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -169,7 +169,7 @@ namespace DY.Inferastructure.EfCore.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Domain.CourseCategory.CourseCategory", b =>
+            modelBuilder.Entity("DY.Domain.CourseCategoryAgg.CourseCategory", b =>
                 {
                     b.Navigation("Courses");
                 });

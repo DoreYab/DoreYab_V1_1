@@ -59,7 +59,12 @@
                 <div class="mb-4">
                     <label for="Category" class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
                     <select asp-items="Model.CourseCategories" id="CategoryId" name="CategoryId" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus">
-                        <option value="">Select a category</option>
+                        <option value="0">Select a category</option>
+                        @foreach (var item in Model.ToList())
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                      
                         
                     </select>
                     <span asp-validation-for="CategoryId" class="text-red-500 text-sm"></span>
