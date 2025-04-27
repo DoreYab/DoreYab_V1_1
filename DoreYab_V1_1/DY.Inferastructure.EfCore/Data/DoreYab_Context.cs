@@ -1,4 +1,4 @@
-﻿using Domain.CourseCategory;
+﻿using DY.Domain.CourseCategoryAgg;
 using DY.Domain.CourseAgg;
 using DY.Inferastructure.EfCore.Mapping;
 using Microsoft.EntityFrameworkCore;
