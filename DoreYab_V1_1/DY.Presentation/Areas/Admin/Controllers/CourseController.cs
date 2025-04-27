@@ -15,6 +15,12 @@ namespace DY.Presentation.Area.Admin.Controllers
             _courseRepository = courseRepository;
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CourseViewModel model)
         {
