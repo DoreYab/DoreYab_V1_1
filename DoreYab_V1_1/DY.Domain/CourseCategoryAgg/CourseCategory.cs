@@ -1,7 +1,7 @@
 ﻿using _0_Framework.Domain;
 using DY.Domain.CourseAgg;
 
-namespace Domain.CourseCategory
+namespace DY.Domain.CourseCategoryAgg
 {
     public class CourseCategory : EntityBase
     {
@@ -9,7 +9,8 @@ namespace Domain.CourseCategory
         {
             Title = title;
             IsDeleted = false;
-            Courses = new List<Course>();
+            CreationDate = DateTime.Now;
+            //Courses = new List<Course>();
         }
 
         public string Title { get; private set; }
