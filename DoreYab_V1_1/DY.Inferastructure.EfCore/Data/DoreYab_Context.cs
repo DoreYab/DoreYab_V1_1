@@ -2,6 +2,7 @@
 using DY.Domain.CourseAgg;
 using DY.Inferastructure.EfCore.Mapping;
 using Microsoft.EntityFrameworkCore;
+using Domain.CourseCategory;
 
 namespace DY.Inferastructure.EfCore.Data
 {
