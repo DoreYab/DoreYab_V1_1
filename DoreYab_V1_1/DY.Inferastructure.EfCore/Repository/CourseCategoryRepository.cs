@@ -1,5 +1,4 @@
-﻿using Domain.CourseCategory;
-using DY.Domain.CourseCategoryAgg;
+﻿using DY.Domain.CourseCategoryAgg;
 using DY.Inferastructure.EfCore.Data;
 
 namespace DY.Inferastructure.EfCore.Repository
