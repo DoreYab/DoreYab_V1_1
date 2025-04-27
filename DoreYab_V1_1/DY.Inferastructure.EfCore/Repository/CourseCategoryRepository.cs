@@ -12,7 +12,7 @@ namespace DY.Inferastructure.EfCore.Repository
             _context = context;
         }
 
-        public void Create(CourseCategory entity)
+        public void Add(CourseCategory entity)
         {
             _context.CourseCategories.Add(entity);
             _context.SaveChanges();
