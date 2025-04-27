@@ -72,7 +72,7 @@ namespace DY.Inferastructure.EfCore.Mapping
                 .IsUnicode(true);
 
             builder.Property(x => x.CreationDate)
-                .HasColumnType("datetime2");
+                .HasDefaultValueSql("GETDATE()");
 
             // Relationships
             builder.HasOne(x => x.Category)

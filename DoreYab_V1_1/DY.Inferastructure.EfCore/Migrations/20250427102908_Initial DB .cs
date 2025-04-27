@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DY.Inferastructure.EfCore.Migrations
 {
     /// <inheritdoc />
-    public partial class ADDDBWithFluntAPI : Migration
+    public partial class InitialDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace DY.Inferastructure.EfCore.Migrations
                     ShortDescription = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     CourseCount = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -48,7 +48,7 @@ namespace DY.Inferastructure.EfCore.Migrations
                     MetaDescription = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     MetaKeyword = table.Column<string>(type: "nvarchar(600)", maxLength: 600, nullable: false),
                     CategoryId = table.Column<long>(type: "bigint", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {

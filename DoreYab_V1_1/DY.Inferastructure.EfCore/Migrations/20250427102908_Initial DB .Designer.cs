@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DY.Inferastructure.EfCore.Migrations
 {
     [DbContext(typeof(DoreYab_Context))]
-    [Migration("20250426103051_ADD DB With FluntAPI")]
-    partial class ADDDBWithFluntAPI
+    [Migration("20250427102908_Initial DB ")]
+    partial class InitialDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,8 +41,10 @@ namespace DY.Inferastructure.EfCore.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<DateTime?>("CreationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("CreationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Desctiption")
                         .HasMaxLength(3000)
@@ -130,8 +132,10 @@ namespace DY.Inferastructure.EfCore.Migrations
                         .HasColumnType("bigint")
                         .HasDefaultValue(0L);
 
-                    b.Property<DateTime?>("CreationDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("CreationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()

@@ -33,7 +33,7 @@ namespace DY.Inferastructure.EfCore.Mapping
                 .HasDefaultValue(false);
 
             builder.Property(x => x.CreationDate)
-                .HasColumnType("datetime2");
+                .HasDefaultValueSql("GETDATE()");
 
             // Relationships
             builder.HasMany(x => x.Courses)
