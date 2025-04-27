@@ -1,5 +1,4 @@
-﻿using Domain.CourseCategory;
-using DY.Domain.CourseCategoryAgg;
+﻿using DY.Domain.CourseCategoryAgg;
 using DY.Inferastructure.EfCore.Data;
 
 namespace DY.Inferastructure.EfCore.Repository
@@ -12,7 +11,7 @@ namespace DY.Inferastructure.EfCore.Repository
             _context = context;
         }
 
-        public void Create(CourseCategory entity)
+        public void Add(CourseCategory entity)
         {
             _context.CourseCategories.Add(entity);
             _context.SaveChanges();
