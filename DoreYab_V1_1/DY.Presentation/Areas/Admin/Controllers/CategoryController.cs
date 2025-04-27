@@ -19,12 +19,19 @@ namespace DY.Presentation.Area.Admin.Controllers
         {
             CourseCategories = _categoryApplication.List();
             return View(CourseCategories);
-        } 
+        }
 
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View("Create");
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateCourseCategory command)
+        {
+            _categoryApplication.Create(command);
+            return RedirectToAction("./List");
+        }
     }
 }
