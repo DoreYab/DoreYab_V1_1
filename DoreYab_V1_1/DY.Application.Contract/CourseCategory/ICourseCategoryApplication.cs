@@ -3,5 +3,7 @@
     public interface ICourseCategoryApplication
     {
         List<CourseCategoryViewModel> List();
+        void Create(CreateCourseCategory category);
+
     }
 }
