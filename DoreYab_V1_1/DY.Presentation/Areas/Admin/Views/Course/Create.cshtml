@@ -1,4 +1,5 @@
-﻿@model DY.Application.Contract.Course.CourseViewModel
+﻿@model List<SelectListItem>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,17 +9,7 @@
     <title>Create New Course - Admin Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .gold-focus:focus {
-            border-color: #FFD700;
-            box-shadow: 0 0 0 1px #FFD700;
-        }
-
-        .gold-checkbox:checked {
-            background-color: #FFD700;
-            border-color: #FFD700;
-        }
-    </style>
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body class="bg-white text-black">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
@@ -66,14 +57,10 @@
                 </div>
                 <!-- Category -->
                 <div class="mb-4">
-                    <label asp-for="CategoryId" class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
-                    <select asp-for="CategoryId" id="categoryId" name="categoryId" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus">
+                    <label for="Category" class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
+                    <select asp-items="Model.CourseCategories" id="CategoryId" name="CategoryId" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus">
                         <option value="">Select a category</option>
-                        <option value="1">Programming</option>
-                        <option value="2">Design</option>
-                        <option value="3">Business</option>
-                        <option value="4">Marketing</option>
-                        <option value="5">Data Science</option>
+                        
                     </select>
                     <span asp-validation-for="CategoryId" class="text-red-500 text-sm"></span>
                 </div>

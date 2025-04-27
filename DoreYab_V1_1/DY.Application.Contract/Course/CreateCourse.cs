@@ -1,11 +1,7 @@
-﻿
-
-
-namespace DY.Application.Contract.Course
+﻿namespace DY.Application.Contract.Course
 {
-    public class CourseViewModel
+    public class CreateCourse
     {
-        public long Id { get; set; }
         public string Title { get; set; }
         public decimal? Price { get; set; }
         public string? Desctiption { get; set; }
@@ -16,13 +12,13 @@ namespace DY.Application.Contract.Course
         public bool IsFree { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsFinished { get; set; }
+
+        // seo
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
-        public string MetaKeyword { get; set; } 
-        public string CreationDate { get; set; }
-        public long CategoryId { get; set; }
-        public string CourseCategory { get; set; }
+        public string MetaKeyword { get; set; }
 
+        // Navigate
+        public long CategoryId { get; set; }
     }
 }
-            

@@ -1,4 +1,5 @@
 ﻿using Domain.CourseCategory;
+using DY.Application.Contract.Course;
 using DY.Domain.CourseAgg;
 using DY.Inferastructure.EfCore.Data;
 using Microsoft.EntityFrameworkCore;
@@ -16,25 +17,29 @@ namespace DY.Inferastructure.EfCore.Repository
             _context = context;
         }
 
-        public async Task Addsynk(Course course)
+        
+
+        public void Create(Course course)
         {
-            await _context.Courses.AddAsync(course);
+            _context.Courses.Add(course);
+            _context.SaveChanges();
         }
 
-        //public void Create(Course entity)
-        //{
-        //    _context.Courses.Add(entity);
-        //    _context.SaveChanges();
-        //}
+        
 
-        public async Task<List<Course>> GetAll()
+        Task<List<CourseViewModel>> ICourseRepository.GetList()
         {
-            return await _context.Courses.ToListAsync();
-        }
-
-        public async Task SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
+            return _context.Courses.Include(x => x.Category)
+                .Select(x => new CourseViewModel
+                {
+                Id = x.Id,
+                    Title = x.Title,
+                    Price = x.Price,
+                    IsFree = x.IsFree,
+                    ImageUrl = x.ImageUrl,
+                    CourseCategory = x.Category.Title,
+                    CategoryId = x.CategoryId,
+                }).ToListAsync();
         }
     }
 }

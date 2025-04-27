@@ -61,3 +61,13 @@
     .dark .footer {
         background-color: #2d3748;
     }
+
+.gold-focus:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 0 1px #FFD700;
+}
+
+.gold-checkbox:checked {
+    background-color: #FFD700;
+    border-color: #FFD700;
+}

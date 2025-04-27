@@ -40,6 +40,7 @@ namespace DY.Domain.CourseAgg
     bool isFree,
   
     bool isFinished,
+    bool isDeleted,
     string metaTitle,
     string metaDescription,
     string metaKeyword,
@@ -55,6 +56,7 @@ namespace DY.Domain.CourseAgg
             IsFree = isFree;
             IsDeleted = false;
             IsFinished = isFinished;
+            IsDeleted = isDeleted;
             MetaTitle = metaTitle;
             MetaDescription = metaDescription;
             MetaKeyword = metaKeyword;

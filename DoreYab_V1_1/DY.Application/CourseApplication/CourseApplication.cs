@@ -14,33 +14,29 @@ namespace DY.Application.CourseApplication
             _courseRipository = courseRipository;
         }
 
-
-        public async Task<List<CourseViewModel>> List()
+        public void Create(CreateCourse command)
         {
-            var courseList = await _courseRipository.GetAll(); // Await the Task to get the actual list
-            var result = new List<CourseViewModel>();
+            var course = new Course(command.Title,
+                                    command.Price,
+                                    command.CourseUrl,
+                                    command.Desctiption,
+                                    command.SiteSource,
+                                    command.Slug,
+                                    command.ImageUrl,
+                                    command.IsFree,
+                                    command.IsFinished,
+                                    command.IsDeleted,
+                                    command.MetaDescription,
+                                    command.MetaTitle,
+                                    command.MetaKeyword,
+                                    command.CategoryId
+                                    );
+            _courseRipository.Create(course);
+        }
 
-            foreach (var course in courseList) // Iterate over the resolved list
-            {
-                result.Add(new CourseViewModel
-                {
-                    Id = course.Id,
-                    Title = course.Title,
-                    Price = course.Price,
-                    Desctiption = course.Desctiption,
-                    CourseUrl = course.CourseUrl,
-                    SiteSource = course.SiteSource,
-                    Slug = course.Slug,
-                    ImageUrl = course.ImageUrl,
-                    IsFree = course.IsFree,
-                    IsDeleted = course.IsDeleted,
-                    IsFinished = course.IsFinished,
-                    MetaTitle = course.MetaTitle,
-                    MetaDescription = course.MetaDescription,
-                    MetaKeyword = course.MetaKeyword,
-                });
-            }
-            return result;
+        public Task<List<CourseViewModel>> GetList()
+        {
+            return _courseRipository.GetList();
         }
     }
 }

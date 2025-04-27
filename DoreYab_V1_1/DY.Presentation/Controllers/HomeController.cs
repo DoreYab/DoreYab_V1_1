@@ -8,6 +8,7 @@ namespace DY.Presentation.Controllers
 {
     public class HomeController : Controller
     {
+        public List<CourseViewModel> courseViewModels { get; set; }
         private readonly ILogger<HomeController> _logger;
         private readonly ICourseApplication _courseApplication;
 
@@ -19,10 +20,11 @@ namespace DY.Presentation.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var courses = await _courseApplication.List(); // دریافت لیست دوره‌ها  
-            return View(courses); // ارسال لیست به View  
+            courseViewModels = await _courseApplication.GetList();
+            return View(courseViewModels); // ارسال لیست به View  
         }
 
+        #region Exm  
         public IActionResult Privacy()
         {
             return View();
@@ -33,5 +35,6 @@ namespace DY.Presentation.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }
