@@ -4,6 +4,7 @@
     {
         List<CourseCategoryViewModel> List();
         void Create(CreateCourseCategory category);
-
+        void Rename(RenameCourseCategory command);
     }
 }
+    
