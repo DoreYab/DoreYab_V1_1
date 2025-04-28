@@ -19,5 +19,10 @@ namespace DY.Domain.CourseCategoryAgg
         public bool IsDeleted { get; private set; }
 
         public ICollection<Course> Courses { get; private set; }
+
+        public void Rename(string title)
+        {
+            Title = title;
+        }
     }
 }
