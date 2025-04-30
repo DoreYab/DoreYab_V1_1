@@ -14,8 +14,21 @@ namespace DY.Application.CourseCategory
 
         public void Create(CreateCourseCategory category)
         {
-            var courseCategory = new DY.Domain.CourseCategoryAgg.CourseCategory(category.Title);
+            var courseCategory = new Domain.CourseCategoryAgg.CourseCategory(category.Title);
             _categoryRepository.Add(courseCategory);
+        }
+
+        public RenameCourseCategory Get(long id)
+        {
+            var courseCategory = _categoryRepository.Get(id);
+            return new RenameCourseCategory
+            {
+                Id = courseCategory.Id,
+                Title = courseCategory.Title,
+                CourseCount = courseCategory.CourseCount,
+                ShortDescription = courseCategory.ShortDescription,
+                IsDeleted = courseCategory.IsDeleted,
+            };
         }
 
         public List<CourseCategoryViewModel> List()
@@ -35,6 +48,13 @@ namespace DY.Application.CourseCategory
                 });
             }
             return result;
+        }
+
+        public void Rename(RenameCourseCategory command)
+        {
+            var courseCategory = _categoryRepository.Get(command.Id);
+            courseCategory.Rename(command.Title);
+            _categoryRepository.Save();
         }
     }
 }
