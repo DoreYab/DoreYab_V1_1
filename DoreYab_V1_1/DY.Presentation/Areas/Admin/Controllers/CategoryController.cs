@@ -45,12 +45,12 @@ namespace DY.Presentation.Area.Admin.Controllers
         }
 
         [HttpPost("Edit")]
-        public IActionResult Edit(RenameCourseCategory model)
+        public IActionResult Edit()
         {
-            if(!ModelState.IsValid)
-                return View(model);
+            //if(!ModelState.IsValid)
+            //    return View(model);
 
-            _categoryApplication.Rename(model);
+            _categoryApplication.Rename(RenameCategory);
             return RedirectToAction("List");
         }
         
