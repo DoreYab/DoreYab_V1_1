@@ -6,7 +6,7 @@ namespace DY.Presentation.Area.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-       
+        [BindProperty]
         public RenameCourseCategory RenameCategory { get; set; }
         public List<CourseCategoryViewModel> CourseCategories { get; set; }
         
