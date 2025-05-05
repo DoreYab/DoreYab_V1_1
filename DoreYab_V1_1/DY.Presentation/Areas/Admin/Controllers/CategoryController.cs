@@ -6,7 +6,6 @@ namespace DY.Presentation.Area.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-       
         public RenameCourseCategory RenameCategory { get; set; }
         public List<CourseCategoryViewModel> CourseCategories { get; set; }
         
@@ -44,11 +43,11 @@ namespace DY.Presentation.Area.Admin.Controllers
             return View(courseCategory);
         }
 
-        [HttpPost("Edit")]
+        [HttpPost]
         public IActionResult Edit(RenameCourseCategory model)
         {
-            if(!ModelState.IsValid)
-                return View(model);
+            //if(!ModelState.IsValid)
+            //    return View(model);
 
             _categoryApplication.Rename(model);
             return RedirectToAction("List");
