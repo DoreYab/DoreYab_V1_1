@@ -24,6 +24,6 @@ namespace DY.Domain.CourseCategoryAgg
 
         public void Remove() => IsDeleted = true;
 
-        public void IsActivate(long id) => IsDeleted = false;
+        public void IsActivate() => IsDeleted = false;
     }
 }
