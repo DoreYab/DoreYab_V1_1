@@ -57,7 +57,9 @@ namespace DY.Application.CourseCategory
 
         public void Remove(long id)
         {
-            throw new NotImplementedException();
+            var courseCategory = _categoryRepository.Get(id);
+            courseCategory.Remove();
+            _categoryRepository.Save();
         }
 
         public void Rename(RenameCourseCategory command)
