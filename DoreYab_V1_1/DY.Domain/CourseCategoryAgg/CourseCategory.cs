@@ -24,5 +24,9 @@ namespace DY.Domain.CourseCategoryAgg
         {
             Title = title;
         }
+
+        public void Remove(long id) => IsDeleted = true;
+
+
     }
 }
