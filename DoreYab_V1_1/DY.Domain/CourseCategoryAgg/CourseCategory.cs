@@ -20,13 +20,10 @@ namespace DY.Domain.CourseCategoryAgg
 
         public ICollection<Course> Courses { get; private set; }
 
-        public void Rename(string title)
-        {
-            Title = title;
-        }
+        public void Rename(string title) => Title = title;
 
-        public void Remove(long id) => IsDeleted = true;
+        public void Remove() => IsDeleted = true;
 
-        public void IsActivate(long id) => IsDeleted = false;
+        public void IsActivate() => IsDeleted = false;
     }
 }

@@ -52,6 +52,19 @@ namespace DY.Presentation.Area.Admin.Controllers
             _categoryApplication.Rename(model);
             return RedirectToAction("List");
         }
-        
+
+        [HttpPost]
+        public IActionResult Remove(long id)
+        {
+            _categoryApplication.Remove(id);
+            return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public IActionResult Active(long id)
+        {
+            _categoryApplication.Activate(id);
+            return RedirectToAction("List");
+        }
     }
 }

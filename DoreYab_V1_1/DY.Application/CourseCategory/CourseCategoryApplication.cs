@@ -12,6 +12,8 @@ namespace DY.Application.CourseCategory
             _categoryRepository = categoryRepository;
         }
 
+
+
         public void Create(CreateCourseCategory category)
         {
             var courseCategory = new Domain.CourseCategoryAgg.CourseCategory(category.Title);
@@ -50,10 +52,24 @@ namespace DY.Application.CourseCategory
             return result;
         }
 
+        public void Remove(long id)
+        {
+            var courseCategory = _categoryRepository.Get(id);
+            courseCategory.Remove();
+            _categoryRepository.Save();
+        }
+
         public void Rename(RenameCourseCategory command)
         {
             var courseCategory = _categoryRepository.Get(command.Id);
             courseCategory.Rename(command.Title);
+            _categoryRepository.Save();
+        }
+
+        public void Activate(long id)
+        {
+            var courseCategory = _categoryRepository.Get(id);
+            courseCategory.IsActivate();
             _categoryRepository.Save();
         }
     }
