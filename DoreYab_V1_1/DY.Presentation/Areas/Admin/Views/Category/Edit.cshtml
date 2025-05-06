@@ -54,7 +54,7 @@
 
             <!-- IsDeleted (Checkbox) -->
             <div class="flex items-center space-x-3">
-                <input  type="checkbox" id="IsDeleted" name="IsDeleted"
+                <input  type="checkbox" id="IsDeleted" name="IsDeleted" value="false"
                        class="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                 <label for="IsDeleted" class="text-sm font-medium text-gray-700 flex items-center">
                     <i class="fas fa-trash-alt mr-1 text-indigo-400"></i>Mark as Deleted
@@ -68,7 +68,7 @@
                         text-gray-700 bg-white hover:bg-gray-50 transition">
                     <i class="fas fa-arrow-left mr-2"></i>Cancel
                 </a>
-                <button type="submit"  asp-area="Admin" asp-controller="Category" asp-page="./List"
+                <button type="submit"
                         class="inline-flex items-center px-5 py-3 border border-transparent text-sm font-medium rounded-xl
                             shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition">
                     <i class="fas fa-save mr-2"></i>Save Changes
