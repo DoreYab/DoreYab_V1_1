@@ -12,6 +12,11 @@ namespace DY.Application.CourseCategory
             _categoryRepository = categoryRepository;
         }
 
+        public void Activate(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Create(CreateCourseCategory category)
         {
             var courseCategory = new Domain.CourseCategoryAgg.CourseCategory(category.Title);
@@ -48,6 +53,11 @@ namespace DY.Application.CourseCategory
                 });
             }
             return result;
+        }
+
+        public void Remove(long id)
+        {
+            throw new NotImplementedException();
         }
 
         public void Rename(RenameCourseCategory command)
