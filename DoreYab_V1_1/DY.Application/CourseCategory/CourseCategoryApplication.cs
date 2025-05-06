@@ -12,10 +12,7 @@ namespace DY.Application.CourseCategory
             _categoryRepository = categoryRepository;
         }
 
-        public void Activate(long id)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public void Create(CreateCourseCategory category)
         {
@@ -66,6 +63,13 @@ namespace DY.Application.CourseCategory
         {
             var courseCategory = _categoryRepository.Get(command.Id);
             courseCategory.Rename(command.Title);
+            _categoryRepository.Save();
+        }
+
+        public void Activate(long id)
+        {
+            var courseCategory = _categoryRepository.Get(id);
+            courseCategory.IsActivate();
             _categoryRepository.Save();
         }
     }
