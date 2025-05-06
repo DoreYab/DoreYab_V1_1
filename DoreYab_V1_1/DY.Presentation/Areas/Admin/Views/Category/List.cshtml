@@ -75,7 +75,7 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         <!-- Sample Row 1 (Active) -->
                         @foreach(var courseCategory in Model)
-                         {
+                        {
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
@@ -105,10 +105,20 @@
                                             <i class="fas fa-pencil-alt"></i>
                                             <span class="sr-only sm:not-sr-only sm:ml-1">Edit</span>
                                         </a>
-                                        <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-900">
-                                            <i class="fas fa-trash"></i>
-                                            <span class="sr-only sm:not-sr-only sm:ml-1">Delete</span>
-                                        </button>
+                                        @if (courseCategory.IsDeleted)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Remove">
+                                                <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-900">
+                                                    <i class="fas fa-trash"></i>
+                                                    <span class="sr-only sm:not-sr-only sm:ml-1">Delete</span>
+                                                </button>
+                                                <input type="hidden" name="Id" value="@courseCategory.Id"/>
+                                            </form>
+                                        }
                                     </div>
                                 </td>
                             </tr>
