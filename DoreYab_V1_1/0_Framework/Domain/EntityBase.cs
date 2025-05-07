@@ -6,6 +6,6 @@ namespace _0_Framework.Domain
     {
         public long Id { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
     }
 }
