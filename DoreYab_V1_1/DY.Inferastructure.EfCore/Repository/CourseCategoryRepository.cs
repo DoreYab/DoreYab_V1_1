@@ -17,6 +17,11 @@ namespace DY.Inferastructure.EfCore.Repository
             _context.SaveChanges(); 
         }
 
+        public void Exsist(string title)
+        {
+            _context.CourseCategories.Any(x=>x.Title == title);
+        }
+
         public CourseCategory Get(long id)
         {
             return _context.CourseCategories.FirstOrDefault(x=>x.Id == id);
