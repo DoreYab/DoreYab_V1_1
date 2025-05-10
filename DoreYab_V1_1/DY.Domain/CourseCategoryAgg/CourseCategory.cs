@@ -7,6 +7,9 @@ namespace DY.Domain.CourseCategoryAgg
     {
         public CourseCategory(string title)
         {
+            if(string.IsNullOrEmpty(title))
+                throw new ArgumentNullException();
+
             Title = title;
             IsDeleted = false;
             CreationDate = DateTime.Now;
