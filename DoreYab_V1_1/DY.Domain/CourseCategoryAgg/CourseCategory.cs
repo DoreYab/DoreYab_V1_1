@@ -1,14 +1,14 @@
 ﻿using _0_Framework.Domain;
 using DY.Domain.CourseAgg;
+using DY.Domain.Services;
 
 namespace DY.Domain.CourseCategoryAgg
 {
     public class CourseCategory : EntityBase
     {
-        public CourseCategory(string title)
+        public CourseCategory(string title, ICourseCategoryValidatorServices validatorServices)
         {
             GuardAgainstEmptyTitle(title);
-
             Title = title;
             IsDeleted = false;
             CreationDate = DateTime.Now;
