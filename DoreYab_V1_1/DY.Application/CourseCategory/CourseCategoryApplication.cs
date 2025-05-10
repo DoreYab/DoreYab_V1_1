@@ -1,22 +1,26 @@
 ﻿using DY.Domain.CourseCategoryAgg;
 using DY.Application.Contract.CourseCategory;
+using DY.Domain.Services;
 
 namespace DY.Application.CourseCategory
 {
     public class CourseCategoryApplication : ICourseCategoryApplication
     {
         private readonly ICourseCategoryRepository _categoryRepository;
+        private readonly ICourseCategoryValidatorServices _validatorServices;
 
-        public CourseCategoryApplication(ICourseCategoryRepository categoryRepository)
+        public CourseCategoryApplication(ICourseCategoryRepository categoryRepository,
+            ICourseCategoryValidatorServices validatorServices)
         {
             _categoryRepository = categoryRepository;
+            _validatorServices = validatorServices;
         }
 
 
 
         public void Create(CreateCourseCategory category)
         {
-            var courseCategory = new Domain.CourseCategoryAgg.CourseCategory(category.Title);
+            var courseCategory = new Domain.CourseCategoryAgg.CourseCategory(category.Title, _validatorServices);
             _categoryRepository.Add(courseCategory);
         }
 
