@@ -7,5 +7,7 @@ namespace DY.Domain.CourseCategoryAgg
         List<CourseCategory> GetAll();
         CourseCategory Get(long Id);
         void Save();
+
+        bool Exsist(string title);
     }
 }
