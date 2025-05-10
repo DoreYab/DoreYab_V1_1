@@ -23,7 +23,13 @@ namespace DY.Domain.CourseCategoryAgg
 
         public ICollection<Course> Courses { get; private set; }
 
-        public void Rename(string title) => Title = title;
+        public void Rename(string title)
+        {
+            if(string.IsNullOrEmpty(title))
+                throw new ArgumentNullException();
+
+            Title = title;
+        }
 
         public void Remove() => IsDeleted = true;
 
