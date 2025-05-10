@@ -1,4 +1,5 @@
 ﻿using DY.Domain.CourseCategoryAgg;
+using DY.Domain.Exception;
 
 namespace DY.Domain.Services
 {
@@ -14,7 +15,7 @@ namespace DY.Domain.Services
         public void CheckThisRecordAlreadyExsist(string title)
         {
             if (_categoryRepository.Exsist(title))
-                throw new Exception();
+                throw new DuplicatedRecordException("This record already exists in database");
         }
     }
 }
