@@ -11,8 +11,4 @@
     <ProjectReference Include="..\DY.Application.Contract\DY.Application.Contract.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exception\" />
-  </ItemGroup>
-
 </Project>
