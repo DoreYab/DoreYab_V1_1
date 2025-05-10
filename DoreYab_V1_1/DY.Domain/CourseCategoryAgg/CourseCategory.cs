@@ -7,8 +7,7 @@ namespace DY.Domain.CourseCategoryAgg
     {
         public CourseCategory(string title)
         {
-            if(string.IsNullOrEmpty(title))
-                throw new ArgumentNullException();
+            GuardAgainstEmptyTitle(title);
 
             Title = title;
             IsDeleted = false;
@@ -25,14 +24,18 @@ namespace DY.Domain.CourseCategoryAgg
 
         public void Rename(string title)
         {
-            if(string.IsNullOrEmpty(title))
-                throw new ArgumentNullException();
-
+            GuardAgainstEmptyTitle(title);
             Title = title;
         }
 
         public void Remove() => IsDeleted = true;
 
         public void IsActivate() => IsDeleted = false;
+
+        public void GuardAgainstEmptyTitle(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                throw new ArgumentNullException();
+        }
     }
 }
