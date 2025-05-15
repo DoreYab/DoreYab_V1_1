@@ -1,21 +1,40 @@
 ﻿using DY.Domain.CourseCategoryAgg;
 using DY.Application.Contract.CourseCategory;
+using DY.Domain.Services;
 
 namespace DY.Application.CourseCategory
 {
     public class CourseCategoryApplication : ICourseCategoryApplication
     {
         private readonly ICourseCategoryRepository _categoryRepository;
+        private readonly ICourseCategoryValidatorServices _validatorServices;
 
-        public CourseCategoryApplication(ICourseCategoryRepository categoryRepository)
+        public CourseCategoryApplication(ICourseCategoryRepository categoryRepository,
+            ICourseCategoryValidatorServices validatorServices)
         {
             _categoryRepository = categoryRepository;
+            _validatorServices = validatorServices;
         }
+
+
 
         public void Create(CreateCourseCategory category)
         {
-            var courseCategory = new DY.Domain.CourseCategoryAgg.CourseCategory(category.Title);
+            var courseCategory = new Domain.CourseCategoryAgg.CourseCategory(category.Title, _validatorServices);
             _categoryRepository.Add(courseCategory);
+        }
+
+        public RenameCourseCategory Get(long id)
+        {
+            var courseCategory = _categoryRepository.Get(id);
+            return new RenameCourseCategory
+            {
+                Id = courseCategory.Id,
+                Title = courseCategory.Title,
+                CourseCount = courseCategory.CourseCount,
+                ShortDescription = courseCategory.ShortDescription,
+                IsDeleted = courseCategory.IsDeleted,
+            };
         }
 
         public List<CourseCategoryViewModel> List()
@@ -35,6 +54,27 @@ namespace DY.Application.CourseCategory
                 });
             }
             return result;
+        }
+
+        public void Remove(long id)
+        {
+            var courseCategory = _categoryRepository.Get(id);
+            courseCategory.Remove();
+            _categoryRepository.Save();
+        }
+
+        public void Rename(RenameCourseCategory command)
+        {
+            var courseCategory = _categoryRepository.Get(command.Id);
+            courseCategory.Rename(command.Title);
+            _categoryRepository.Save();
+        }
+
+        public void Activate(long id)
+        {
+            var courseCategory = _categoryRepository.Get(id);
+            courseCategory.IsActivate();
+            _categoryRepository.Save();
         }
     }
 }

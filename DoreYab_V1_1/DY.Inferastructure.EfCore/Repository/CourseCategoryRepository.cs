@@ -14,12 +14,27 @@ namespace DY.Inferastructure.EfCore.Repository
         public void Add(CourseCategory entity)
         {
             _context.CourseCategories.Add(entity);
-            _context.SaveChanges();
+            _context.SaveChanges(); 
+        }
+
+        public void Exsist(string title)
+        {
+            _context.CourseCategories.Any(x=>x.Title == title);
+        }
+
+        public CourseCategory Get(long id)
+        {
+            return _context.CourseCategories.FirstOrDefault(x=>x.Id == id);
         }
 
         public List<CourseCategory> GetAll()
         {
             return _context.CourseCategories.ToList();
+        }
+
+        public void Save()
+        {
+           _context.SaveChanges();
         }
     }
 }
