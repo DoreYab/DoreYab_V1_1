@@ -17,10 +17,7 @@ namespace DY.Inferastructure.EfCore.Repository
             _context.SaveChanges(); 
         }
 
-        public void Exsist(string title)
-        {
-            _context.CourseCategories.Any(x=>x.Title == title);
-        }
+        
 
         public CourseCategory Get(long id)
         {
@@ -35,6 +32,11 @@ namespace DY.Inferastructure.EfCore.Repository
         public void Save()
         {
            _context.SaveChanges();
+        }
+
+        public bool Exsist(string title)
+        {
+            return _context.CourseCategories.Any(x => x.Title == title);
         }
     }
 }

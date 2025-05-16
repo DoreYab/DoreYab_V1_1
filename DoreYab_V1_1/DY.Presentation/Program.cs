@@ -4,6 +4,7 @@ using DY.Application.CourseApplication;
 using DY.Application.CourseCategory;
 using DY.Domain.CourseAgg;
 using DY.Domain.CourseCategoryAgg;
+using DY.Domain.Services;
 using DY.Inferastructure.EfCore.Data;
 using DY.Inferastructure.EfCore.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace DY.Presentation
 
             builder.Services.AddTransient<ICourseCategoryRepository, CourseCategoryRepository>();
             builder.Services.AddTransient<ICourseCategoryApplication, CourseCategoryApplication>();
+            builder.Services.AddTransient<ICourseCategoryValidatorServices, CourseCategoryalidatorServices>();
             
             builder.Services.AddTransient<ICourseRepository, CourseRepository>();
             builder.Services.AddTransient<ICourseApplication, CourseApplication>();
