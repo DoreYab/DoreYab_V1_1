@@ -1,5 +1,6 @@
 ﻿using DY.Application.Contract.Course;
 using DY.Application.Contract.CourseCategory;
+using DY.Application.Contract.ViewModels;
 using DY.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

@@ -1,4 +1,5 @@
-﻿@model List<SelectListItem>
+﻿@model DY.Application.Contract.ViewModels.CourseViewModel
+
 
 
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
             <i class="fas fa-book-open text-3xl mr-3 text-yellow-500"></i>
             <h1 class="text-3xl font-bold">Create New Course</h1>
         </div>
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        
 
         <form asp-action="Create" method="post" class="space-y-6">
             <!-- Basic Information -->
@@ -50,25 +51,16 @@
                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus"></textarea>
                 </div>
 
-                <div class="mb-4">
-                    <label asp-for="Categories " class="block text-sm font-medium mb-1">Categories  <span class="text-red-500">*</span></label>
-                    <input asp-for="Categories " type="text" id="Categories " name="Categories " required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
-                    <span asp-validation-for="Categories " class="text-red-500 text-sm"></span>
-                </div>
+                
                 <!-- Category -->
                 <div class="mb-4">
-                    <label for="Category" class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
-                    <select asp-items="Model.CourseCategories" id="CategoryId" name="CategoryId" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus">
-                        <option value="0">Select a category</option>
-                        @foreach (var item in Model.ToList())
-                        {
-                            <option value="@item.Value">@item.Text</option>
-                        }
-                      
-                        
+                    <label asp-for="CourseCategories" class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
+                    <select asp-for="CourseCategories" asp-items="@Model.CourseCategories" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus">
+                        <option value="">Select a category</option>
                     </select>
-                    <span asp-validation-for="CategoryId" class="text-red-500 text-sm"></span>
+                    <span asp-validation-for="CourseCategories" class="text-red-500 text-sm"></span>
                 </div>
+
             </div>
 
 
@@ -170,44 +162,7 @@
 
     </div>
 
-    <script>
-        document.getElementById('courseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
 
-            // Form validation
-            const title = document.getElementById('title').value;
-            const slug = document.getElementById('slug').value;
-            const siteSource = document.getElementById('siteSource').value;
-            const imageUrl = document.getElementById('imageUrl').value;
-            const categoryId = document.getElementById('categoryId').value;
-
-            if (!title || !slug || !siteSource || !imageUrl || !categoryId) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
-            // In a real application, you would submit the form data to the server here
-            alert('Course created successfully! (This is a demo)');
-
-            // Reset form
-            this.reset();
-        });
-
-        // Auto-generate slug from title
-        document.getElementById('title').addEventListener('blur', function() {
-            const title = this.value;
-            const slugInput = document.getElementById('slug');
-
-            if (title && !slugInput.value) {
-                const slug = title.toLowerCase()
-                    .replace(/[^\w\s-]/g, '') // Remove non-word chars
-                    .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
-                    .replace(/^-+|-+$/g, ''); // Trim hyphens from start/end
-
-                slugInput.value = slug;
-            }
-        });
-    </script>
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -6,6 +6,7 @@ namespace DY.Domain.CourseCategoryAgg
 {
     public class CourseCategory : EntityBase
     {
+        private CourseCategory() { }
         public CourseCategory(string title, ICourseCategoryValidatorServices validatorServices)
         {
             GuardAgainstEmptyTitle(title);
@@ -14,7 +15,6 @@ namespace DY.Domain.CourseCategoryAgg
             CreationDate = DateTime.Now;
             //Courses = new List<Course>();
         }
-
         public string Title { get; private set; }
         public string? ShortDescription { get; private set; }
         public long CourseCount { get; private set; }

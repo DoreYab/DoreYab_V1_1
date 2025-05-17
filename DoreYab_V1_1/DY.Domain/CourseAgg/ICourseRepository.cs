@@ -1,12 +1,10 @@
-﻿
-
-using DY.Application.Contract.Course;
+﻿using DY.Application.Contract.ViewModels;
 
 namespace DY.Domain.CourseAgg
 {
     public interface ICourseRepository
     {
-        void Create(Course course);
+        Task CreateAsync(Course course);
         Task<List<CourseViewModel>> GetList();
     }
 }

@@ -1,4 +1,5 @@
 using DY.Application.Contract.Course;
+using DY.Application.Contract.Validators;
 using DY.Application.Contract.CourseCategory;
 using DY.Application.CourseApplication;
 using DY.Application.CourseCategory;
@@ -7,7 +8,13 @@ using DY.Domain.CourseCategoryAgg;
 using DY.Domain.Services;
 using DY.Inferastructure.EfCore.Data;
 using DY.Inferastructure.EfCore.Repository;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using DY.Application.Mapper;
+using Mapster;
+using MapsterMapper;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace DY.Presentation
 {
@@ -15,12 +22,30 @@ namespace DY.Presentation
     {
         public static void Main(string[] args)
         {
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(typeof(CourseMappingConfig).Assembly);
+
+
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddControllersWithViews();
+
+            // Mapster
+            builder.Services.AddSingleton(config);
+            builder.Services.AddScoped<IMapper, ServiceMapper>();
+
+
+            // FluentValidation
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddFluentValidationClientsideAdapters();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateCourseVM_Validator>();
+
+
+            //DI
             builder.Services.AddTransient<ICourseCategoryRepository, CourseCategoryRepository>();
             builder.Services.AddTransient<ICourseCategoryApplication, CourseCategoryApplication>();
             builder.Services.AddTransient<ICourseCategoryValidatorServices, CourseCategoryalidatorServices>();
-            
+
             builder.Services.AddTransient<ICourseRepository, CourseRepository>();
             builder.Services.AddTransient<ICourseApplication, CourseApplication>();
 
@@ -29,17 +54,14 @@ namespace DY.Presentation
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DoreYab_V1_1"));
             });
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            
 
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

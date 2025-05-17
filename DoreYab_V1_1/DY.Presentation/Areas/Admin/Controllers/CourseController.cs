@@ -1,5 +1,6 @@
 ﻿using DY.Application.Contract.Course;
 using DY.Application.Contract.CourseCategory;
+using DY.Application.Contract.ViewModels;
 using DY.Domain.CourseAgg;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,32 +8,56 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace DY.Presentation.Area.Admin.Controllers
 {
     [Area("Admin")]
-    public class CourseController : Controller
+    public class CourseController(
+        ICourseApplication courseApplication, 
+        ICourseCategoryApplication courseCategoryApplication
+        ) : Controller
     {
-        private readonly ICourseApplication _courseApplication;
-        public List<SelectListItem> CourseCategories { get; set; }
-        private readonly ICourseCategoryApplication _courseCategoryApplication;
 
-        public CourseController(ICourseApplication courseApplication, ICourseCategoryApplication courseCategoryApplication)
-        {
-            _courseApplication = courseApplication;
-            _courseCategoryApplication = courseCategoryApplication;
-        }
+
+        private readonly ICourseApplication _courseApplication = courseApplication;
+        public List<SelectListItem> CourseCategories { get; set; }
+        private readonly ICourseCategoryApplication _courseCategoryApplication = courseCategoryApplication;
+
+
+
+
 
         [HttpGet]
         public IActionResult Create()
         {
-            CourseCategories = _courseCategoryApplication.List().Select(x => new SelectListItem
+            var model = new CourseViewModel
+            {
+                CourseCategories = _courseCategoryApplication.List()
+            .Select(x => new SelectListItem
             {
                 Text = x.Title,
                 Value = x.Id.ToString()
-            }).ToList();
-            return View(CourseCategories);
+            }).ToList()
+            };
+
+            return View(model);
         }
+
+
+
         [HttpPost]
-        public IActionResult Create(CreateCourse command)
+        public async Task<IActionResult> Create(CourseViewModel model)
         {
-            _courseApplication.Create(command);
+            if (!ModelState.IsValid)
+            {
+                // 🔁 در صورت خطا باید مجدد دسته‌بندی‌ها لود شوند
+                model.CourseCategories = _courseCategoryApplication.List()
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.Title
+                    }).ToList();
+
+                return View(model);
+            }
+
+            await _courseApplication.CreatAsync(model);
             return RedirectToAction("Index");
         }
     }
