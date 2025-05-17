@@ -1,38 +1,34 @@
 ﻿using DY.Application.Contract.Course;
-using DY.Application.Contract.CourseCategory;
+using DY.Application.Contract.ViewModels;
 using DY.Domain.CourseAgg;
-using DY.Domain.CourseCategoryAgg;
+using MapsterMapper;
 
 namespace DY.Application.CourseApplication
 {
     public class CourseApplication : ICourseApplication
     {
         private readonly ICourseRepository _courseRipository;
+        private readonly IMapper _mapper;
+        
 
-        public CourseApplication(ICourseRepository courseRipository)
+        public CourseApplication(ICourseRepository courseRipository, IMapper mapper)
         {
             _courseRipository = courseRipository;
+            _mapper = mapper;
         }
 
-        public void Create(CreateCourse command)
+        public async Task<CourseViewModel> CreatAsync(CourseViewModel courseViewModel)
         {
-            var course = new Course(command.Title,
-                                    command.Price,
-                                    command.CourseUrl,
-                                    command.Desctiption,
-                                    command.SiteSource,
-                                    command.Slug,
-                                    command.ImageUrl,
-                                    command.IsFree,
-                                    command.IsFinished,
-                                    command.IsDeleted,
-                                    command.MetaDescription,
-                                    command.MetaTitle,
-                                    command.MetaKeyword,
-                                    command.CategoryId
-                                    );
-            _courseRipository.Create(course);
+            var course = _mapper.Map<Course>(courseViewModel);
+
+             await _courseRipository.CreateAsync(course);
+
+            var result = _mapper.Map<CourseViewModel>(course);
+
+            return result;
         }
+
+       
 
         public Task<List<CourseViewModel>> GetList()
         {
