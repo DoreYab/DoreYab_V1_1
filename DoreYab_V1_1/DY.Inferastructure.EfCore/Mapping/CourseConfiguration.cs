@@ -24,7 +24,7 @@ namespace DY.Inferastructure.EfCore.Mapping
                 .HasColumnType("decimal(18,2)")
                 .IsRequired(false);
 
-            builder.Property(x => x.Desctiption)
+            builder.Property(x => x.Description)
                 .HasMaxLength(3000)
                 .IsUnicode(true);
 
