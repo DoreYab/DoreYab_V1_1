@@ -20,9 +20,9 @@ namespace DY.Application.Contract.Validators
                 .GreaterThanOrEqualTo(0).WithMessage("قیمت دوره نمی‌تواند منفی باشد.")
                 .When(x => !x.IsFree); // اگر رایگان نیست، قیمت باید ≥ 0 باشد
 
-            RuleFor(x => x.Desctiption)
+            RuleFor(x => x.Description)
                 .MaximumLength(1000).WithMessage("توضیحات نباید بیشتر از 1000 کاراکتر باشد.")
-                .When(x => !string.IsNullOrEmpty(x.Desctiption));
+                .When(x => !string.IsNullOrEmpty(x.Description));
 
             RuleFor(x => x.CourseUrl)
                 .Must(url => Uri.TryCreate(url, UriKind.Absolute, out _))
