@@ -19,10 +19,6 @@ namespace DY.Presentation.Area.Admin.Controllers
         public List<SelectListItem> CourseCategories { get; set; }
         private readonly ICourseCategoryApplication _courseCategoryApplication = courseCategoryApplication;
 
-
-
-
-
         [HttpGet]
         public IActionResult Create()
         {
@@ -40,25 +36,44 @@ namespace DY.Presentation.Area.Admin.Controllers
         }
 
 
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CourseViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                // 🔁 در صورت خطا باید مجدد دسته‌بندی‌ها لود شوند
-                model.CourseCategories = _courseCategoryApplication.List()
-                    .Select(c => new SelectListItem
-                    {
-                        Value = c.Id.ToString(),
-                        Text = c.Title
-                    }).ToList();
-
+                await PopulateCategoriesAsync(model);
                 return View(model);
             }
 
-            await _courseApplication.CreatAsync(model);
-            return RedirectToAction("Index");
+            try
+            {
+                var result = await _courseApplication.CreatAsync(model);
+
+                TempData["SuccessMessage"] = "Course created successfully.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // این بخش فقط برای زمانی هست که متد application به جای استفاده از Result از throw استفاده کنه.
+                TempData["ErrorMessage"] = "An error occurred while creating the course.";
+                ModelState.AddModelError(string.Empty, ex.Message);
+                await PopulateCategoriesAsync(model);
+                return View(model);
+            }
         }
+        private async Task PopulateCategoriesAsync(CourseViewModel model)
+        {
+            // Updated to remove 'await' since List() is not asynchronous
+            var categories = _courseCategoryApplication.List();
+            model.CourseCategories = categories
+                .Select(x => new SelectListItem
+                {
+                    Text = x.Title,
+                    Value = x.Id.ToString()
+                })
+                .ToList();
+        }
+
     }
 }

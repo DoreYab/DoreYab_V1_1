@@ -36,9 +36,9 @@ namespace DY.Presentation
 
 
             // FluentValidation
-            builder.Services.AddFluentValidationAutoValidation();
-            builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateCourseVM_Validator>();
+            //builder.Services.AddFluentValidationAutoValidation();
+            //builder.Services.AddFluentValidationClientsideAdapters();
+            //builder.Services.AddValidatorsFromAssemblyContaining<CreateCourseVM_Validator>();
 
 
             //DI
