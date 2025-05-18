@@ -8,13 +8,14 @@ namespace DY.Domain.CourseAgg
     {
         public string Title { get; private set; }
         public decimal? Price { get; private set; }
-        public string? Desctiption { get; private set; }
-        public string? CourseUrl { get; private set; }
+        public string? Description { get; private set; }
+
+        public string CourseUrl { get; private set; }
         public string SiteSource { get; private set; }
         public string Slug { get; private set; }
         public string ImageUrl { get; private set; }
         public bool IsFree { get; private set; }
-        public bool IsDeleted { get; private set; }
+        public bool IsDeleted { get; private set; } = false;
         public bool IsFinished { get; private set; }
 
         // seo
@@ -30,37 +31,41 @@ namespace DY.Domain.CourseAgg
         protected Course() { }
 
         public Course(
-    string title,
-    decimal? price,
-    string? description,
-    string? courseUrl,
-    string siteSource,
-    string slug,
-    string imageUrl,
-    bool isFree,
-  
-    bool isFinished,
-    bool isDeleted,
-    string metaTitle,
-    string metaDescription,
-    string metaKeyword,
-    long categoryId)
+                        string title,
+                        decimal? price,
+                        string? description,
+
+                        string courseUrl,
+                        string siteSource,
+                        string slug,
+                        string imageUrl,
+
+                        bool isFree,
+                        bool isFinished,
+
+                        string metaTitle,
+                        string metaDescription,
+                        string metaKeyword,
+
+                        long categoryId
+            )
         {
-            Title = title;
+            Title = title ?? throw new ArgumentNullException(nameof(title));
             Price = price;
-            Desctiption = description;
-            CourseUrl = courseUrl;
-            SiteSource = siteSource;
-            Slug = slug;
-            ImageUrl = imageUrl;
+            Description = description;
+            CourseUrl = courseUrl ?? throw new ArgumentNullException(nameof(courseUrl));
+            SiteSource = siteSource ?? throw new ArgumentNullException(nameof(siteSource));
+            Slug = slug ?? throw new ArgumentNullException(nameof(slug));
+            ImageUrl = imageUrl ?? throw new ArgumentNullException(nameof(imageUrl));
             IsFree = isFree;
-            IsDeleted = false;
             IsFinished = isFinished;
-            IsDeleted = isDeleted;
-            MetaTitle = metaTitle;
-            MetaDescription = metaDescription;
-            MetaKeyword = metaKeyword;
+
+            MetaTitle = metaTitle ?? string.Empty;
+            MetaDescription = metaDescription ?? string.Empty;
+            MetaKeyword = metaKeyword ?? string.Empty;
+
             CategoryId = categoryId;
         }
+
     }
 }
