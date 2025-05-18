@@ -28,7 +28,7 @@ namespace DY.Application.CourseApplication
             return result;
         }
 
-       
+        
 
         public Task<List<CourseViewModel>> GetList()
         {
