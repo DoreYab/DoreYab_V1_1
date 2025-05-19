@@ -1,12 +1,6 @@
 ﻿using DY.Application.Contract.ViewModels;
 using DY.Domain.CourseAgg;
 using Mapster;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DY.Application.Mapper
 {
@@ -17,9 +11,8 @@ namespace DY.Application.Mapper
             // Entity → ViewModel
             config.NewConfig<Course, CourseViewModel>()
                 .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
-                .Map(dest => dest.CreationDate, src => src.CreationDate.HasValue
-                                                    ? src.CreationDate.Value.ToString("yyyy/MM/dd")
-                                                    : string.Empty);
+                .Map(dest => dest.IsSucceeded, src => true) // برای برگشت موفقیت آمیز
+                .Map(dest => dest.Message, src => "Course created successfully");
 
             // ViewModel → Entity (با استفاده از کانستراکتور)
             config.NewConfig<CourseViewModel, Course>()
@@ -27,7 +20,7 @@ namespace DY.Application.Mapper
                         src.Title,
                         src.Price,
                         src.Description,
-                        src.CourseUrl!,
+                        src.CourseUrl, // حذف ! چون الان Required هست
                         src.SiteSource,
                         src.Slug,
                         src.ImageUrl,
