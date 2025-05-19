@@ -3,21 +3,27 @@ using DY.Application.Contract.CourseCategory;
 using DY.Application.Contract.ViewModels;
 using DY.Domain.CourseAgg;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DY.Presentation.Area.Admin.Controllers
 {
     [Area("Admin")]
-    public class CourseController(
-        ICourseApplication courseApplication, 
-        ICourseCategoryApplication courseCategoryApplication
-        ) : Controller
+    public class CourseController : Controller
     {
+        private readonly ICourseApplication _courseApplication;
+        private readonly ICourseCategoryApplication _courseCategoryApplication;
+        private readonly ILogger<CourseController> _logger;
 
-
-        private readonly ICourseApplication _courseApplication = courseApplication;
-        public List<SelectListItem> CourseCategories { get; set; }
-        private readonly ICourseCategoryApplication _courseCategoryApplication = courseCategoryApplication;
+        public CourseController(
+            ICourseApplication courseApplication,
+            ICourseCategoryApplication courseCategoryApplication,
+            ILogger<CourseController> logger)
+        {
+            _courseApplication = courseApplication;
+            _courseCategoryApplication = courseCategoryApplication;
+            _logger = logger;
+        }
 
         [HttpGet]
         public IActionResult Create()
@@ -25,16 +31,14 @@ namespace DY.Presentation.Area.Admin.Controllers
             var model = new CourseViewModel
             {
                 CourseCategories = _courseCategoryApplication.List()
-            .Select(x => new SelectListItem
-            {
-                Text = x.Title,
-                Value = x.Id.ToString()
-            }).ToList()
+                    .Select(x => new SelectListItem
+                    {
+                        Text = x.Title,
+                        Value = x.Id.ToString()
+                    }).ToList()
             };
-
             return View(model);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -42,6 +46,7 @@ namespace DY.Presentation.Area.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                
                 await PopulateCategoriesAsync(model);
                 return View(model);
             }
@@ -50,8 +55,19 @@ namespace DY.Presentation.Area.Admin.Controllers
             {
                 var result = await _courseApplication.CreatAsync(model);
 
-                TempData["SuccessMessage"] = "Course created successfully.";
-                return RedirectToAction("Index");
+                if (result.IsSucceeded)
+                {
+
+                    TempData["SuccessMessage"] = "Course created successfully.";
+                    return Redirect("/");
+                }
+                else
+                {
+
+                    ModelState.AddModelError(nameof(model.Slug), result.Message);
+                    await PopulateCategoriesAsync(model);
+                    return View(model);
+                }
             }
             catch (Exception ex)
             {
@@ -62,15 +78,17 @@ namespace DY.Presentation.Area.Admin.Controllers
                 return View(model);
             }
         }
+
         private async Task PopulateCategoriesAsync(CourseViewModel model)
         {
-            // Updated to remove 'await' since List() is not asynchronous
+            // نیازی به await نیست چون List() آسنکرون نیست
             var categories = _courseCategoryApplication.List();
             model.CourseCategories = categories
                 .Select(x => new SelectListItem
                 {
                     Text = x.Title,
-                    Value = x.Id.ToString()
+                    Value = x.Id.ToString(),
+                    Selected = x.Id == model.SelectedCategoryId // اضافه کردن Selected
                 })
                 .ToList();
         }

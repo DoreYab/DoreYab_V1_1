@@ -1,18 +1,20 @@
 ﻿@model DY.Application.Contract.ViewModels.CourseViewModel
 
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Course - Admin Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="~/css/site.css" rel="stylesheet" />
+    
 </head>
-<body class="bg-white text-black">
+    <body class="bg-white text-black">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
         <div class="flex items-center mb-8">
             <i class="fas fa-book-open text-3xl mr-3 text-yellow-500"></i>
@@ -32,7 +34,7 @@
         }
 
 
-        <form asp-action="Create" method="post" class="space-y-6">
+        <form method="post" asp-area="Admin" asp-controller="Course" asp-action="Create" class="space-y-6">
             @Html.AntiForgeryToken()
             <!-- Basic Information -->
             <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
@@ -42,40 +44,35 @@
 
                 <!-- Title -->
                 <div class="mb-4">
-                    <label asp-for="Title" class="block text-sm font-medium mb-1">Title <span class="text-red-500">*</span></label>
-                    <input asp-for="Title" type="text" id="Title" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <label asp-for="Title" class="block text-sm font-medium mb-1"></label>
+                    <input asp-for="Title" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
                     <span asp-validation-for="Title" class="text-red-500 text-sm"></span>
                 </div>
 
                 <!-- Slug -->
                 <div class="mb-4">
-                    <label asp-for="Slug" class="block text-sm font-medium mb-1">Slug <span class="text-red-500">*</span></label>
+                    <label asp-for="Slug" class="block text-sm font-medium mb-1"></label>
                     <div class="flex">
                         <span class="inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 bg-gray-100 text-gray-500 text-sm rounded-l-md">/courses/</span>
-                        <input type="text" id="Slug" asp-for="Slug" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:outline-none gold-focus" />
+                        <input type="text" asp-for="Slug" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:outline-none gold-focus" />
                     </div>
                     <span asp-validation-for="Slug" class="text-red-500 text-sm"></span>
                 </div>
 
                 <!-- Description -->
                 <div class="mb-4">
-                    <label asp-for="Description" class="block text-sm font-medium mb-1">Desctiption</label>
+                    <label asp-for="Description" class="block text-sm font-medium mb-1"></label>
                     <textarea asp-for="Description" rows="3"
                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus"></textarea>
+                    <span asp-validation-for="Description" class="text-red-500 text-sm"></span>
                 </div>
 
-                
+
                 <!-- Category -->
                 <div class="mb-4">
-                    <label asp-for="SelectedCategoryId" class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
+                    <label asp-for="SelectedCategoryId" class="block text-sm font-medium mb-1"></label>
                     <select asp-for="SelectedCategoryId" asp-items="@Model.CourseCategories" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus">
                         <option value="">Select a category</option>
-                        @foreach (var item in Model.CourseCategories)
-                        {
-                            <option value="@item.Value">@item.Text</option>
-                            
-                        }
-
                     </select>
                     <span asp-validation-for="SelectedCategoryId" class="text-red-500 text-sm"></span>
                 </div>
@@ -91,28 +88,29 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Price -->
                     <div class="mb-4">
-                        <label asp-for="Price" class="block text-sm font-medium mb-1">Price ($)</label>
+                        <label asp-for="Price" class="block text-sm font-medium mb-1"></label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500 sm:text-sm">$</span>
                             </div>
-                            <input asp-for="Price" type="number" step="0.01" id="price" class="focus:outline-none gold-focus block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md" />
+                            <input asp-for="Price" type="number" id="Price" step="0.01" class="focus:outline-none gold-focus block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md" />
                             <div class="absolute inset-y-0 right-0 flex items-center">
                                 <span class="text-gray-500 sm:text-sm mr-3">USD</span>
                             </div>
                         </div>
+                        <span asp-validation-for="Price" class="text-red-500 text-sm"></span>
                     </div>
 
                     <!-- IsFree -->
                     <div class="mb-4 flex items-center">
-                        <input asp-for="IsFree" type="checkbox" class="gold-checkbox focus:ring-yellow-500 h-4 w-4 text-yellow-600 border-gray-300 rounded" />
-                        <label asp-for="IsFree" class="ml-2 block text-sm font-medium">Mark as Free Course</label>
+                        <input asp-for="IsFree" type="checkbox" id="IsFree" class="gold-checkbox focus:ring-yellow-500 h-4 w-4 text-yellow-600 border-gray-300 rounded" />
+                        <label asp-for="IsFree" class="ml-2 block text-sm font-medium"></label>
                     </div>
 
                     <!-- IsFinished -->
                     <div class="mb-4 flex items-center">
                         <input asp-for="IsFinished" type="checkbox" class="gold-checkbox focus:ring-yellow-500 h-4 w-4 text-yellow-600 border-gray-300 rounded" />
-                        <label asp-for="IsFinished" class="ml-2 block text-sm font-medium">Course is Completed</label>
+                        <label asp-for="IsFinished" class="ml-2 block text-sm font-medium"></label>
                     </div>
                 </div>
             </div>
@@ -125,20 +123,23 @@
 
                 <!-- ImageUrl -->
                 <div class="mb-4">
-                    <label asp-for="ImageUrl" class="block text-sm font-medium mb-1">Image URL <span class="text-red-500">*</span></label>
-                    <input asp-for="ImageUrl" type="url" id="ImageUrl"  required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <label asp-for="ImageUrl" class="block text-sm font-medium mb-1"></label>
+                    <input asp-for="ImageUrl" type="url" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <span asp-validation-for="ImageUrl" class="text-red-500 text-sm"></span>
                 </div>
 
                 <!-- CourseUrl -->
                 <div class="mb-4">
-                    <label asp-for="CourseUrl" class="block text-sm font-medium mb-1"> Course URL <span class="text-red-500">*</span></label>
-                    <input asp-for="CourseUrl" type="url" id="CourseUrl"  required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <label asp-for="CourseUrl" class="block text-sm font-medium mb-1"></label>
+                    <input asp-for="CourseUrl" type="url" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <span asp-validation-for="CourseUrl" class="text-red-500 text-sm"></span>
                 </div>
 
                 <!-- SiteSource -->
                 <div class="mb-4">
-                    <label asp-for="SiteSource" class="block text-sm font-medium mb-1">Source Website <span class="text-red-500">*</span></label>
-                    <input asp-for="SiteSource" type="text" id="SiteSource"  required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <label asp-for="SiteSource" class="block text-sm font-medium mb-1"></label>
+                    <input asp-for="SiteSource" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <span asp-validation-for="SiteSource" class="text-red-500 text-sm"></span>
                 </div>
             </div>
 
@@ -150,42 +151,56 @@
 
                 <!-- MetaTitle -->
                 <div class="mb-4">
-                    <label asp-for="MetaTitle" class="block text-sm font-medium mb-1">MetaTitle</label>
-                    <input asp-for="MetaTitle" type="text" id="MetaTitle" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <label asp-for="MetaTitle" class="block text-sm font-medium mb-1"></label>
+                    <input asp-for="MetaTitle" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <span asp-validation-for="MetaTitle" class="text-red-500 text-sm"></span>
                 </div>
 
                 <!-- MetaDescription -->
                 <div class="mb-4">
-                    <label asp-for="MetaDescription" class="block text-sm font-medium mb-1">MetaDescription</label>
-                    <textarea asp-for="MetaDescription" id="MetaDescription" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus"></textarea>
+                    <label asp-for="MetaDescription" class="block text-sm font-medium mb-1"></label>
+                    <textarea asp-for="MetaDescription" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus"></textarea>
+                    <span asp-validation-for="MetaDescription" class="text-red-500 text-sm"></span>
                 </div>
 
                 <!-- MetaKeyword -->
                 <div class="mb-4">
-                    <label asp-for="MetaKeyword" class="block text-sm font-medium mb-1">MetaKeyword</label>
-                    <input asp-for="MetaKeyword" type="text" id="MetaKeyword" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <label asp-for="MetaKeyword" class="block text-sm font-medium mb-1"></label>
+                    <input asp-for="MetaKeyword" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <span asp-validation-for="MetaKeyword" class="text-red-500 text-sm"></span>
                     <p class="mt-1 text-xs text-gray-500">Separate keywords with commas</p>
                 </div>
             </div>
 
             <!-- Form Actions -->
             <div class="flex justify-end space-x-3">
-                <button type="button" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                    Cancel
-                </button>
+                <button type="button" onclick="location.href='@Url.Action("Index", "Course", new { area = "Admin" })'" class="...">Cancel</button>
+
                 <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                     <i class="fas fa-save mr-2"></i> Create Course
                 </button>
             </div>
         </form>
+        <partial name="_ValidationScriptsPartial" />
 
     </div>
 
 
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
-    }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const isFree = document.getElementById("IsFree");
+            const price = document.getElementById("Price");
+
+            function togglePrice() {
+                price.disabled = isFree.checked;
+            }
+
+            isFree.addEventListener("change", togglePrice);
+            togglePrice();
+        });
+    </script>
+
 </body>
+
 </html>

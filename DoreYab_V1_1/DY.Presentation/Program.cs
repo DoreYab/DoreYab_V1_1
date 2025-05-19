@@ -1,5 +1,4 @@
-using DY.Application.Contract.Course;
-using DY.Application.Contract.Validators;
+﻿using DY.Application.Contract.Course;
 using DY.Application.Contract.CourseCategory;
 using DY.Application.CourseApplication;
 using DY.Application.CourseCategory;
@@ -8,13 +7,10 @@ using DY.Domain.CourseCategoryAgg;
 using DY.Domain.Services;
 using DY.Inferastructure.EfCore.Data;
 using DY.Inferastructure.EfCore.Repository;
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using FluentValidation;
 using DY.Application.Mapper;
 using Mapster;
 using MapsterMapper;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace DY.Presentation
 {
@@ -28,7 +24,9 @@ namespace DY.Presentation
 
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+                            .AddDataAnnotationsLocalization()  // اضافه کردن پشتیبانی از Data Annotations
+                            .AddViewLocalization();  // اضافه کردن پشتیبانی از محلی‌سازی برای View ها
 
             // Mapster
             builder.Services.AddSingleton(config);
