@@ -3,6 +3,7 @@ using DY.Domain.CourseAgg;
 using DY.Inferastructure.EfCore.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq.Expressions;
 
 
 namespace DY.Inferastructure.EfCore.Repository
@@ -21,7 +22,10 @@ namespace DY.Inferastructure.EfCore.Repository
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
         }
-        
+        public async Task<bool> ExistsAsync(Expression<Func<Course, bool>> predicate)
+        {
+            return await _context.Courses.AnyAsync(predicate);
+        }
 
         Task<List<CourseViewModel>> ICourseRepository.GetList()
         {
