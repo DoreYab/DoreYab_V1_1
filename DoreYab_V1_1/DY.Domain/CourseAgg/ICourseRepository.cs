@@ -1,4 +1,5 @@
 ﻿using DY.Application.Contract.ViewModels;
+using System.Linq.Expressions;
 
 namespace DY.Domain.CourseAgg
 {
@@ -6,5 +7,6 @@ namespace DY.Domain.CourseAgg
     {
         Task CreateAsync(Course course);
         Task<List<CourseViewModel>> GetList();
+        Task<bool> ExistsAsync(Expression<Func<Course, bool>> predicate);
     }
 }
