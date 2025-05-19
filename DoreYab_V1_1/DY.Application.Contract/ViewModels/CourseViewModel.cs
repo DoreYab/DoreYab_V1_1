@@ -8,7 +8,7 @@ namespace DY.Application.Contract.ViewModels
         [Required(ErrorMessage = "عنوان دوره الزامی است.")]
         [StringLength(100, ErrorMessage = "عنوان دوره نباید بیشتر از 100 کاراکتر باشد.")]
         [Display(Name = "عنوان دوره")]
-        public  string Title { get; set; }
+        public string Title { get; set; }
 
         [Range(0, 10000000, ErrorMessage = "قیمت باید عددی بین ۰ تا ۱۰٬۰۰۰٬۰۰۰ باشد.")]
         [Display(Name = "قیمت دوره")]
@@ -18,9 +18,10 @@ namespace DY.Application.Contract.ViewModels
         [Display(Name = "توضیحات دوره")]
         public string? Description { get; set; }
 
+        [Required(ErrorMessage = "لینک دوره الزامی است.")]
         [Url(ErrorMessage = "آدرس وارد شده معتبر نیست.")]
         [Display(Name = "لینک دوره")]
-        public string? CourseUrl { get; set; }
+        public string CourseUrl { get; set; }
 
         [Required(ErrorMessage = "منبع سایت الزامی است.")]
         [StringLength(100, ErrorMessage = "منبع سایت نباید بیشتر از 100 کاراکتر باشد.")]
@@ -58,19 +59,15 @@ namespace DY.Application.Contract.ViewModels
         [Display(Name = "Meta Keywords")]
         public string MetaKeyword { get; set; }
 
-        [Required(ErrorMessage = "تاریخ ایجاد الزامی است.")]
-        [Display(Name = "تاریخ ایجاد")]
-        public string CreationDate { get; set; }
-
         [Display(Name = "دسته‌بندی دوره‌ها")]
-        public List<SelectListItem> CourseCategories { get; set; }
+        public List<SelectListItem>? CourseCategories { get; set; }
 
-        [Display(Name = " آیدی دسته‌بندی دوره‌ها")]
+        [Required(ErrorMessage = "انتخاب دسته‌بندی الزامی است.")]
+        [Display(Name = "دسته‌بندی دوره")]
         public int SelectedCategoryId { get; set; }
 
         public bool IsSucceeded { get; set; }
-
-        public object Message { get; set; }
+        public string? Message { get; set; }
     }
 }   
             

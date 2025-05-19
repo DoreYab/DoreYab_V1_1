@@ -55,11 +55,7 @@ namespace DY.Application.Contract.Validators
                 .NotEmpty().WithMessage("کلمات کلیدی متا نباید خالی باشد.")
                 .MaximumLength(200).WithMessage("کلمات کلیدی متا نباید بیشتر از 200 کاراکتر باشد.");
 
-            RuleFor(x => x.CreationDate)
-                .NotEmpty().WithMessage("تاریخ ایجاد نباید خالی باشد.")
-                .Must(date => DateTime.TryParse(date, out _))
-                .WithMessage("فرمت تاریخ ایجاد نامعتبر است.");
-
+            
             
         }
     }
