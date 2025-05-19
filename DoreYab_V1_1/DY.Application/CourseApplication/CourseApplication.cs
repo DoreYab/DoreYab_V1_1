@@ -19,16 +19,36 @@ namespace DY.Application.CourseApplication
 
         public async Task<CourseViewModel> CreatAsync(CourseViewModel courseViewModel)
         {
-            var course = _mapper.Map<Course>(courseViewModel);
+            try
+            {
+                // بررسی تکراری بودن Slug
+                var exists = await _courseRipository.ExistsAsync(c => c.Slug == courseViewModel.Slug);
+                if (exists)
+                {
+                    return new CourseViewModel
+                    {
+                        IsSucceeded = false,
+                        Message = "این Slug قبلاً استفاده شده است.",
+                    };
+                }
 
-             await _courseRipository.CreateAsync(course);
+                var course = _mapper.Map<Course>(courseViewModel);
+                await _courseRipository.CreateAsync(course);
 
-            var result = _mapper.Map<CourseViewModel>(course);
-
-            return result;
+                var result = _mapper.Map<CourseViewModel>(course);
+                result.IsSucceeded = true;
+                result.Message = "Course created successfully.";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new CourseViewModel
+                {
+                    IsSucceeded = false,
+                    Message = ex.Message
+                };
+            }
         }
-
-        
 
         public Task<List<CourseViewModel>> GetList()
         {
