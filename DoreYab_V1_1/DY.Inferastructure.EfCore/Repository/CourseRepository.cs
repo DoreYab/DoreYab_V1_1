@@ -27,6 +27,16 @@ namespace DY.Inferastructure.EfCore.Repository
             return await _context.Courses.AnyAsync(predicate);
         }
 
+        public async Task<Course> GetById(long Id)
+        {
+            if (Id <= 0)
+                throw new ArgumentException("Id must be greater than zero.", nameof(Id));
+
+            var course = await _context.Courses.FindAsync(Id);
+
+            return course ?? throw new InvalidOperationException($"Course with Id {Id} not found.");
+        }
+
         Task<List<CourseViewModel>> ICourseRepository.GetList()
         {
             return _context.Courses.Include(x => x.Category)
@@ -39,5 +49,12 @@ namespace DY.Inferastructure.EfCore.Repository
                     
                 }).ToListAsync();
         }
+
+        public async Task UpdateAsync(Course course)
+        {
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
