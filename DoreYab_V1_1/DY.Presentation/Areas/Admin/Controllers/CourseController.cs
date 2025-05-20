@@ -40,13 +40,11 @@ namespace DY.Presentation.Area.Admin.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CourseViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                
                 await PopulateCategoriesAsync(model);
                 return View(model);
             }
@@ -57,21 +55,19 @@ namespace DY.Presentation.Area.Admin.Controllers
 
                 if (result.IsSucceeded)
                 {
-
                     TempData["SuccessMessage"] = "Course created successfully.";
-                    return Redirect("/");
+                    return RedirectToAction(nameof(List));
                 }
                 else
                 {
-
-                    ModelState.AddModelError(nameof(model.Slug), result.Message);
+                    // Ensure result.Message is not null before passing it to AddModelError
+                    ModelState.AddModelError(nameof(model.Slug), result.Message ?? "An error occurred.");
                     await PopulateCategoriesAsync(model);
                     return View(model);
                 }
             }
             catch (Exception ex)
             {
-                // این بخش فقط برای زمانی هست که متد application به جای استفاده از Result از throw استفاده کنه.
                 TempData["ErrorMessage"] = "An error occurred while creating the course.";
                 ModelState.AddModelError(string.Empty, ex.Message);
                 await PopulateCategoriesAsync(model);
@@ -81,17 +77,72 @@ namespace DY.Presentation.Area.Admin.Controllers
 
         private async Task PopulateCategoriesAsync(CourseViewModel model)
         {
-            // نیازی به await نیست چون List() آسنکرون نیست
+
             var categories = _courseCategoryApplication.List();
             model.CourseCategories = categories
                 .Select(x => new SelectListItem
                 {
                     Text = x.Title,
                     Value = x.Id.ToString(),
-                    Selected = x.Id == model.SelectedCategoryId // اضافه کردن Selected
+                    Selected = x.Id == model.SelectedCategoryId
                 })
                 .ToList();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            return View(await _courseApplication.GetList()); // ارسال لیست به View  
+        }
+
+        [HttpGet]
+        public IActionResult Update()
+        {
+            var model = new CourseViewModel
+            {
+                CourseCategories = _courseCategoryApplication.List()
+                    .Select(x => new SelectListItem
+                    {
+                        Text = x.Title,
+                        Value = x.Id.ToString()
+                    }).ToList()
+            };
+            return View(model);
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(CourseViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                await PopulateCategoriesAsync(model);
+                return View(model);
+            }
+
+            try
+            {
+                var result = await _courseApplication.UpdateAsync(model);
+
+                if (result.IsSucceeded)
+                {
+                    TempData["SuccessMessage"] = "Course Updated successfully.";
+                    return RedirectToAction(nameof(List));
+                }
+                else
+                {
+                   
+                    ModelState.AddModelError(nameof(model.Slug), result.Message ?? "An error occurred.");
+                    await PopulateCategoriesAsync(model);
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred while updating the course.";
+                ModelState.AddModelError(string.Empty, ex.Message);
+                await PopulateCategoriesAsync(model);
+                return View(model);
+            }
+        }
     }
 }
