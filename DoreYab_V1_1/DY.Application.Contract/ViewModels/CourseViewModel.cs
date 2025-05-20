@@ -5,6 +5,7 @@ namespace DY.Application.Contract.ViewModels
 {
     public class CourseViewModel
     {
+        public long Id { get; set; }    
         [Required(ErrorMessage = "عنوان دوره الزامی است.")]
         [StringLength(100, ErrorMessage = "عنوان دوره نباید بیشتر از 100 کاراکتر باشد.")]
         [Display(Name = "عنوان دوره")]
