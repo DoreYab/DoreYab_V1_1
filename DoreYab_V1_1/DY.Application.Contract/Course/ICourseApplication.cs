@@ -8,6 +8,8 @@ namespace DY.Application.Contract.Course
     {
         Task<List<CourseViewModel>> GetList();
         Task<CourseViewModel> CreatAsync(CourseViewModel courseViewModel);
+        Task<CourseViewModel> UpdateAsync(CourseViewModel courseViewModel);
+        
     }
 }
         
