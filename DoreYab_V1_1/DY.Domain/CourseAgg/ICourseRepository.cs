@@ -8,5 +8,7 @@ namespace DY.Domain.CourseAgg
         Task CreateAsync(Course course);
         Task<List<CourseViewModel>> GetList();
         Task<bool> ExistsAsync(Expression<Func<Course, bool>> predicate);
+        Task<Course> GetById(long Id);
+        Task UpdateAsync(Course course);
     }
 }
