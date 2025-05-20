@@ -54,6 +54,40 @@ namespace DY.Application.CourseApplication
         {
             return _courseRipository.GetList();
         }
+
+        public async Task<CourseViewModel> UpdateAsync(CourseViewModel courseViewModel)
+        {
+            try
+            {
+                var course = _mapper.Map<Course>(courseViewModel);
+                var model = await _courseRipository.GetById(course.Id);
+                // بررسی تکراری بودن Slug
+                var exists = await _courseRipository.ExistsAsync(c => c.Slug == courseViewModel.Slug);
+                if (exists)
+                {
+                    return new CourseViewModel
+                    {
+                        IsSucceeded = false,
+                        Message = "این Slug قبلاً استفاده شده است.",
+                    };
+                }
+
+                await _courseRipository.UpdateAsync(model);
+
+                var result = _mapper.Map<CourseViewModel>(model);
+                result.IsSucceeded = true;
+                result.Message = "Course UPdated successfully.";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new CourseViewModel
+                {
+                    IsSucceeded = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
     
