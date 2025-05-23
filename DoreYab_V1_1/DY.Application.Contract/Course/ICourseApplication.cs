@@ -1,15 +1,15 @@
 ﻿using DY.Application.Contract.CourseCategory;
-using DY.Application.Contract.ViewModels;
+using DY.Application.Contract.ViewModels.Course;
 
 
 namespace DY.Application.Contract.Course
 {
     public interface ICourseApplication
     {
-        Task<List<CourseViewModel>> GetList();
-        Task<CourseViewModel> CreatAsync(CourseViewModel courseViewModel);
-        Task<CourseViewModel> UpdateAsync(CourseViewModel courseViewModel);
-        
+        Task<List<Create_CorceVM>> GetList();
+        Task<Create_CorceVM> CreatAsync(Create_CorceVM courseViewModel);
+        Task<Update_CourseVM> UpdateAsync(long Id);
+        Task<Update_CourseVM> GetByIdAsync(long Id);
     }
 }
-        
+            
