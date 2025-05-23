@@ -1,6 +1,6 @@
 ﻿using DY.Application.Contract.Course;
 using DY.Application.Contract.CourseCategory;
-using DY.Application.Contract.ViewModels;
+using DY.Application.Contract.ViewModels.Course;
 using DY.Domain.CourseAgg;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -28,7 +28,7 @@ namespace DY.Presentation.Area.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new CourseViewModel
+            var model = new Create_CorceVM
             {
                 CourseCategories = _courseCategoryApplication.List()
                     .Select(x => new SelectListItem
@@ -41,7 +41,7 @@ namespace DY.Presentation.Area.Admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CourseViewModel model)
+        public async Task<IActionResult> Create(Create_CorceVM model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace DY.Presentation.Area.Admin.Controllers
             }
         }
 
-        private async Task PopulateCategoriesAsync(CourseViewModel model)
+        private async Task PopulateCategoriesAsync(Create_CorceVM model)
         {
 
             var categories = _courseCategoryApplication.List();
@@ -92,57 +92,36 @@ namespace DY.Presentation.Area.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            return View(await _courseApplication.GetList()); // ارسال لیست به View  
+            return View(await _courseApplication.GetList());  
         }
 
-        [HttpGet]
-        public IActionResult Update()
+
+        [HttpGet("Admin/Course/GetcourseEdit/{id}")]
+        public async Task<IActionResult> GetcourseEdit(long id)
         {
-            var model = new CourseViewModel
+            var course = await _courseApplication.GetByIdAsync(id);
+            if (course == null)
             {
-                CourseCategories = _courseCategoryApplication.List()
-                    .Select(x => new SelectListItem
-                    {
-                        Text = x.Title,
-                        Value = x.Id.ToString()
-                    }).ToList()
-            };
+                return NotFound();
+            }
+
+            course.CourseCategories = _courseCategoryApplication.List()
+                .Select(x => new SelectListItem
+                {
+                    Text = x.Title,
+                    Value = x.Id.ToString(),
+                    Selected = x.Id == course.SelectedCategoryId
+                }).ToList();
+
+            return View(course);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Update_CourseVM model)
+        {
             return View(model);
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(CourseViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                await PopulateCategoriesAsync(model);
-                return View(model);
-            }
-
-            try
-            {
-                var result = await _courseApplication.UpdateAsync(model);
-
-                if (result.IsSucceeded)
-                {
-                    TempData["SuccessMessage"] = "Course Updated successfully.";
-                    return RedirectToAction(nameof(List));
-                }
-                else
-                {
-                   
-                    ModelState.AddModelError(nameof(model.Slug), result.Message ?? "An error occurred.");
-                    await PopulateCategoriesAsync(model);
-                    return View(model);
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = "An error occurred while updating the course.";
-                ModelState.AddModelError(string.Empty, ex.Message);
-                await PopulateCategoriesAsync(model);
-                return View(model);
-            }
-        }
     }
 }
