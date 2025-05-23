@@ -1,6 +1,6 @@
 ﻿using DY.Application.Contract.Course;
 using DY.Application.Contract.CourseCategory;
-using DY.Application.Contract.ViewModels;
+using DY.Application.Contract.ViewModels.Course;
 using DY.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ namespace DY.Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        public List<CourseViewModel> courseViewModels { get; set; }
+        public List<Create_CorceVM> courseViewModels { get; set; }
         private readonly ILogger<HomeController> _logger;
         private readonly ICourseApplication _courseApplication;
 
