@@ -1,4 +1,4 @@
-﻿using DY.Application.Contract.ViewModels;
+﻿using DY.Application.Contract.ViewModels.Course;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DY.Application.Contract.Validators
 {
-    public class CreateCourseVM_Validator : AbstractValidator<CourseViewModel>
+    public class CreateCourseVM_Validator : AbstractValidator<Create_CorceVM>
     {
         public CreateCourseVM_Validator()
         {
