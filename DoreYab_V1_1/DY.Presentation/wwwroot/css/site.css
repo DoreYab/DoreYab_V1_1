@@ -71,3 +71,12 @@
     background-color: #FFD700;
     border-color: #FFD700;
 }
+
+.readonly-old-value {
+    color: #999;
+    font-style: italic;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    user-select: none;
+}
