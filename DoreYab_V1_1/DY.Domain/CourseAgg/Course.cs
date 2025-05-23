@@ -31,6 +31,7 @@ namespace DY.Domain.CourseAgg
         protected Course() { }
 
         public Course(
+
                         string title,
                         decimal? price,
                         string? description,
@@ -50,6 +51,7 @@ namespace DY.Domain.CourseAgg
                         long categoryId
             )
         {
+
             Title = title ?? throw new ArgumentNullException(nameof(title));
             Price = price;
             Description = description;
