@@ -1,4 +1,4 @@
-﻿using DY.Application.Contract.ViewModels;
+﻿using DY.Application.Contract.ViewModels.Course;
 using DY.Domain.CourseAgg;
 using DY.Inferastructure.EfCore.Data;
 using Microsoft.EntityFrameworkCore;
@@ -31,16 +31,16 @@ namespace DY.Inferastructure.EfCore.Repository
         {
             if (Id <= 0)
                 throw new ArgumentException("Id must be greater than zero.", nameof(Id));
-
-            var course = await _context.Courses.FindAsync(Id);
+            var course = await _context.Courses.Include(a => a.Category).FirstOrDefaultAsync(a => a.Id.Equals(Id));
+            //var course = await _context.Courses.FindAsync(Id);
 
             return course ?? throw new InvalidOperationException($"Course with Id {Id} not found.");
         }
 
-        Task<List<CourseViewModel>> ICourseRepository.GetList()
+        Task<List<Create_CorceVM>> ICourseRepository.GetList()
         {
-            return _context.Courses.Include(x => x.Category)
-                .Select(x => new CourseViewModel
+            return _context.Courses.Include(x => x.Category).Where(x=>x.IsDeleted == false)
+                .Select(x => new Create_CorceVM
                 {
                     Title = x.Title,
                     Price = x.Price,
