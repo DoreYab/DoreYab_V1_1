@@ -50,6 +50,7 @@ namespace DY.Application.CourseCategory
                     Title = courseCategory.Title,
                     IsDeleted = courseCategory.IsDeleted,
                     ShortDescription = courseCategory.ShortDescription,
+                    CourseCount= courseCategory.CourseCount,
                     CreationDate = courseCategory.CreationDate,
                 });
             }

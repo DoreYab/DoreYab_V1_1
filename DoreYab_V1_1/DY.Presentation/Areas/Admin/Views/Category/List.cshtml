@@ -66,8 +66,7 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Description</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Courses</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
@@ -82,11 +81,8 @@
                                         <div class="text-sm font-medium text-gray-900"> @courseCategory.Title</div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
-                                    <div class="text-sm text-gray-500"> @courseCategory.ShortDescription</div>
-                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">@* @courseCategory. *@CourseCount</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">@courseCategory.CourseCount</span>
                                 </td>
                                 @if (!courseCategory.IsDeleted)
                                 {
@@ -117,8 +113,8 @@
                                         @if (courseCategory.IsDeleted)
                                         {
                                             <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Active">
-                                                <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-900">
-                                                    <i class="fas fa-trash"></i>
+                                                <button onclick="confirmDelete(1)" class="text-green-600 hover:text-green-800">
+                                                    <i class="fas fa-check-circle"></i>
                                                     <span class="sr-only sm:not-sr-only sm:ml-1">Activate</span>
                                                 </button>
                                                 <input type="hidden" name="Id" value="@courseCategory.Id" />
@@ -126,14 +122,15 @@
                                         }
                                         else
                                         {
-                                            <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Remove">
-                                                <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-900">
-                                                    <i class="fas fa-trash"></i>
+                                            <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Remove" asp-route-id="@courseCategory.Id">
+                                                <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-800">
+                                                    <i class="fas fa-trash-alt"></i>
                                                     <span class="sr-only sm:not-sr-only sm:ml-1">Delete</span>
                                                 </button>
-                                                <input type="hidden" name="Id" value="@courseCategory.Id"/>
+                                                <input type="hidden" name="Id" value="@courseCategory.Id" />
                                             </form>
                                         }
+
                                     </div>
                                 </td>
                             </tr>
