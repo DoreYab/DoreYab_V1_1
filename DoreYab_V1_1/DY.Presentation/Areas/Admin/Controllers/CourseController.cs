@@ -116,8 +116,7 @@ namespace DY.Presentation.Area.Admin.Controllers
             return View(course);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost,ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Update_CourseVM model)
         {
             return View(model);
