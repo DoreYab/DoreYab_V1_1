@@ -1,6 +1,6 @@
 ﻿@using DY.Application.Contract.ViewModels
 @using DY.Application.Contract.ViewModels.Course
-@model List<Create_CorceVM>
+@model IEnumerable<List_CourseVM>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +75,7 @@
                         </div>
                     }
                     <div class="col-span-3 flex items-center space-x-2">
-                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View Details</a>
+                        <a asp-area="Admin" asp-controller="Course" asp-action="GetcourseEdit" asp-route-id="@item.Id" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View Details</a>
                         <button class="text-blue-500 hover:text-blue-700 p-1 rounded-full">
                             <i class="fas fa-edit text-sm"></i>
                         </button>

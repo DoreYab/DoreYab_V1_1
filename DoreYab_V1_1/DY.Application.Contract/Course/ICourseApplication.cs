@@ -6,7 +6,7 @@ namespace DY.Application.Contract.Course
 {
     public interface ICourseApplication
     {
-        Task<List<Create_CorceVM>> GetList();
+        Task<IEnumerable<List_CourseVM>> GetList();
         Task<Create_CorceVM> CreatAsync(Create_CorceVM courseViewModel);
         Task<Update_CourseVM> UpdateAsync(long Id);
         Task<Update_CourseVM> GetByIdAsync(long Id);

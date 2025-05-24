@@ -1,6 +1,7 @@
 ﻿using DY.Application.Contract.Course;
 using DY.Application.Contract.ViewModels.Course;
 using DY.Domain.CourseAgg;
+using Mapster;
 using MapsterMapper;
 
 namespace DY.Application.CourseApplication
@@ -79,9 +80,11 @@ namespace DY.Application.CourseApplication
             }
         }
 
-        public Task<List<Create_CorceVM>> GetList()
+        public async Task<IEnumerable<List_CourseVM>> GetList()
         {
-            return _courseRipository.GetList();
+            var courses = await _courseRipository.GetList(); // خروجی: IEnumerable<Course>
+            var result = courses.Adapt<IEnumerable<List_CourseVM>>(); // تبدیل با Mapster
+            return result;
         }
 
         public async Task<Update_CourseVM> UpdateAsync(long Id)

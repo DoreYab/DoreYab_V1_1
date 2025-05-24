@@ -37,18 +37,18 @@ namespace DY.Inferastructure.EfCore.Repository
             return course ?? throw new InvalidOperationException($"Course with Id {Id} not found.");
         }
 
-        Task<List<Create_CorceVM>> ICourseRepository.GetList()
-        {
-            return _context.Courses.Include(x => x.Category).Where(x=>x.IsDeleted == false)
-                .Select(x => new Create_CorceVM
-                {
-                    Title = x.Title,
-                    Price = x.Price,
-                    IsFree = x.IsFree,
-                    ImageUrl = x.ImageUrl,
+        //Task<List<Create_CorceVM>> ICourseRepository.GetList()
+        //{
+        //    return _context.Courses.Include(x => x.Category).Where(x=>x.IsDeleted == false)
+        //        .Select(x => new Create_CorceVM
+        //        {
+        //            Title = x.Title,
+        //            Price = x.Price,
+        //            IsFree = x.IsFree,
+        //            ImageUrl = x.ImageUrl,
                     
-                }).ToListAsync();
-        }
+        //        }).ToListAsync();
+        //}
 
         public async Task UpdateAsync(Course course)
         {
@@ -56,5 +56,10 @@ namespace DY.Inferastructure.EfCore.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Course>> GetList()
+        {
+            var model = await _context.Courses.AsNoTracking().ToListAsync();
+            return model;
+        }
     }
 }
