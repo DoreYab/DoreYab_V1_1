@@ -68,6 +68,23 @@ namespace DY.Application.Mapper
                     src.SelectedCategoryId
                 ));
 
+            config.NewConfig<Course, List_CourseVM>()
+                .Map(dest=>dest.Id,src=>src.Id)
+                .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
+                .Map(dest => dest.Title, src => src.Title)
+                .Map(dest => dest.Slug, src => src.Slug) // مهم!
+                .Map(dest => dest.Price, src => src.Price)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.CourseUrl, src => src.CourseUrl)
+                .Map(dest => dest.SiteSource, src => src.SiteSource)
+                .Map(dest => dest.ImageUrl, src => src.ImageUrl)
+                .Map(dest => dest.IsFree, src => src.IsFree)
+                .Map(dest => dest.IsFinished, src => src.IsFinished)
+                .Map(dest => dest.MetaTitle, src => src.MetaTitle)
+                .Map(dest => dest.MetaDescription, src => src.MetaDescription)
+                .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
+                .Map(dest => dest.IsSucceeded, src => true)
+                .Map(dest => dest.Message, src => "Course loaded successfully");
         }
     }
 }
