@@ -43,7 +43,7 @@ namespace DY.Presentation.Area.Admin.Controllers
             return View(courseCategory);
         }
 
-        [HttpPost]
+        [HttpPost("Edit/{id:long}")]
         public IActionResult Edit(RenameCourseCategory model)
         {
             //if(!ModelState.IsValid)
