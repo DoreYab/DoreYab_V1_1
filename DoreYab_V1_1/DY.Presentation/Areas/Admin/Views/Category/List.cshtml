@@ -126,7 +126,7 @@
                                         }
                                         else
                                         {
-                                            <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Remove">
+                                            <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Remove" asp-route-id="@courseCategory.Id">
                                                 <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-900">
                                                     <i class="fas fa-trash"></i>
                                                     <span class="sr-only sm:not-sr-only sm:ml-1">Delete</span>
