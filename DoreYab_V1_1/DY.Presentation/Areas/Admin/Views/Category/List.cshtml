@@ -113,8 +113,8 @@
                                         @if (courseCategory.IsDeleted)
                                         {
                                             <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Active">
-                                                <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-900">
-                                                    <i class="fas fa-trash"></i>
+                                                <button onclick="confirmDelete(1)" class="text-green-600 hover:text-green-800">
+                                                    <i class="fas fa-check-circle"></i>
                                                     <span class="sr-only sm:not-sr-only sm:ml-1">Activate</span>
                                                 </button>
                                                 <input type="hidden" name="Id" value="@courseCategory.Id" />
@@ -123,13 +123,14 @@
                                         else
                                         {
                                             <form method="post" asp-area="Admin" asp-controller="Category" asp-action="Remove" asp-route-id="@courseCategory.Id">
-                                                <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-900">
-                                                    <i class="fas fa-trash"></i>
+                                                <button onclick="confirmDelete(1)" class="text-red-600 hover:text-red-800">
+                                                    <i class="fas fa-trash-alt"></i>
                                                     <span class="sr-only sm:not-sr-only sm:ml-1">Delete</span>
                                                 </button>
-                                                <input type="hidden" name="Id" value="@courseCategory.Id"/>
+                                                <input type="hidden" name="Id" value="@courseCategory.Id" />
                                             </form>
                                         }
+
                                     </div>
                                 </td>
                             </tr>
