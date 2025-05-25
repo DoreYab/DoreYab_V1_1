@@ -2,11 +2,13 @@
 using DY.Domain.CourseAgg;
 using DY.Inferastructure.EfCore.Mapping;
 using Microsoft.EntityFrameworkCore;
+using DY.Domain.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
 namespace DY.Inferastructure.EfCore.Data
 {
-    public class DoreYab_Context : DbContext
+    public class DoreYab_Context : IdentityDbContext<ApplicationUser>
     {
         public DbSet<CourseCategory> CourseCategories{ get; set; }
         public DbSet<Course> Courses{ get; set; }
