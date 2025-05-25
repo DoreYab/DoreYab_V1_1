@@ -56,7 +56,6 @@ namespace DY.Application.CourseCategory
             return result;
         }
 
-<<<<<<< Updated upstream
         public void Remove(long id)
         {
             var courseCategory = _categoryRepository.Get(id);
