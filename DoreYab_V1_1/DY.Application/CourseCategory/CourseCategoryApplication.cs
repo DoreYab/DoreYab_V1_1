@@ -56,6 +56,7 @@ namespace DY.Application.CourseCategory
             return result;
         }
 
+<<<<<<< Updated upstream
         public void Remove(long id)
         {
             var courseCategory = _categoryRepository.Get(id);
@@ -75,6 +76,11 @@ namespace DY.Application.CourseCategory
             var courseCategory = _categoryRepository.Get(id);
             courseCategory.IsActivate();
             _categoryRepository.Save();
+=======
+        public void Rename(RenameCourseCategory command)
+        {
+            throw new NotImplementedException();
+>>>>>>> Stashed changes
         }
     }
 }
