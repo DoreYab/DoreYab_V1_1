@@ -16,18 +16,16 @@
         .row-height {
             height: 3cm;
         }
+
         @@media (max-width: 640px) {
-            .row-height
+            .row-height {
+                height: auto;
+                min-height: 3cm;
+            }
 
-        {
-            height: auto;
-            min-height: 3cm;
-        }
-
-        .course-title {
-            font-size: 1rem;
-        }
-
+            .course-title {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -42,130 +40,90 @@
         </div>
     </div>
 
-        <div class="bg-white rounded-xl shadow-md overflow-hidden">
-            <!-- Table Header -->
-            <div class="grid grid-cols-12 bg-gray-100 p-4 font-semibold text-gray-700 hidden md:grid">
-                <div class="col-span-4 md:col-span-3">Course</div>
-                <div class="col-span-2 text-center">Status</div>
-                <div class="col-span-2 text-center">Price</div>
-                <div class="col-span-4 md:col-span-5 text-right">Actions</div>
-            </div>
-
-            <!-- Table Rows -->
-            <div class="divide-y divide-gray-200">
-                <!-- Course 1 -->
-                <div class="grid grid-cols-12 items-center p-4 row-height hover:bg-gray-50 transition-colors">
-                    <div class="col-span-4 md:col-span-3 flex items-center">
-                        <img src="https://via.placeholder.com/80x45" alt="Course thumbnail" class="w-20 h-12 object-cover rounded mr-4">
-                        <span class="course-title font-bold text-gray-800 truncate">Advanced JavaScript Patterns</span>
-                    </div>
-                    <div class="col-span-2 flex justify-center">
-                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Free</span>
-                    </div>
-                    <div class="col-span-2 text-center text-gray-600">
-                        $0.00
-                    </div>
-                    <div class="col-span-4 md:col-span-5 flex justify-end space-x-2">
-                        <button class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-edit mr-1"></i> Edit
-                        </button>
-                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-trash mr-1"></i> Delete
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Course 2 -->
-                <div class="grid grid-cols-12 items-center p-4 row-height hover:bg-gray-50 transition-colors">
-                    <div class="col-span-4 md:col-span-3 flex items-center">
-                        <img src="https://via.placeholder.com/80x45" alt="Course thumbnail" class="w-20 h-12 object-cover rounded mr-4">
-                        <span class="course-title font-bold text-gray-800 truncate">React Masterclass 2023</span>
-                    </div>
-                    <div class="col-span-2 flex justify-center">
-                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Paid</span>
-                    </div>
-                    <div class="col-span-2 text-center text-gray-600">
-                        $49.99
-                    </div>
-                    <div class="col-span-4 md:col-span-5 flex justify-end space-x-2">
-                        <button class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-edit mr-1"></i> Edit
-                        </button>
-                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-trash mr-1"></i> Delete
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Course 3 -->
-                <div class="grid grid-cols-12 items-center p-4 row-height hover:bg-gray-50 transition-colors">
-                    <div class="col-span-4 md:col-span-3 flex items-center">
-                        <img src="https://via.placeholder.com/80x45" alt="Course thumbnail" class="w-20 h-12 object-cover rounded mr-4">
-                        <span class="course-title font-bold text-gray-800 truncate">CSS Grid & Flexbox Deep Dive</span>
-                    </div>
-                    <div class="col-span-2 flex justify-center">
-                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Free</span>
-                    </div>
-                    <div class="col-span-2 text-center text-gray-600">
-                        $0.00
-                    </div>
-                    <div class="col-span-4 md:col-span-5 flex justify-end space-x-2">
-                        <button class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-edit mr-1"></i> Edit
-                        </button>
-                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-trash mr-1"></i> Delete
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Course 4 -->
-                <div class="grid grid-cols-12 items-center p-4 row-height hover:bg-gray-50 transition-colors">
-                    <div class="col-span-4 md:col-span-3 flex items-center">
-                        <img src="https://via.placeholder.com/80x45" alt="Course thumbnail" class="w-20 h-12 object-cover rounded mr-4">
-                        <span class="course-title font-bold text-gray-800 truncate">Node.js Backend Development</span>
-                    </div>
-                    <div class="col-span-2 flex justify-center">
-                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Paid</span>
-                    </div>
-                    <div class="col-span-2 text-center text-gray-600">
-                        $79.99
-                    </div>
-                    <div class="col-span-4 md:col-span-5 flex justify-end space-x-2">
-                        <button class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-edit mr-1"></i> Edit
-                        </button>
-                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-trash mr-1"></i> Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <!-- Table Header -->
+        <div class="grid grid-cols-12 bg-gray-100 p-4 font-semibold text-gray-700 hidden md:grid">
+            <div class="col-span-4 md:col-span-3">Course</div>
+            <div class="col-span-2 text-center">Status</div>
+            <div class="col-span-2 text-center">Price</div>
+            <div class="col-span-4 md:col-span-5 text-right">Actions</div>
         </div>
 
-        <!-- Pagination -->
-        <div class="flex justify-between items-center mt-6">
-            <div class="text-sm text-gray-600">
-                Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">12</span> courses
-            </div>
-            <div class="flex space-x-2">
-                <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
-                    Previous
-                </button>
-                <button class="px-3 py-1 border rounded-md bg-gray-800 text-white">
-                    1
-                </button>
-                <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
-                    2
-                </button>
-                <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
-                    3
-                </button>
-                <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
-                    Next
-                </button>
-            </div>
+        <!-- Table Rows -->
+        <div class="divide-y divide-gray-200">
+            <!-- Course 1 -->
+            @foreach (var item in Model)
+            {
+                <div class="grid grid-cols-12 items-center p-4 row-height hover:bg-gray-50 transition-colors">
+                    <div class="col-span-4 md:col-span-3 flex items-center">
+                        <img src="https://via.placeholder.com/80x45" alt="Course thumbnail" class="w-20 h-12 object-cover rounded mr-4">
+                        <span class="course-title font-bold text-gray-800 truncate">@item.Title</span>
+                    </div>
+                    @if (item.IsFree)
+                    {
+                       
+                        <div class="col-span-2 flex justify-center">
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Free</span>
+                        </div>
+                        <div class="col-span-2 text-center text-gray-600">
+                            --
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-span-2 flex justify-center">
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">--</span>
+                        </div>
+                        <div class="col-span-2 text-center text-gray-600">
+                            @item.Price
+
+                        </div>
+                    }                 
+                    
+                    <div class="col-span-4 md:col-span-5 flex justify-end space-x-2">
+                        <a asp-area="Admin"
+                           asp-controller="Course"
+                           asp-action="GetcourseEdit"
+                           asp-route-id="@item.Id"
+                           class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm flex items-center transition-colors duration-200 no-underline">
+                            <i class="fas fa-edit mr-1"></i>
+                            Edit
+                        </a>
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
+                            <i class="fas fa-trash mr-1"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            }
+
+
         </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-between items-center mt-6">
+        <div class="text-sm text-gray-600">
+            Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">12</span> courses
+        </div>
+        <div class="flex space-x-2">
+            <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
+                Previous
+            </button>
+            <button class="px-3 py-1 border rounded-md bg-gray-800 text-white">
+                1
+            </button>
+            <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
+                2
+            </button>
+            <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
+                3
+            </button>
+            <button class="px-3 py-1 border rounded-md text-gray-700 hover:bg-gray-100">
+                Next
+            </button>
+        </div>
+    </div>
     </div>
 
     <script>
