@@ -10,6 +10,8 @@ namespace DY.Application.Contract.Course
         Task<Create_CorceVM> CreatAsync(Create_CorceVM courseViewModel);
         Task<Update_CourseVM> UpdateAsync(long Id);
         Task<Update_CourseVM> GetByIdAsync(long Id);
+        Task<Update_CourseVM> SaveUpdateAsync(Update_CourseVM model);
+        Task<bool> DeletAsync(Update_CourseVM model);
     }
 }
             
