@@ -49,7 +49,12 @@ namespace DY.Application.CourseApplication
                     Message = ex.Message
                 };
             }
-        } 
+        }
+
+        public Task<bool> DeletAsync(Update_CourseVM model)
+        {
+           
+        }
 
         public async Task<Update_CourseVM> GetByIdAsync(long Id)
         {
@@ -85,6 +90,35 @@ namespace DY.Application.CourseApplication
             var courses = await _courseRipository.GetList(); // خروجی: IEnumerable<Course>
             var result = courses.Adapt<IEnumerable<List_CourseVM>>(); // تبدیل با Mapster
             return result;
+        }
+
+        public async Task<Update_CourseVM> SaveUpdateAsync(Update_CourseVM model)
+        {
+            try
+            {
+                var existingCourse = await _courseRipository.GetById(model.Id);
+                if (existingCourse == null)
+                {
+                    return new Update_CourseVM
+                    {
+                        IsSucceeded = false,
+                        Message = "Course not found."
+                    };
+                }
+
+               
+                _mapper.Map(model, existingCourse);
+
+                await _courseRipository.UpdateAsync(existingCourse);
+
+                model.IsSucceeded = true;
+                model.Message = "Course updated successfully.";
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("خطا در بروزرسانی دوره", ex);
+            }
         }
 
         public async Task<Update_CourseVM> UpdateAsync(long Id)
