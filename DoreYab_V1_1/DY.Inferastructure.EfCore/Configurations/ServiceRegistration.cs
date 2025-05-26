@@ -1,5 +1,8 @@
-﻿using DY.Domain.Identity;
+﻿using DY.Application.Common.Interfaces;
+using DY.Application.Common.Settings;
+using DY.Domain.Identity;
 using DY.Inferastructure.EfCore.Data;
+using DY.Inferastructure.EfCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +27,11 @@ namespace DY.Inferastructure.EfCore.Configurations
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DoreYab_Context>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+            services.AddScoped<IAuthService, AuthService>();
 
             services.Configure<IdentityOptions>(options =>
             {
