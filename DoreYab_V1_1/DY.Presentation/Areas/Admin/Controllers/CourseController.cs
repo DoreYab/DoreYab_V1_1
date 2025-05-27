@@ -115,7 +115,7 @@ namespace DY.Presentation.Area.Admin.Controllers
         #endregion
 
 
-
+        #region Edit and Update Method
         [HttpGet("Admin/Course/Edit/{id}")]
         public async Task<IActionResult> GetcourseEdit(long id)
         {
@@ -142,7 +142,7 @@ namespace DY.Presentation.Area.Admin.Controllers
         public async Task<IActionResult> PostCourseEdit(long id, Update_CourseVM model)
         {
             if (!ModelState.IsValid)
-            {   
+            {
 
                 await PopulateCategoriesAsync(model);
                 return View(model);
@@ -162,6 +162,41 @@ namespace DY.Presentation.Area.Admin.Controllers
             return RedirectToAction(nameof(List));
         }
 
+        #endregion
+
+
+        #region Soft Delete Method
+        [HttpPost("Admin/Course/Delete/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostCourseDelete(long id)
+        {
+            var result = await _courseApplication.DeletAsync(id);
+            if (!result)
+            {
+                TempData["ErrorMessage"] = "حذف دوره با خطا مواجه شد.";
+                return RedirectToAction(nameof(List));
+            }
+
+            TempData["SuccessMessage"] = "دوره با موفقیت حذف شد.";
+            return RedirectToAction(nameof(List));
+        }
+
+        #endregion
+
+        [HttpPost("Admin/Course/Active/{id}")]  
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActiveCourse(long id)
+        {
+            var result = await _courseApplication.ActiveAsync(id);
+            if (!result)
+            {
+                TempData["ErrorMessage"] = "فعال سازی دوره با خطا مواجه شد.";
+                return RedirectToAction(nameof(List));
+            }
+
+            TempData["SuccessMessage"] = "دوره با موفقیت فعال شد.";
+            return RedirectToAction(nameof(List));
+        }
 
     }
 }
