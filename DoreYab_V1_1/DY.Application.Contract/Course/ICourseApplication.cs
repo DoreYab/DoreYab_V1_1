@@ -11,7 +11,8 @@ namespace DY.Application.Contract.Course
         Task<Update_CourseVM> UpdateAsync(long Id);
         Task<Update_CourseVM> GetByIdAsync(long Id);
         Task<Update_CourseVM> SaveUpdateAsync(Update_CourseVM model);
-        Task<bool> DeletAsync(Update_CourseVM model);
+        Task<bool> DeletAsync(long Id);
+        Task<bool> ActiveAsync(long Id);
     }
 }
-            
+                
