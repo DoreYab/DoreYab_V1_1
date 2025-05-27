@@ -44,6 +44,37 @@ namespace DY.Presentation.Controllers
                 return View(registerView);
             }
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginView)
+        {
+            if (!ModelState.IsValid)
+                return View(loginView);
+
+            try
+            {
+                var request = new LoginRequest
+                {
+                    Email = loginView.Email,
+                    Password = loginView.Password,
+                };
+
+                var result = await _authService.LoginAsync(request);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("", ex.Message);
+                return View(loginView);
+            }
+        }
     }
 }
 
