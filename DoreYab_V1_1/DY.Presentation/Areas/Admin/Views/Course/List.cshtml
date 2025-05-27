@@ -90,9 +90,25 @@
                             <i class="fas fa-edit mr-1"></i>
                             Edit
                         </a>
-                        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                            <i class="fas fa-trash mr-1"></i> Delete
-                        </button>
+                        @if (!item.IsDeleted)
+                        {
+                            <form asp-action="PostCourseDelete" asp-route-id="@item.Id" method="post" class="inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
+                                    <i class="fas fa-trash mr-1"></i> حذف
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="ActiveCourse" asp-route-id="@item.Id" method="post" class="inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm flex items-center">
+                                    <i class="fas fa-check-circle mr-1"></i> فعال‌سازی
+                                </button>
+                            </form>
+
+                        }
                     </div>
                 </div>
             }
