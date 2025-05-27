@@ -31,6 +31,8 @@ namespace DY.Inferastructure.EfCore.Configurations
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
+            services.AddScoped<IAuthService, AuthService>();
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
