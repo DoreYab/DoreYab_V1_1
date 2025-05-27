@@ -17,7 +17,7 @@ namespace DY.Inferastructure.EfCore.Repository
             _context = context;
         }
 
-        public async Task CreateAsync(Course course)
+        public async Task SaveAsync(Course course)
         {
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
@@ -58,6 +58,17 @@ namespace DY.Inferastructure.EfCore.Repository
                 return false;
 
             course.SoftDelete();
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ActiveCourseAsync(long Id)
+        {
+            var course = await _context.Courses.FindAsync(Id);
+            if (course == null)
+                return false;
+
+            course.ActiveCourse();
             await _context.SaveChangesAsync();
             return true;
         }
