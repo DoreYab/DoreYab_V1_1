@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DY.Application.Common.Interfaces
 {
-    public class IJwtTokenGenerator
+    public interface IJwtTokenGenerator
     {
         string GenerateToken(ApplicationUser user);
     }
