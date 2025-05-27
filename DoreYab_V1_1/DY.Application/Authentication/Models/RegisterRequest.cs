@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace DY.Application.Authentication.Models
 {
-    internal class RegisterRequest
+    public class RegisterRequest
     {
+        public string FullName { get; set; } = null;
+        public string Email { get; set; } = null;
+        public string Password { get; set; } = null;
+
     }
 }
