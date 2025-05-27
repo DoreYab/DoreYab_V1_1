@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DY.Application.Authentication.Models
+﻿namespace DY.Application.Authentication.Models
 {
-    internal class AuthResponse
+    public class AuthResponse
     {
+        public string USerId { get; set; }
+        public string Email { get; set; }
+        public string FullName { get; set; }
+        public string Tocken { get; set; }
     }
 }
