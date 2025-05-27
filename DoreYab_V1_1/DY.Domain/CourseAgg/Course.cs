@@ -76,6 +76,13 @@ namespace DY.Domain.CourseAgg
 
             IsDeleted = true;
         }
+        public void ActiveCourse()
+        {
+            if (!IsDeleted)
+                throw new InvalidOperationException("Course is already Actived.");
+
+            IsDeleted = false;
+        }
 
 
     }
