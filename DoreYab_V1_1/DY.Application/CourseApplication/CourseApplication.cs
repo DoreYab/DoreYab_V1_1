@@ -18,6 +18,8 @@ namespace DY.Application.CourseApplication
             _mapper = mapper;
         }
 
+        
+
         public async Task<Create_CorceVM> CreatAsync(Create_CorceVM courseViewModel)
         {
             try
@@ -34,7 +36,7 @@ namespace DY.Application.CourseApplication
                 }
 
                 var course = _mapper.Map<Course>(courseViewModel);
-                await _courseRipository.CreateAsync(course);
+                await _courseRipository.SaveAsync(course);
 
                 var result = _mapper.Map<Create_CorceVM>(course);
                 result.IsSucceeded = true;
@@ -51,9 +53,23 @@ namespace DY.Application.CourseApplication
             }
         }
 
-        public Task<bool> DeletAsync(Update_CourseVM model)
+        public async Task<bool> DeletAsync(long Id)
         {
-           
+            var course = await _courseRipository.SoftDeleteAsync(Id);
+            if (course == false) 
+            {
+                return false; 
+            }
+            return true;
+        }
+        public async Task<bool> ActiveAsync(long Id)
+        {
+            var course = await _courseRipository.ActiveCourseAsync(Id);
+            if (course == true)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<Update_CourseVM> GetByIdAsync(long Id)
