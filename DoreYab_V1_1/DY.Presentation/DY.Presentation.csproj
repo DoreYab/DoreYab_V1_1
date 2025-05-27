@@ -25,4 +25,8 @@
     <ProjectReference Include="..\DY.Inferastructure.EfCore\DY.Inferastructure.EfCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Account\" />
+  </ItemGroup>
+
 </Project>
