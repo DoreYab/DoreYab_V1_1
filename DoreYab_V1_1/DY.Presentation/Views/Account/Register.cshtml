@@ -1,1 +1,143 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ثبت‌نام | دوره‌یاب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+    <style>
+        * {
+          margin: 0; padding: 0; box-sizing: border-box;
+          font-family: 'Vazirmatn', sans-serif;
+        }
+        body {
+          background-color: var(--bg);
+          color: var(--text);
+          transition: 0.3s;
+        }
+        :root {
+          --bg: #f9f9f9;
+          --card-bg: white;
+          --text: #222;
+          --primary: #4caf50;
+        }
+        body.dark {
+          --bg: #1e1e1e;
+          --card-bg: #2c2c2c;
+          --text: #eee;
+        }
+        .navbar {
+          background-color: var(--card-bg);
+          padding: 1rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .menu {
+          display: flex;
+          gap: 1rem;
+        }
+        .menu a {
+          text-decoration: none;
+          color: var(--text);
+          font-weight: bold;
+        }
+        .toggle-btn {
+          cursor: pointer;
+          background: none;
+          border: 1px solid var(--text);
+          color: var(--text);
+          padding: 5px 10px;
+          border-radius: 5px;
+        }
+        .container {
+          max-width: 400px;
+          margin: 3rem auto;
+          background-color: var(--card-bg);
+          padding: 2rem;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+          text-align: center;
+          margin-bottom: 1.5rem;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+        .checkbox {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+        .checkbox input {
+          margin-left: 0.5rem;
+        }
+        button[type="submit"] {
+          width: 100%;
+          padding: 10px;
+          background-color: var(--primary);
+          border: none;
+          color: white;
+          font-weight: bold;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .footer-text {
+          margin-top: 1rem;
+          text-align: center;
+          font-size: 0.9rem;
+        }
+        .footer-text a {
+          color: var(--primary);
+          text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">دوره‌یاب</div>
+        <nav class="menu">
+            <a href="#">خانه</a>
+            <a href="#">دسته‌بندی</a>
+            <a href="#">مقالات</a>
+            <a href="#">درباره ما</a>
+            <a href="#">تماس با ما</a>
+            <a href="#">ثبت‌نام</a>
+        </nav>
+        <button class="toggle-btn" onclick="toggleTheme()">🌓</button>
+    </header>
+
+    <section class="container">
+        <h2>ثبت‌نام در دوره‌یاب</h2>
+        <form onsubmit="handleSubmit(event)">
+            <input type="text" placeholder="مثلاً سهیل محمدی" required />
+            <input type="email" placeholder="مثلاً soheil@email.com" required />
+            <input type="password" placeholder="رمز عبور امن خود را وارد کنید" required />
+            <input type="password" placeholder="تکرار رمز عبور" required />
+            <div class="checkbox">
+                <input type="checkbox" id="terms" required />
+                <label for="terms">با شرایط استفاده موافقم</label>
+            </div>
+            <button type="submit">ثبت‌نام</button>
+        </form>
+        <p class="footer-text">قبلاً حساب دارید؟ <a href="#">ورود</a></p>
+        <p id="success" style="text-align:center; color:green; display:none;">ثبت‌نام با موفقیت انجام شد!</p>
+    </section>
+
+    <script>
+        function toggleTheme() {
+          document.body.classList.toggle("dark");
+        }
+        function handleSubmit(e) {
+          e.preventDefault();
+          document.getElementById("success").style.display = "block";
+        }
+    </script>
+</body>
+</html>
