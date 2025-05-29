@@ -1,158 +1,33 @@
-﻿<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ورود | دوره‌یاب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Vazirmatn', sans-serif;
-        }
+﻿@model DY.Presentation.Models.Account.LoginViewModel
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            transition: 0.3s;
-        }
+@{
+    ViewData["Title"] = "ورود کاربر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-        :root {
-            --bg: #f9f9f9;
-            --card-bg: white;
-            --text: #222;
-            --primary: #4caf50;
-        }
+<section class="max-w-md mx-auto mt-10 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-white">ورود به دوره‌یاب</h2>
 
-        body.dark {
-            --bg: #1e1e1e;
-            --card-bg: #2c2c2c;
-            --text: #eee;
-        }
+    <form asp-controller="Account" asp-action="Login" method="post" class="space-y-4">
+        <input asp-for="Email" placeholder="ایمیل خود را وارد کنید" required
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" />
 
-        .navbar {
-            background-color: var(--card-bg);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+        <input asp-for="Password" type="password" placeholder="رمز عبور" required
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" />
 
-        .menu {
-            display: flex;
-            gap: 1rem;
-        }
-
-            .menu a {
-                text-decoration: none;
-                color: var(--text);
-                font-weight: bold;
-            }
-
-        .toggle-btn {
-            cursor: pointer;
-            background: none;
-            border: 1px solid var(--text);
-            color: var(--text);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 3rem auto;
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .checkbox {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-            .checkbox input {
-                margin-left: 0.5rem;
-            }
-
-        button[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--primary);
-            border: none;
-            color: white;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .footer-text {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-            .footer-text a {
-                color: var(--primary);
-                text-decoration: none;
-            }
-    </style>
-</head>
-<body>
-    <header class="navbar">
-        <div class="logo">دوره‌یاب</div>
-        <nav class="menu">
-            <a href="#">خانه</a>
-            <a href="#">دسته‌بندی</a>
-            <a href="#">مقالات</a>
-            <a href="#">درباره ما</a>
-            <a href="#">تماس با ما</a>
-            <a href="#">ورود</a>
-        </nav>
-        <button class="toggle-btn" onclick="toggleTheme()">🌓</button>
-    </header>
-
-    <section class="container">
-        <h2>ورود به حساب کاربری</h2>
-        <form onsubmit="handleSubmit(event)">
-            <input type="email" placeholder="ایمیل خود را وارد کنید" required />
-            <input type="password" placeholder="رمز عبور" required />
-            <div class="checkbox">
-                <input type="checkbox" id="remember" />
-                <label for="remember">مرا به خاطر بسپار</label>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <input type="checkbox" id="remember" name="remember" class="ml-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600">
+                <label for="remember" class="text-gray-600 dark:text-gray-300">مرا به خاطر بسپار</label>
             </div>
-            <button type="submit">ورود</button>
-        </form>
-        <p class="footer-text">حساب ندارید؟ <a href="#">ثبت‌نام</a></p>
-        <p id="success" style="text-align:center; color:green; display:none;">ورود موفقیت‌آمیز بود!</p>
-    </section>
+            <a href="/Account/ForgotPassword" class="text-sm text-blue-600 hover:underline">فراموشی رمز؟</a>
+        </div>
 
-    <script>
-        function toggleTheme() {
-          document.body.classList.toggle("dark");
-        }
-        function handleSubmit(e) {
-          e.preventDefault();
-          document.getElementById("success").style.display = "block";
-        }
-    </script>
-</body>
-</html>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">ورود</button>
+    </form>
+
+    <p class="text-center mt-4 text-sm text-gray-600 dark:text-gray-300">
+        حساب کاربری ندارید؟
+        <a asp-controller="Account" asp-action="Register" class="text-blue-600 hover:underline">ثبت‌نام</a>
+    </p>
+</section>
