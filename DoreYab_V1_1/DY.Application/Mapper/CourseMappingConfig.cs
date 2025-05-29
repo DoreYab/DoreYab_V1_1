@@ -8,6 +8,7 @@ namespace DY.Application.Mapper
     {
         public void Register(TypeAdapterConfig config)
         {
+
             // Entity → Create ViewModel
             config.NewConfig<Course, Create_CorceVM>()
                 .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
@@ -41,7 +42,7 @@ namespace DY.Application.Mapper
                     src.CourseUrl,
                     src.SiteSource,
                     src.Slug,
-                    src.ImageUrl,
+                    src.ImageFile,
                     src.IsFree,
                     src.IsFinished,
                     src.MetaTitle ?? string.Empty,

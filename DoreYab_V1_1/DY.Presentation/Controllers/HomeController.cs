@@ -15,8 +15,11 @@ namespace DY.Presentation.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ListCourseVMs = await _courseApplication.GetList();
-            return View(ListCourseVMs); // ارسال لیست به View  
+            // Get all courses
+            var allCourses = await _courseApplication.GetList();
+            // Filter out deleted courses
+            ListCourseVMs = allCourses.Where(x => !x.IsDeleted).ToList();
+            return View(ListCourseVMs);
         }
 
         #region Exm  

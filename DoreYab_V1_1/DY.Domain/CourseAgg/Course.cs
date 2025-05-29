@@ -69,5 +69,21 @@ namespace DY.Domain.CourseAgg
             CategoryId = categoryId;
         }
 
+        public void SoftDelete()
+        {
+            if (IsDeleted)
+                throw new InvalidOperationException("Course is already deleted.");
+
+            IsDeleted = true;
+        }
+        public void ActiveCourse()
+        {
+            if (!IsDeleted)
+                throw new InvalidOperationException("Course is already Actived.");
+
+            IsDeleted = false;
+        }
+
+
     }
 }

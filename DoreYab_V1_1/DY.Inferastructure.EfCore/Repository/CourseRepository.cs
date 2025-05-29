@@ -17,7 +17,7 @@ namespace DY.Inferastructure.EfCore.Repository
             _context = context;
         }
 
-        public async Task CreateAsync(Course course)
+        public async Task SaveAsync(Course course)
         {
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
@@ -37,18 +37,7 @@ namespace DY.Inferastructure.EfCore.Repository
             return course ?? throw new InvalidOperationException($"Course with Id {Id} not found.");
         }
 
-        //Task<List<Create_CorceVM>> ICourseRepository.GetList()
-        //{
-        //    return _context.Courses.Include(x => x.Category).Where(x=>x.IsDeleted == false)
-        //        .Select(x => new Create_CorceVM
-        //        {
-        //            Title = x.Title,
-        //            Price = x.Price,
-        //            IsFree = x.IsFree,
-        //            ImageUrl = x.ImageUrl,
-                    
-        //        }).ToListAsync();
-        //}
+       
 
         public async Task UpdateAsync(Course course)
         {
@@ -61,5 +50,27 @@ namespace DY.Inferastructure.EfCore.Repository
             var model = await _context.Courses.AsNoTracking().ToListAsync();
             return model;
         }
+
+        public async Task<bool> SoftDeleteAsync(long Id)
+        {
+            var course = await _context.Courses.FindAsync(Id);
+            if (course == null)
+                return false;
+
+            course.SoftDelete();
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ActiveCourseAsync(long Id)
+        {
+            var course = await _context.Courses.FindAsync(Id);
+            if (course == null)
+                return false;
+
+            course.ActiveCourse();
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
-}
+}   

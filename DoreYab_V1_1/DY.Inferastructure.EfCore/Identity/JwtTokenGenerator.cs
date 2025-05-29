@@ -46,7 +46,5 @@ namespace DY.Inferastructure.EfCore.Identity
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
-
-
 }
 

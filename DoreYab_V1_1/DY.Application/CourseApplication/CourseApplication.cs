@@ -18,6 +18,8 @@ namespace DY.Application.CourseApplication
             _mapper = mapper;
         }
 
+        
+
         public async Task<Create_CorceVM> CreatAsync(Create_CorceVM courseViewModel)
         {
             try
@@ -34,7 +36,7 @@ namespace DY.Application.CourseApplication
                 }
 
                 var course = _mapper.Map<Course>(courseViewModel);
-                await _courseRipository.CreateAsync(course);
+                await _courseRipository.SaveAsync(course);
 
                 var result = _mapper.Map<Create_CorceVM>(course);
                 result.IsSucceeded = true;
@@ -49,7 +51,26 @@ namespace DY.Application.CourseApplication
                     Message = ex.Message
                 };
             }
-        } 
+        }
+
+        public async Task<bool> DeletAsync(long Id)
+        {
+            var course = await _courseRipository.SoftDeleteAsync(Id);
+            if (course == false) 
+            {
+                return false; 
+            }
+            return true;
+        }
+        public async Task<bool> ActiveAsync(long Id)
+        {
+            var course = await _courseRipository.ActiveCourseAsync(Id);
+            if (course == true)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public async Task<Update_CourseVM> GetByIdAsync(long Id)
         {
@@ -85,6 +106,35 @@ namespace DY.Application.CourseApplication
             var courses = await _courseRipository.GetList(); // خروجی: IEnumerable<Course>
             var result = courses.Adapt<IEnumerable<List_CourseVM>>(); // تبدیل با Mapster
             return result;
+        }
+
+        public async Task<Update_CourseVM> SaveUpdateAsync(Update_CourseVM model)
+        {
+            try
+            {
+                var existingCourse = await _courseRipository.GetById(model.Id);
+                if (existingCourse == null)
+                {
+                    return new Update_CourseVM
+                    {
+                        IsSucceeded = false,
+                        Message = "Course not found."
+                    };
+                }
+
+               
+                _mapper.Map(model, existingCourse);
+
+                await _courseRipository.UpdateAsync(existingCourse);
+
+                model.IsSucceeded = true;
+                model.Message = "Course updated successfully.";
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("خطا در بروزرسانی دوره", ex);
+            }
         }
 
         public async Task<Update_CourseVM> UpdateAsync(long Id)
