@@ -11,6 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using DY.Application.Mapper;
 using Mapster;
 using MapsterMapper;
+using DY.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using DY.Application.Common.Interfaces;
+using DY.Inferastructure.EfCore.Identity;
 
 namespace DY.Presentation
 {
@@ -47,12 +51,20 @@ namespace DY.Presentation
             builder.Services.AddTransient<ICourseRepository, CourseRepository>();
             builder.Services.AddTransient<ICourseApplication, CourseApplication>();
 
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+
+
             builder.Services.AddDbContext<DoreYab_Context>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DoreYab_V1_1"));
             });
 
-            
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()    // Register Identity...
+    .AddEntityFrameworkStores<DoreYab_Context>()
+    .AddDefaultTokenProviders();
+
 
 
             var app = builder.Build();
@@ -67,6 +79,8 @@ namespace DY.Presentation
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
