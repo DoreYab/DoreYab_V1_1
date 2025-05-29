@@ -1,5 +1,9 @@
 ﻿@model DY.Presentation.Models.Account.RegisterViewModel
 
+@{
+    ViewData["Title"] = "ثبت نام کاربر";
+}
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -117,11 +121,12 @@
 
     <section class="container">
         <h2>ثبت‌نام در دوره‌یاب</h2>
-        <form onsubmit="handleSubmit(event)">
-            <input type="text" placeholder="مثلاً سهیل محمدی" required />
-            <input type="email" placeholder="مثلاً soheil@email.com" required />
-            <input type="password" placeholder="رمز عبور امن خود را وارد کنید" required />
-            <input type="password" placeholder="تکرار رمز عبور" required />
+        <form onsubmit="handleSubmit(event)" asp-controller="Account" asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <input asp-for="FullName" placeholder="مثلاً سهیل محمدی" required />
+            <input asp-for="Email" placeholder="مثلاً soheil@email.com" required />
+            <input asp-for="Password" placeholder="رمز عبور امن خود را وارد کنید" required />
+            <input asp-for="ConfirmPassword" placeholder="تکرار رمز عبور" required />
             <div class="checkbox">
                 <input type="checkbox" id="terms" required />
                 <label for="terms">با شرایط استفاده موافقم</label>
