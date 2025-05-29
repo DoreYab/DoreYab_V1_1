@@ -1,6 +1,7 @@
 ﻿using DY.Application.Authentication.Models;
 using DY.Application.Common.Interfaces;
 using DY.Presentation.Models.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DY.Presentation.Controllers
@@ -75,6 +76,14 @@ namespace DY.Presentation.Controllers
                 return View(loginView);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
 

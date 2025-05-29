@@ -1,1 +1,33 @@
-﻿
+﻿@model DY.Presentation.Models.Account.LoginViewModel
+
+@{
+    ViewData["Title"] = "ورود کاربر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="max-w-md mx-auto mt-10 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-white">ورود به دوره‌یاب</h2>
+
+    <form asp-controller="Account" asp-action="Login" method="post" class="space-y-4">
+        <input asp-for="Email" placeholder="ایمیل خود را وارد کنید" required
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" />
+
+        <input asp-for="Password" type="password" placeholder="رمز عبور" required
+               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" />
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <input type="checkbox" id="remember" name="remember" class="ml-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600">
+                <label for="remember" class="text-gray-600 dark:text-gray-300">مرا به خاطر بسپار</label>
+            </div>
+            <a href="/Account/ForgotPassword" class="text-sm text-blue-600 hover:underline">فراموشی رمز؟</a>
+        </div>
+
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">ورود</button>
+    </form>
+
+    <p class="text-center mt-4 text-sm text-gray-600 dark:text-gray-300">
+        حساب کاربری ندارید؟
+        <a asp-controller="Account" asp-action="Register" class="text-blue-600 hover:underline">ثبت‌نام</a>
+    </p>
+</section>
