@@ -21,6 +21,7 @@ namespace DY.Inferastructure.EfCore.Data
         {
             modelBuilder.ApplyConfiguration(new CourseCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new CourseConfiguration());
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
