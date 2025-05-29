@@ -25,6 +25,10 @@ namespace DY.Inferastructure.EfCore.Identity
 
         public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
         {
+            var existingUser = await _userManager.FindByEmailAsync(request.Email);
+            if (existingUser != null)
+                throw new Exception("ایمیل وارد شده تکراری است.");
+
             var user = new ApplicationUser
             {
                 UserName = request.Email,
@@ -47,6 +51,7 @@ namespace DY.Inferastructure.EfCore.Identity
                 Token = token
             };
         }
+
 
         public async Task<AuthResponse> LoginAsync(LoginRequest request)
         {
