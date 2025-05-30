@@ -11,25 +11,6 @@ namespace DY.Inferastructure.EfCore.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Desctiption",
-                table: "Courses",
-                newName: "Description");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CourseUrl",
-                table: "Courses",
-                type: "varchar(1000)",
-                unicode: false,
-                maxLength: 1000,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "varchar(1000)",
-                oldUnicode: false,
-                oldMaxLength: 1000,
-                oldNullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -70,6 +51,23 @@ namespace DY.Inferastructure.EfCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseCategories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    ShortDescription = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    CourseCount = table.Column<long>(type: "bigint", nullable: false, defaultValue: 0L),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,6 +176,40 @@ namespace DY.Inferastructure.EfCore.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
+                    CourseUrl = table.Column<string>(type: "varchar(1000)", unicode: false, maxLength: 1000, nullable: false),
+                    SiteSource = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Slug = table.Column<string>(type: "varchar(300)", unicode: false, maxLength: 300, nullable: false),
+                    ImageUrl = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: false),
+                    IsFree = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsFinished = table.Column<bool>(type: "bit", nullable: false),
+                    MetaTitle = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    MetaDescription = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    MetaKeyword = table.Column<string>(type: "nvarchar(600)", maxLength: 600, nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    ThumbnailUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Courses_CourseCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "CourseCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -216,6 +248,33 @@ namespace DY.Inferastructure.EfCore.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseCategories_Title",
+                table: "CourseCategories",
+                column: "Title",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_CategoryId",
+                table: "Courses",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_SiteSource",
+                table: "Courses",
+                column: "SiteSource");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_Slug",
+                table: "Courses",
+                column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_Title",
+                table: "Courses",
+                column: "Title");
         }
 
         /// <inheritdoc />
@@ -237,27 +296,16 @@ namespace DY.Inferastructure.EfCore.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Courses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "Courses",
-                newName: "Desctiption");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CourseUrl",
-                table: "Courses",
-                type: "varchar(1000)",
-                unicode: false,
-                maxLength: 1000,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(1000)",
-                oldUnicode: false,
-                oldMaxLength: 1000);
+            migrationBuilder.DropTable(
+                name: "CourseCategories");
         }
     }
 }

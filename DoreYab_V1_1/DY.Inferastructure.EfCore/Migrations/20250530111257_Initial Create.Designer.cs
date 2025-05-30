@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DY.Inferastructure.EfCore.Migrations
 {
     [DbContext(typeof(DoreYab_Context))]
-    [Migration("20250525115444_InitialCreate")]
+    [Migration("20250530111257_Initial Create")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -99,6 +99,10 @@ namespace DY.Inferastructure.EfCore.Migrations
                         .HasMaxLength(300)
                         .IsUnicode(false)
                         .HasColumnType("varchar(300)");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()

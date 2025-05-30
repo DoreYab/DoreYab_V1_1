@@ -97,6 +97,10 @@ namespace DY.Inferastructure.EfCore.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(300)");
 
+                    b.Property<string>("ThumbnailUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(300)
