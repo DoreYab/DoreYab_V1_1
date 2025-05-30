@@ -35,7 +35,7 @@
         }
 
 
-        <form method="post" asp-area="Admin" asp-controller="Course" asp-action="GetcourseEdit" class="space-y-6">
+        <form method="post" asp-area="Admin" asp-controller="Course" asp-action="Edit" class="space-y-6">
             @Html.AntiForgeryToken()
             <!-- Basic Information -->
             <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
@@ -132,15 +132,15 @@
 
                 <!-- ImageUrl -->
                 <div class="mb-4">
-                    <label asp-for="ImageUrl" class="block text-sm font-medium mb-1"></label>
-                    <input asp-for="ImageUrl" type="url" required placeholder="@Model.ImageUrl" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
-                    <span asp-validation-for="ImageUrl" class="text-red-500 text-sm"></span>
+                    <label asp-for="ImageFile" class="block text-sm font-medium mb-1"></label>
+                    <input asp-for="ImageFile" type="file" accept="image/*" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <span asp-validation-for="ImageFile" class="text-red-500 text-sm"></span>
                 </div>
 
                 <!-- CourseUrl -->
                 <div class="mb-4">
                     <label asp-for="CourseUrl" class="block text-sm font-medium mb-1"></label>
-                    <input asp-for="CourseUrl" type="url" required placeholder="@Model.ImageUrl" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
+                    <input asp-for="CourseUrl" type="url" required placeholder="@Model.CourseUrl" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none gold-focus" />
                     <span asp-validation-for="CourseUrl" class="text-red-500 text-sm"></span>
                 </div>
 
