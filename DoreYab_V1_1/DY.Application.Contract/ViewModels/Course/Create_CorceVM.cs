@@ -34,7 +34,7 @@ namespace DY.Application.Contract.ViewModels.Course
         [Display(Name = "اسلاگ (slug)")]
         public string Slug { get; set; }
 
-        [Required(ErrorMessage = "آدرس تصویر الزامی است.")]
+        [Required(ErrorMessage = "آپلود تصویر الزامی است !")]
         [Display(Name = " تصویر")]
         public IFormFile ImageFile { get; set; }
 

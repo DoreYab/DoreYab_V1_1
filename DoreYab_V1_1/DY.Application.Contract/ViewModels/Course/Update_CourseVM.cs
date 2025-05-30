@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -39,10 +40,10 @@ namespace DY.Application.Contract.ViewModels.Course
         [Display(Name = "اسلاگ (slug)")]
         public string Slug { get; set; }
 
-        [Required(ErrorMessage = "آدرس تصویر الزامی است.")]
-        [Url(ErrorMessage = "لینک تصویر معتبر نیست.")]
-        [Display(Name = "لینک تصویر")]
-        public string ImageUrl { get; set; }
+        
+        [Display(Name = " تصویر")]
+        public IFormFile? ImageFile { get; set; }
+
 
         [Display(Name = "رایگان است؟")]
         public bool IsFree { get; set; }
