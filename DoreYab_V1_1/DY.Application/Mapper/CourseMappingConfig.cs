@@ -1,4 +1,5 @@
-﻿using DY.Application.Contract.ViewModels.Course;
+﻿using DY.Application.Contract.DTOs;
+using DY.Application.Contract.ViewModels.Course;
 using DY.Domain.CourseAgg;
 using Mapster;
 
@@ -8,23 +9,24 @@ namespace DY.Application.Mapper
     {
         public void Register(TypeAdapterConfig config)
         {
-
-            // Entity → Create ViewModel
+            #region Entity → Create ViewModel
             config.NewConfig<Course, Create_CorceVM>()
                 .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
                 .Map(dest => dest.IsSucceeded, src => true)
-                .Map(dest => dest.Message, src => "Course created successfully");
+                .Map(dest => dest.Message, src => "Course created successfully")
+                .Ignore(dest => dest.ImageFile);
+            #endregion
 
-            // Entity → Update ViewModel (این رو اضافه کن!)
+            #region Entity → Update ViewModel
             config.NewConfig<Course, Update_CourseVM>()
                 .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
                 .Map(dest => dest.Title, src => src.Title)
-                .Map(dest => dest.Slug, src => src.Slug) // مهم!
+                .Map(dest => dest.Slug, src => src.Slug)
                 .Map(dest => dest.Price, src => src.Price)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.CourseUrl, src => src.CourseUrl)
                 .Map(dest => dest.SiteSource, src => src.SiteSource)
-                .Map(dest => dest.ImageUrl, src => src.ImageUrl)
+                .Ignore(dest => dest.ImageFile) // فایل جداگانه هنگام آپلود دستی ست میشه
                 .Map(dest => dest.IsFree, src => src.IsFree)
                 .Map(dest => dest.IsFinished, src => src.IsFinished)
                 .Map(dest => dest.MetaTitle, src => src.MetaTitle)
@@ -32,27 +34,44 @@ namespace DY.Application.Mapper
                 .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
                 .Map(dest => dest.IsSucceeded, src => true)
                 .Map(dest => dest.Message, src => "Course loaded successfully");
+            #endregion
 
-            // Create ViewModel → Entity
-            config.NewConfig<Create_CorceVM, Course>()
-                .ConstructUsing(src => new Course(
-                    src.Title,
-                    src.Price,
-                    src.Description,
-                    src.CourseUrl,
-                    src.SiteSource,
-                    src.Slug,
-                    src.ImageFile,
-                    src.IsFree,
-                    src.IsFinished,
-                    src.MetaTitle ?? string.Empty,
-                    src.MetaDescription ?? string.Empty,
-                    src.MetaKeyword ?? string.Empty,
-                    src.SelectedCategoryId
-                ));
+            #region Create ViewModel → Dto
+            config.NewConfig<Create_CorceVM, CourseCreateDto>()
+                .Map(dest => dest.ImageUrl, src => src.ImageFile != null ? src.ImageFile.FileName : string.Empty)
+                .Map(dest => dest.Title, src => src.Title)
+                .Map(dest => dest.Price, src => src.Price)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.CourseUrl, src => src.CourseUrl)
+                .Map(dest => dest.SiteSource, src => src.SiteSource)
+                .Map(dest => dest.Slug, src => src.Slug)
+                .Map(dest => dest.IsFree, src => src.IsFree)
+                .Map(dest => dest.IsFinished, src => src.IsFinished)
+                .Map(dest => dest.MetaTitle, src => src.MetaTitle)
+                .Map(dest => dest.MetaDescription, src => src.MetaDescription)
+                .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
+                .Map(dest => dest.SelectedCategoryId, src => src.SelectedCategoryId);
+            #endregion
 
-            // Update ViewModel → Entity (اگر نیاز داری)
-            config.NewConfig<Update_CourseVM, Course>()
+            #region Update ViewModel → Dto
+            config.NewConfig<Update_CourseVM, CourseUpdateDto>()
+                .Map(dest => dest.ImageUrl, src => src.ImageFile != null ? src.ImageFile.FileName : string.Empty)
+                .Map(dest => dest.Title, src => src.Title)
+                .Map(dest => dest.Price, src => src.Price)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.CourseUrl, src => src.CourseUrl)
+                .Map(dest => dest.SiteSource, src => src.SiteSource)
+                .Map(dest => dest.Slug, src => src.Slug)
+                .Map(dest => dest.IsFree, src => src.IsFree)
+                .Map(dest => dest.IsFinished, src => src.IsFinished)
+                .Map(dest => dest.MetaTitle, src => src.MetaTitle)
+                .Map(dest => dest.MetaDescription, src => src.MetaDescription)
+                .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
+                .Map(dest => dest.SelectedCategoryId, src => src.SelectedCategoryId);
+            #endregion
+
+            #region CourseCreateDto → Course
+            config.NewConfig<CourseCreateDto, Course>()
                 .ConstructUsing(src => new Course(
                     src.Title,
                     src.Price,
@@ -68,12 +87,37 @@ namespace DY.Application.Mapper
                     src.MetaKeyword ?? string.Empty,
                     src.SelectedCategoryId
                 ));
+            #endregion
 
+            #region CourseUpdateDto → Course
+            config.NewConfig<CourseUpdateDto, Course>()
+                .IgnoreNullValues(true)
+                .AfterMapping((src, dest) =>
+                {
+                    dest.UpdateCourse(
+                        src.Title,
+                        src.Price,
+                        src.Description,
+                        src.CourseUrl,
+                        src.SiteSource,
+                        src.Slug,
+                        src.IsFree,
+                        src.IsFinished,
+                        src.MetaTitle ?? string.Empty,
+                        src.MetaDescription ?? string.Empty,
+                        src.MetaKeyword ?? string.Empty,
+                        src.SelectedCategoryId,
+                        src.ImageUrl
+                    );
+                });
+            #endregion
+
+            #region Course → List_CourseVM
             config.NewConfig<Course, List_CourseVM>()
-                .Map(dest=>dest.Id,src=>src.Id)
+                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
                 .Map(dest => dest.Title, src => src.Title)
-                .Map(dest => dest.Slug, src => src.Slug) // مهم!
+                .Map(dest => dest.Slug, src => src.Slug)
                 .Map(dest => dest.Price, src => src.Price)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.CourseUrl, src => src.CourseUrl)
@@ -86,6 +130,29 @@ namespace DY.Application.Mapper
                 .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
                 .Map(dest => dest.IsSucceeded, src => true)
                 .Map(dest => dest.Message, src => "Course loaded successfully");
+            #endregion
+
+            #region Course → Create_CorceVM
+            config.NewConfig<Course, Create_CorceVM>()
+                .Map(dest => dest.Title, src => src.Title)
+                .Map(dest => dest.Price, src => src.Price)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.CourseUrl, src => src.CourseUrl)
+                .Map(dest => dest.SiteSource, src => src.SiteSource)
+                .Map(dest => dest.Slug, src => src.Slug)
+                .Map(dest => dest.IsFree, src => src.IsFree)
+                .Map(dest => dest.IsFinished, src => src.IsFinished)
+                .Map(dest => dest.MetaTitle, src => src.MetaTitle)
+                .Map(dest => dest.MetaDescription, src => src.MetaDescription)
+                .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
+                .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
+                .Ignore(dest => dest.ImageFile)
+                .Ignore(dest => dest.CourseCategories)
+                .Ignore(dest => dest.IsSucceeded)
+                .Ignore(dest => dest.Message);
+            #endregion
+
+
         }
     }
 }
