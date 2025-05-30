@@ -38,10 +38,10 @@ namespace DY.Application.Contract.Validators
                 .Matches("^[a-z0-9-]+$").WithMessage("اسلاگ فقط می‌تواند شامل حروف کوچک، اعداد و خط تیره باشد.")
                 .MaximumLength(100).WithMessage("اسلاگ نباید بیشتر از 100 کاراکتر باشد.");
 
-            RuleFor(x => x.ImageUrl)
-                .Must(url => Uri.TryCreate(url, UriKind.Absolute, out _))
-                .WithMessage("آدرس تصویر نامعتبر است.")
-                .When(x => !string.IsNullOrEmpty(x.ImageUrl));
+            //RuleFor(x => x.ImageUrl)
+            //    .Must(url => Uri.TryCreate(url, UriKind.Absolute, out _))
+            //    .WithMessage("آدرس تصویر نامعتبر است.")
+            //    .When(x => !string.IsNullOrEmpty(x.ImageUrl));
 
             RuleFor(x => x.MetaTitle)
                 .NotEmpty().WithMessage("عنوان متا نباید خالی باشد.")
