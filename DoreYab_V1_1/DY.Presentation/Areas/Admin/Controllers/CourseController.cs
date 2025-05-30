@@ -9,33 +9,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace DY.Presentation.Area.Admin.Controllers
 {
     [Area("Admin")]
-    public class CourseController : Controller
+    public class CourseController(
+                 ICourseApplication courseApplication,
+                 ICourseCategoryApplication courseCategoryApplication,
+                 ILogger<CourseController> logger) : Controller
     {
-        private readonly ICourseApplication _courseApplication;
-        private readonly ICourseCategoryApplication _courseCategoryApplication;
-        private readonly ILogger<CourseController> _logger;
 
-        public CourseController(
-            ICourseApplication courseApplication,
-            ICourseCategoryApplication courseCategoryApplication,
-            ILogger<CourseController> logger)
-        {
-            _courseApplication = courseApplication;
-            _courseCategoryApplication = courseCategoryApplication;
-            _logger = logger;
-        }
-        #region Creat Method GET and POST 
+        private readonly ICourseApplication _courseApplication = courseApplication;
+        private readonly ICourseCategoryApplication _courseCategoryApplication = courseCategoryApplication;
+        private readonly ILogger<CourseController> _logger = logger;
+
+        #region Create Course
         [HttpGet]
         public IActionResult Create()
         {
             var model = new Create_CorceVM
             {
-                CourseCategories = _courseCategoryApplication.List()
-                    .Select(x => new SelectListItem
-                    {
-                        Text = x.Title,
-                        Value = x.Id.ToString()
-                    }).ToList()
+                CourseCategories = GetCourseCategories()
             };
             return View(model);
         }
@@ -55,95 +45,54 @@ namespace DY.Presentation.Area.Admin.Controllers
 
                 if (result.IsSucceeded)
                 {
-                    TempData["SuccessMessage"] = "موردی که اضافه کرده بودی اضافه شد به درستی ";
+                    TempData["SuccessMessage"] = "دوره با موفقیت اضافه شد.";
                     return RedirectToAction(nameof(List));
                 }
-                else
-                {
-                    // Ensure result.Message is not null before passing it to AddModelError
-                    ModelState.AddModelError(nameof(model.Slug), result.Message ?? "نمیشه ساخت نمیدونم دلیلش چیه چک کن خودت ");
-                    await PopulateCategoriesAsync(model);
-                    return View(model);
-                }
+
+                ModelState.AddModelError(nameof(model.Slug), result.Message ?? "خطای ناشناخته در ایجاد دوره.");
+                await PopulateCategoriesAsync(model);
+                return View(model);
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "رفتی تو اکسپشن ارور جلوشو گرفتم من، بگرد مشکل پیدا کن ";
-                ModelState.AddModelError(string.Empty, ex.Message);
+                _logger.LogError(ex, "Error in creating course.");
+                TempData["ErrorMessage"] = "خطایی در ایجاد دوره رخ داد.";
                 await PopulateCategoriesAsync(model);
                 return View(model);
             }
         }
         #endregion
 
-        #region PopulateCategoriesAsync
-        private async Task PopulateCategoriesAsync(Create_CorceVM model)
-        {
-
-            var categories = _courseCategoryApplication.List();
-            model.CourseCategories = categories
-                .Select(x => new SelectListItem
-                {
-                    Text = x.Title,
-                    Value = x.Id.ToString(),
-                    Selected = x.Id == model.SelectedCategoryId
-                })
-                .ToList();
-        }
-        private async Task PopulateCategoriesAsync(Update_CourseVM model)
-        {
-
-            var categories = _courseCategoryApplication.List();
-            model.CourseCategories = categories
-                .Select(x => new SelectListItem
-                {
-                    Text = x.Title,
-                    Value = x.Id.ToString(),
-                    Selected = x.Id == model.SelectedCategoryId
-                })
-                .ToList();
-        }
-        #endregion
-
-
-        #region List Method for Course
+        #region List Courses
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            return View(await _courseApplication.GetList());
+            var courses = await _courseApplication.GetList();
+            return View(courses);
         }
         #endregion
 
-
-        #region Edit and Update Method
+        #region Edit Course
         [HttpGet("Admin/Course/Edit/{id}")]
-        public async Task<IActionResult> GetcourseEdit(long id)
+        public async Task<IActionResult> Edit(long id)
         {
             var course = await _courseApplication.GetByIdAsync(id);
             if (course == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "دوره مورد نظر یافت نشد.";
+                return RedirectToAction(nameof(List));
             }
 
-            course.CourseCategories = _courseCategoryApplication.List()
-                .Select(x => new SelectListItem
-                {
-                    Text = x.Title,
-                    Value = x.Id.ToString(),
-                    Selected = x.Id == course.SelectedCategoryId
-                }).ToList();
-
+            await PopulateCategoriesAsync(course);
             return View(course);
         }
 
-
         [HttpPost("Admin/Course/Edit/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostCourseEdit(long id, Update_CourseVM model)
+        public async Task<IActionResult> Edit(long id, Update_CourseVM model)
         {
             if (!ModelState.IsValid)
             {
-
                 await PopulateCategoriesAsync(model);
                 return View(model);
             }
@@ -151,52 +100,86 @@ namespace DY.Presentation.Area.Admin.Controllers
             var result = await _courseApplication.SaveUpdateAsync(model);
             if (!result.IsSucceeded)
             {
-                // Ensure result.Message is not null before passing it to AddModelError
-                ModelState.AddModelError(string.Empty, result.Message ?? "نشد بروز رسانیش کنی   : ");
-
-
+                ModelState.AddModelError(string.Empty, result.Message ?? "خطا در بروزرسانی.");
                 await PopulateCategoriesAsync(model);
                 return View(model);
             }
 
+            TempData["SuccessMessage"] = "دوره با موفقیت ویرایش شد.";
             return RedirectToAction(nameof(List));
         }
-
         #endregion
 
-
-        #region Soft Delete Method
+        #region Delete Course (Soft Delete)
         [HttpPost("Admin/Course/Delete/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostCourseDelete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            var result = await _courseApplication.DeletAsync(id);
-            if (!result)
+            var success = await _courseApplication.DeletAsync(id);
+            if (!success)
             {
                 TempData["ErrorMessage"] = "حذف دوره با خطا مواجه شد.";
-                return RedirectToAction(nameof(List));
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "دوره با موفقیت حذف شد.";
             }
 
-            TempData["SuccessMessage"] = "دوره با موفقیت حذف شد.";
             return RedirectToAction(nameof(List));
         }
-
         #endregion
 
-        [HttpPost("Admin/Course/Active/{id}")]  
+        #region Activate Course
+        [HttpPost("Admin/Course/Activate/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ActiveCourse(long id)
+        public async Task<IActionResult> Activate(long id)
         {
-            var result = await _courseApplication.ActiveAsync(id);
-            if (!result)
+            var success = await _courseApplication.ActiveAsync(id);
+            if (!success)
             {
-                TempData["ErrorMessage"] = "فعال سازی دوره با خطا مواجه شد.";
-                return RedirectToAction(nameof(List));
+                TempData["ErrorMessage"] = "فعال‌سازی دوره با خطا مواجه شد.";
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "دوره با موفقیت فعال شد.";
             }
 
-            TempData["SuccessMessage"] = "دوره با موفقیت فعال شد.";
             return RedirectToAction(nameof(List));
         }
+        #endregion
 
+        #region Helper Methods
+        private List<SelectListItem> GetCourseCategories()
+        {
+            var categories = _courseCategoryApplication.List();
+            return categories.Select(x => new SelectListItem
+            {
+                Text = x.Title,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+        private async Task PopulateCategoriesAsync(Create_CorceVM model)
+        {
+            model.CourseCategories = GetCourseCategories()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Text,
+                    Value = c.Value,
+                    Selected = c.Value == model.SelectedCategoryId.ToString()
+                }).ToList();
+        }
+
+        private async Task PopulateCategoriesAsync(Update_CourseVM model)
+        {
+            model.CourseCategories = GetCourseCategories()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Text,
+                    Value = c.Value,
+                    Selected = c.Value == model.SelectedCategoryId.ToString()
+                }).ToList();
+        }
+        #endregion
     }
 }
