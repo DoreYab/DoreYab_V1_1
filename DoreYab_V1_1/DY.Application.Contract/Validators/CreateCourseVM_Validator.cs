@@ -38,10 +38,22 @@ namespace DY.Application.Contract.Validators
                 .Matches("^[a-z0-9-]+$").WithMessage("اسلاگ فقط می‌تواند شامل حروف کوچک، اعداد و خط تیره باشد.")
                 .MaximumLength(100).WithMessage("اسلاگ نباید بیشتر از 100 کاراکتر باشد.");
 
-            RuleFor(x => x.ImageUrl)
-                .Must(url => Uri.TryCreate(url, UriKind.Absolute, out _))
-                .WithMessage("آدرس تصویر نامعتبر است.")
-                .When(x => !string.IsNullOrEmpty(x.ImageUrl));
+            // Plan (pseudocode):
+            // 1. The property ImageFile in Create_CorceVM is of type IFormFile, not string (not a URL).
+            // 2. Validation should check that ImageFile is not null and is a valid image file (by extension or content type).
+            // 3. Remove Uri.TryCreate check, as it is not applicable for IFormFile.
+            // 4. Add NotNull() rule and a custom rule to check file extension or content type.
+
+            //RuleFor(x => x.ImageFile)
+            //    .NotNull().WithMessage("آپلود تصویر الزامی است !")
+            //    .Must(file =>
+            //    {
+            //        if (file == null) return false;
+            //        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+            //        var fileName = file.FileName?.ToLowerInvariant();
+            //        return allowedExtensions.Any(ext => fileName != null && fileName.EndsWith(ext));
+            //    })
+            //    .WithMessage("فرمت تصویر باید jpg، jpeg، png یا gif باشد.");
 
             RuleFor(x => x.MetaTitle)
                 .NotEmpty().WithMessage("عنوان متا نباید خالی باشد.")
