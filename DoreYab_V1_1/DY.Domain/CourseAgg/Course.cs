@@ -26,7 +26,7 @@ namespace DY.Domain.CourseAgg
         // Navigate
         public CourseCategory Category { get; set; }
         public long CategoryId { get; private set; }
-
+        public string ThumbnailUrl { get; private set; }
 
         protected Course() { }
 
@@ -83,7 +83,43 @@ namespace DY.Domain.CourseAgg
 
             IsDeleted = false;
         }
+        public void SetImage(string imageUrl, string thumbnailUrl)
+        {
+            ImageUrl = imageUrl;
+            ThumbnailUrl = thumbnailUrl;
+        }
+        
 
+        public void UpdateCourse(
+            string title,
+            decimal? price,
+            string? description,
+            string courseUrl,
+            string siteSource,
+            string slug,
+            bool isFree,
+            bool isFinished,
+            string metaTitle,
+            string metaDescription,
+            string metaKeyword,
+            long categoryId,
+            string? newImageUrl = null)
+        {
+            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Price = price;
+            Description = description;
+            CourseUrl = courseUrl ?? throw new ArgumentNullException(nameof(courseUrl));
+            SiteSource = siteSource ?? throw new ArgumentNullException(nameof(siteSource));
+            Slug = slug ?? throw new ArgumentNullException(nameof(slug));
+            IsFree = isFree;
+            IsFinished = isFinished;
+            MetaTitle = metaTitle ?? string.Empty;
+            MetaDescription = metaDescription ?? string.Empty;
+            MetaKeyword = metaKeyword ?? string.Empty;
+            CategoryId = categoryId;
 
+            if (!string.IsNullOrEmpty(newImageUrl))
+                ImageUrl = newImageUrl;
+        }
     }
 }
