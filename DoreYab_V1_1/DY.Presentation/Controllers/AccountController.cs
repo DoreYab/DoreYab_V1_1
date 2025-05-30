@@ -84,6 +84,12 @@ namespace DY.Presentation.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public  IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
     }
 }
 
