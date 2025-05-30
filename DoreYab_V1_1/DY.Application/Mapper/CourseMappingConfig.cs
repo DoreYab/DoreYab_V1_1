@@ -79,7 +79,7 @@ namespace DY.Application.Mapper
                     src.CourseUrl,
                     src.SiteSource,
                     src.Slug,
-                    src.ImageUrl,
+                    src.ImageFile,
                     src.IsFree,
                     src.IsFinished,
                     src.MetaTitle ?? string.Empty,
@@ -89,28 +89,23 @@ namespace DY.Application.Mapper
                 ));
             #endregion
 
-            #region CourseUpdateDto → Course
-            config.NewConfig<CourseUpdateDto, Course>()
-                .IgnoreNullValues(true)
-                .AfterMapping((src, dest) =>
-                {
-                    dest.UpdateCourse(
-                        src.Title,
-                        src.Price,
-                        src.Description,
-                        src.CourseUrl,
-                        src.SiteSource,
-                        src.Slug,
-                        src.IsFree,
-                        src.IsFinished,
-                        src.MetaTitle ?? string.Empty,
-                        src.MetaDescription ?? string.Empty,
-                        src.MetaKeyword ?? string.Empty,
-                        src.SelectedCategoryId,
-                        src.ImageUrl
-                    );
-                });
-            #endregion
+            // Update ViewModel → Entity (اگر نیاز داری)
+            config.NewConfig<Update_CourseVM, Course>()
+                .ConstructUsing(src => new Course(
+                    src.Title,
+                    src.Price,
+                    src.Description,
+                    src.CourseUrl,
+                    src.SiteSource,
+                    src.Slug,
+                    src.ImageUrl,
+                    src.IsFree,
+                    src.IsFinished,
+                    src.MetaTitle ?? string.Empty,
+                    src.MetaDescription ?? string.Empty,
+                    src.MetaKeyword ?? string.Empty,
+                    src.SelectedCategoryId
+                ));
 
             #region Course → List_CourseVM
             config.NewConfig<Course, List_CourseVM>()
