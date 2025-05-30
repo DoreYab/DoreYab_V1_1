@@ -15,6 +15,8 @@ using DY.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using DY.Application.Common.Interfaces;
 using DY.Inferastructure.EfCore.Identity;
+using DY.Application.Contract.Service;
+using DY.Application.ImplimentServise;
 
 namespace DY.Presentation
 {
@@ -54,7 +56,7 @@ namespace DY.Presentation
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
-
+            builder.Services.AddScoped<IfileService, FilseService>();
 
             builder.Services.AddDbContext<DoreYab_Context>(options =>
             {
