@@ -1,4 +1,6 @@
 ﻿using DY.Application.Contract.Course;
+using DY.Application.Contract.DTOs;
+using DY.Application.Contract.Service;
 using DY.Application.Contract.ViewModels.Course;
 using DY.Domain.CourseAgg;
 using Mapster;
@@ -9,21 +11,24 @@ namespace DY.Application.CourseApplication
     public class CourseApplication : ICourseApplication
     {
         private readonly ICourseRepository _courseRipository;
+        private readonly IfileService _fileService;
         private readonly IMapper _mapper;
 
-
-        public CourseApplication(ICourseRepository courseRipository, IMapper mapper)
+        public CourseApplication(ICourseRepository courseRipository, IfileService fileService, IMapper mapper)
         {
             _courseRipository = courseRipository;
+            _fileService = fileService;
             _mapper = mapper;
         }
-
-        
 
         public async Task<Create_CorceVM> CreatAsync(Create_CorceVM courseViewModel)
         {
             try
             {
+                var imageUrl = await _fileService.SaveFileAsync(courseViewModel.ImageFile, "courses");
+                var thumbnailUrl = await _fileService.SaveThumbnailAsync(courseViewModel.ImageFile, "courses/thumbs");
+
+                
                 // بررسی تکراری بودن Slug
                 var exists = await _courseRipository.ExistsAsync(c => c.Slug == courseViewModel.Slug);
                 if (exists)
@@ -35,7 +40,11 @@ namespace DY.Application.CourseApplication
                     };
                 }
 
-                var course = _mapper.Map<Course>(courseViewModel);
+                var courseDTO = _mapper.Map<CourseCreateDto>(courseViewModel);
+                var course = _mapper.Map<Course>(courseDTO);
+
+                course.SetImage(imageUrl, thumbnailUrl);
+
                 await _courseRipository.SaveAsync(course);
 
                 var result = _mapper.Map<Create_CorceVM>(course);
@@ -88,6 +97,7 @@ namespace DY.Application.CourseApplication
                 }
 
                 var courseVM = _mapper.Map<Update_CourseVM>(course);
+
                 courseVM.IsSucceeded = true;
                 return courseVM;
             }
@@ -121,11 +131,24 @@ namespace DY.Application.CourseApplication
                         Message = "Course not found."
                     };
                 }
+                // اگر عکس جدید فرستاده شده
+                if (model.ImageFile != null)
+                {
+                    // حذف تصاویر قبلی
+                    _fileService.DeleteFile(existingCourse.ImageUrl);
+                    _fileService.DeleteFile(existingCourse.ThumbnailUrl);
 
-               
-                _mapper.Map(model, existingCourse);
+                    // ذخیره تصاویر جدید
+                    var imageUrl = await _fileService.SaveFileAsync(model.ImageFile, "courses");
+                    var thumbnailUrl = await _fileService.SaveThumbnailAsync(model.ImageFile, "courses/thumbs");
 
-                await _courseRipository.UpdateAsync(existingCourse);
+                    existingCourse.SetImage(imageUrl, thumbnailUrl);
+
+                }
+                var courseDTO = _mapper.Map<CourseUpdateDto>(existingCourse);
+                var course = _mapper.Map<Course>(courseDTO);
+
+                await _courseRipository.UpdateAsync(course);
 
                 model.IsSucceeded = true;
                 model.Message = "Course updated successfully.";
