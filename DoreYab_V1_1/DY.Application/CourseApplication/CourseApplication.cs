@@ -131,6 +131,8 @@ namespace DY.Application.CourseApplication
                         Message = "Course not found."
                     };
                 }
+                string imageUrl = existingCourse.ImageUrl;
+                string thumbnailUrl = existingCourse.ThumbnailUrl;
                 // اگر عکس جدید فرستاده شده
                 if (model.ImageFile != null)
                 {
@@ -139,13 +141,16 @@ namespace DY.Application.CourseApplication
                     _fileService.DeleteFile(existingCourse.ThumbnailUrl);
 
                     // ذخیره تصاویر جدید
-                    var imageUrl = await _fileService.SaveFileAsync(model.ImageFile, "courses");
-                    var thumbnailUrl = await _fileService.SaveThumbnailAsync(model.ImageFile, "courses/thumbs");
+                    imageUrl = await _fileService.SaveFileAsync(model.ImageFile, "courses");
+                    thumbnailUrl = await _fileService.SaveThumbnailAsync(model.ImageFile, "courses/thumbs");
 
-                    existingCourse.SetImage(imageUrl, thumbnailUrl);
+                   
 
                 }
-                var courseDTO = _mapper.Map<CourseUpdateDto>(existingCourse);
+                var courseDTO = _mapper.Map<CourseUpdateDto>(model);
+                courseDTO.ImageUrl = imageUrl;
+                courseDTO.ThumbnailUrl = thumbnailUrl;
+
                 var course = _mapper.Map<Course>(courseDTO);
 
                 await _courseRipository.UpdateAsync(course);
