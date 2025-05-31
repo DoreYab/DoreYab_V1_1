@@ -27,7 +27,7 @@
             
             <!-- Menu Items -->
             <div class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a>
+                <a asp-controller="Home" asp-action="Index" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a>
                 <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">دسته‌بندی</a>
                 <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">درباره ما</a>
                 <a href="#" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">تماس با ما</a>
@@ -38,12 +38,12 @@
                 }
                 else
                 {
-                    <a href="/Account/Register" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">ثبت‌نام</a>
-                    <a href="/Account/Login" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">ورود</a>
+                    <a asp-controller="Account" asp-action="Register" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">ثبت‌نام</a>
+                    <a asp-controller="Account" asp-action="Login" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">ورود</a>
                 }
 
-                <a href="/Admin/Course/List" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"> مدیریت دوره ها</a>
-                <a href="/Admin/Category/List" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">مدیریت دسته بندی ها</a>
+                <a asp-area="Admin" asp-controller="Course" asp-action="List" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"> مدیریت دوره ها</a>
+                <a asp-area="Admin" asp-controller="Category" asp-action="List" class="text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">مدیریت دسته بندی ها</a>
 
             </div>
 
@@ -63,7 +63,7 @@
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg">
             <div class="container mx-auto px-4 py-2 flex flex-col">
-                <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a>
+                <a asp-controller="Home" asp-action="Index" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a>
                 <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">دسته‌بندی</a>
                 <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">درباره ما</a>
                 <a href="#" class="py-2 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">تماس با ما</a>
@@ -91,7 +91,7 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">لینک‌های سریع</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">خانه</a></li>
                         <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">دوره‌ها</a></li>
                         <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">مقالات</a></li>
                         <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">درباره ما</a></li>
