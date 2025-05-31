@@ -79,7 +79,7 @@ namespace DY.Application.Mapper
                     src.CourseUrl,
                     src.SiteSource,
                     src.Slug,
-                    src.ImageFile,
+                    src.ImageUrl,
                     src.IsFree,
                     src.IsFinished,
                     src.MetaTitle ?? string.Empty,
@@ -89,23 +89,25 @@ namespace DY.Application.Mapper
                 ));
             #endregion
 
-            // Update ViewModel → Entity (اگر نیاز داری)
-            config.NewConfig<Update_CourseVM, Course>()
-                .ConstructUsing(src => new Course(
-                    src.Title,
-                    src.Price,
-                    src.Description,
-                    src.CourseUrl,
-                    src.SiteSource,
-                    src.Slug,
-                    src.ImageUrl,
-                    src.IsFree,
-                    src.IsFinished,
-                    src.MetaTitle ?? string.Empty,
-                    src.MetaDescription ?? string.Empty,
-                    src.MetaKeyword ?? string.Empty,
-                    src.SelectedCategoryId
-                ));
+            #region CourseUpdateDto → Course
+            config.NewConfig<CourseUpdateDto, Course>()
+                    .MapWith(src => new Course(
+                        src.Title,
+                        src.Price,
+                        src.Description,
+                        src.CourseUrl,
+                        src.SiteSource,
+                        src.Slug,
+                        string.Empty,
+                        src.IsFree,
+                        src.IsFinished,
+                        src.MetaTitle ?? string.Empty,
+                        src.MetaDescription ?? string.Empty,
+                        src.MetaKeyword ?? string.Empty,
+                        src.SelectedCategoryId
+    ));
+
+            #endregion
 
             #region Course → List_CourseVM
             config.NewConfig<Course, List_CourseVM>()
@@ -127,27 +129,7 @@ namespace DY.Application.Mapper
                 .Map(dest => dest.Message, src => "Course loaded successfully");
             #endregion
 
-            #region Course → Create_CorceVM
-            config.NewConfig<Course, Create_CorceVM>()
-                .Map(dest => dest.Title, src => src.Title)
-                .Map(dest => dest.Price, src => src.Price)
-                .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.CourseUrl, src => src.CourseUrl)
-                .Map(dest => dest.SiteSource, src => src.SiteSource)
-                .Map(dest => dest.Slug, src => src.Slug)
-                .Map(dest => dest.IsFree, src => src.IsFree)
-                .Map(dest => dest.IsFinished, src => src.IsFinished)
-                .Map(dest => dest.MetaTitle, src => src.MetaTitle)
-                .Map(dest => dest.MetaDescription, src => src.MetaDescription)
-                .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
-                .Map(dest => dest.SelectedCategoryId, src => (int)src.CategoryId)
-                .Ignore(dest => dest.ImageFile)
-                .Ignore(dest => dest.CourseCategories)
-                .Ignore(dest => dest.IsSucceeded)
-                .Ignore(dest => dest.Message);
-            #endregion
-
-
+           
         }
     }
 }
