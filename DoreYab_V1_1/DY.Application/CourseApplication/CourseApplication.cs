@@ -5,21 +5,16 @@ using DY.Application.Contract.ViewModels.Course;
 using DY.Domain.CourseAgg;
 using Mapster;
 using MapsterMapper;
+using Microsoft.Extensions.Logging;
 
 namespace DY.Application.CourseApplication
 {
-    public class CourseApplication : ICourseApplication
+    public class CourseApplication(ICourseRepository courseRipository, IfileService fileService, IMapper mapper,ILogger<CourseApplication> logger) : ICourseApplication
     {
-        private readonly ICourseRepository _courseRipository;
-        private readonly IfileService _fileService;
-        private readonly IMapper _mapper;
-
-        public CourseApplication(ICourseRepository courseRipository, IfileService fileService, IMapper mapper)
-        {
-            _courseRipository = courseRipository;
-            _fileService = fileService;
-            _mapper = mapper;
-        }
+        private readonly ICourseRepository _courseRipository = courseRipository;
+        private readonly IfileService _fileService = fileService;
+        private readonly IMapper _mapper = mapper;
+        private readonly ILogger<CourseApplication> _logger = logger;
 
         public async Task<Create_CorceVM> CreatAsync(Create_CorceVM courseViewModel)
         {
@@ -122,38 +117,62 @@ namespace DY.Application.CourseApplication
         {
             try
             {
-                var existingCourse = await _courseRipository.GetById(model.Id);
+                if (model.ImageFile != null)
+                {
+                    Console.WriteLine("✅ file is Uploaded : " + model.ImageFile.FileName);
+                }
+
+                    var existingCourse = await _courseRipository.GetById(model.Id);
                 if (existingCourse == null)
                 {
+                    
                     return new Update_CourseVM
                     {
                         IsSucceeded = false,
-                        Message = "Course not found."
+                        Message = "دوره یافت نشد ."
                     };
                 }
-                string imageUrl = existingCourse.ImageUrl;
-                string thumbnailUrl = existingCourse.ThumbnailUrl;
+                var exists = await _courseRipository.ExistsAsync(c => c.Slug == model.Slug && c.Id != model.Id);
+
+                if (exists)
+                {
+                    
+                    return new Update_CourseVM
+                    {
+                        IsSucceeded = false,
+                        Message = "این Slug قبلاً استفاده شده است.",
+                    };
+                }
+
+                string imageUrl = existingCourse.ImageUrl ?? string.Empty; 
+                string thumbnailUrl = existingCourse.ThumbnailUrl ?? string.Empty;
+
                 // اگر عکس جدید فرستاده شده
                 if (model.ImageFile != null)
                 {
+                    
+
                     // حذف تصاویر قبلی
-                    _fileService.DeleteFile(existingCourse.ImageUrl);
-                    _fileService.DeleteFile(existingCourse.ThumbnailUrl);
+                    if (!string.IsNullOrEmpty(existingCourse.ImageUrl))
+                    {
+                        _fileService.DeleteFile(existingCourse.ImageUrl);
+                    }
+                    if (!string.IsNullOrEmpty(existingCourse.ThumbnailUrl))
+                    {
+                        _fileService.DeleteFile(existingCourse.ThumbnailUrl);
+                    }
 
                     // ذخیره تصاویر جدید
                     imageUrl = await _fileService.SaveFileAsync(model.ImageFile, "courses");
                     thumbnailUrl = await _fileService.SaveThumbnailAsync(model.ImageFile, "courses/thumbs");
-
-                   
-
                 }
+
                 var courseDTO = _mapper.Map<CourseUpdateDto>(model);
-                courseDTO.ImageUrl = imageUrl;
-                courseDTO.ThumbnailUrl = thumbnailUrl;
 
-                var course = _mapper.Map<Course>(courseDTO);
+                courseDTO.Adapt(existingCourse);
+                existingCourse.SetImage(imageUrl, thumbnailUrl); 
 
-                await _courseRipository.UpdateAsync(course);
+                await _courseRipository.UpdateAsync(existingCourse);
 
                 model.IsSucceeded = true;
                 model.Message = "Course updated successfully.";
@@ -161,7 +180,12 @@ namespace DY.Application.CourseApplication
             }
             catch (Exception ex)
             {
-                throw new Exception("خطا در بروزرسانی دوره", ex);
+               
+                return new Update_CourseVM
+                {
+                    IsSucceeded = false,
+                    Message = ex.Message
+                };
             }
         }
 
