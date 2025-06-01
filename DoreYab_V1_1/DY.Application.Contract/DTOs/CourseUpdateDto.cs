@@ -22,6 +22,6 @@ namespace DY.Application.Contract.DTOs
         public string? MetaDescription { get; set; }
         public string? MetaKeyword { get; set; }
         public long SelectedCategoryId { get; set; }
-        public string ThumbnailUrl { get; set; }
+        public string? ThumbnailUrl { get; set; }
     }
 }
