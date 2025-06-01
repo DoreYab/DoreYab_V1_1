@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore everything inside thumbs folder
+DY.Presentation/wwwroot/courses/thumbs/*
+
+# Ignore all files inside courses folder
+DY.Presentation/wwwroot/courses/*
+
+# But keep the folder itself
+!DY.Presentation/wwwroot/courses/.gitkeep
+
