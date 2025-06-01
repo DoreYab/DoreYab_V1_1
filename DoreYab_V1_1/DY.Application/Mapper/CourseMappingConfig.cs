@@ -1,6 +1,7 @@
 ﻿using DY.Application.Contract.DTOs;
 using DY.Application.Contract.ViewModels.Course;
 using DY.Domain.CourseAgg;
+using DY.Domain.CourseCategoryAgg;
 using Mapster;
 
 namespace DY.Application.Mapper
@@ -26,14 +27,14 @@ namespace DY.Application.Mapper
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.CourseUrl, src => src.CourseUrl)
                 .Map(dest => dest.SiteSource, src => src.SiteSource)
-                .Ignore(dest => dest.ImageFile) // فایل جداگانه هنگام آپلود دستی ست میشه
                 .Map(dest => dest.IsFree, src => src.IsFree)
                 .Map(dest => dest.IsFinished, src => src.IsFinished)
                 .Map(dest => dest.MetaTitle, src => src.MetaTitle)
                 .Map(dest => dest.MetaDescription, src => src.MetaDescription)
                 .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
                 .Map(dest => dest.IsSucceeded, src => true)
-                .Map(dest => dest.Message, src => "Course loaded successfully");
+                .Map(dest => dest.Message, src => "Course loaded successfully")
+                .Ignore(dest => dest.ImageFile);
             #endregion
 
             #region Create ViewModel → Dto
@@ -70,16 +71,37 @@ namespace DY.Application.Mapper
                 .Map(dest => dest.SelectedCategoryId, src => src.SelectedCategoryId);
             #endregion
 
-            #region CourseCreateDto → Course
+            #region CourseCreateDto → Course (NEW INSTANCE)
             config.NewConfig<CourseCreateDto, Course>()
-                .ConstructUsing(src => new Course(
+               .MapWith(src => new Course(
+                   src.Title,
+                   src.Price,
+                   src.Description,
+                   src.CourseUrl,
+                   src.SiteSource,
+                   src.Slug,
+                   src.ImageUrl,
+                   src.ThumbnailUrl ?? string.Empty,
+                   src.IsFree,
+                   src.IsFinished,
+                   src.MetaTitle ?? string.Empty,
+                   src.MetaDescription ?? string.Empty,
+                   src.MetaKeyword ?? string.Empty,
+                   src.SelectedCategoryId
+               ));
+            #endregion
+
+            #region CourseUpdateDto → Course (NEW INSTANCE)
+            config.NewConfig<CourseUpdateDto, Course>()
+                .MapWith(src => new Course(
                     src.Title,
                     src.Price,
                     src.Description,
                     src.CourseUrl,
                     src.SiteSource,
                     src.Slug,
-                    src.ImageUrl,
+                    src.ImageUrl ?? string.Empty,
+                    src.ThumbnailUrl ?? string.Empty,
                     src.IsFree,
                     src.IsFinished,
                     src.MetaTitle ?? string.Empty,
@@ -89,23 +111,24 @@ namespace DY.Application.Mapper
                 ));
             #endregion
 
-            #region CourseUpdateDto → Course
+            #region CourseUpdateDto → Course (UPDATE EXISTING INSTANCE)
             config.NewConfig<CourseUpdateDto, Course>()
-                    .MapWith(src => new Course(
-                        src.Title,
-                        src.Price,
-                        src.Description,
-                        src.CourseUrl,
-                        src.SiteSource,
-                        src.Slug,
-                        string.Empty,
-                        src.IsFree,
-                        src.IsFinished,
-                        src.MetaTitle ?? string.Empty,
-                        src.MetaDescription ?? string.Empty,
-                        src.MetaKeyword ?? string.Empty,
-                        src.SelectedCategoryId
-    ));
+                        .IgnoreNullValues(true)
+                        .Map(dest => dest.Title, src => src.Title)
+                        .Map(dest => dest.Price, src => src.Price)
+                        .Map(dest => dest.Description, src => src.Description)
+                        .Map(dest => dest.CourseUrl, src => src.CourseUrl)
+                        .Map(dest => dest.SiteSource, src => src.SiteSource)
+                        .Map(dest => dest.Slug, src => src.Slug)
+                        .Ignore(dest => dest.ImageUrl)         // 👈 جلوگیری از بازنویسی دستی
+                        .Ignore(dest => dest.ThumbnailUrl)     // 👈 جلوگیری از بازنویسی دستی
+                        .Map(dest => dest.IsFree, src => src.IsFree)
+                        .Map(dest => dest.IsFinished, src => src.IsFinished)
+                        .Map(dest => dest.MetaTitle, src => src.MetaTitle)
+                        .Map(dest => dest.MetaDescription, src => src.MetaDescription)
+                        .Map(dest => dest.MetaKeyword, src => src.MetaKeyword)
+                        .Map(dest => dest.CategoryId, src => src.SelectedCategoryId);
+
 
             #endregion
 
@@ -129,7 +152,6 @@ namespace DY.Application.Mapper
                 .Map(dest => dest.Message, src => "Course loaded successfully");
             #endregion
 
-           
         }
     }
 }
