@@ -42,6 +42,7 @@ namespace DY.Inferastructure.EfCore.Repository
         public async Task UpdateAsync(Course course)
         {
             _context.Courses.Update(course);
+            Console.WriteLine("the file is saved "+course.ImageUrl);
             await _context.SaveChangesAsync();
         }
 
