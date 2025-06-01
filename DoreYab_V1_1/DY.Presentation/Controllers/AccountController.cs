@@ -1,7 +1,9 @@
 ﻿using DY.Application.Authentication.Models;
 using DY.Application.Common.Interfaces;
+using DY.Domain.Identity;
 using DY.Presentation.Models.Account;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DY.Presentation.Controllers
@@ -9,10 +11,12 @@ namespace DY.Presentation.Controllers
     public class AccountController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountController(IAuthService authService)
+        public AccountController(IAuthService authService, UserManager<ApplicationUser> userManager)
         {
             _authService = authService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -90,6 +94,28 @@ namespace DY.Presentation.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult ForgetPassword(ForgetPasswordViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+
+            var user = _userManager.FindByEmailAsync(model.Email).Result;
+
+            if (user == null)
+                ViewBag.Message = "اگر ایمیل معتبر باشد، لینک بازیابی برای شما ارسال خواهد شد";
+                return View();
+
+            var token = _userManager.GeneratePasswordResetTokenAsync(user).Result;
+            var resetLink = Url.Action("ResetPassword", "Account", new
+            {
+                token = token,
+                email = model.Email
+            }, Request.Scheme);
+
+            ViewBag.Message = $"لینک بازنشانی رمز: <a href='{resetLink}'>کلیک کنید</a>";
+            return View();
+        }
     }
 }
 
