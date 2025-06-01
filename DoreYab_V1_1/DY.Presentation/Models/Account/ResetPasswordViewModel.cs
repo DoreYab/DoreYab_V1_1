@@ -12,5 +12,10 @@ namespace DY.Presentation.Models.Account
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Required(ErrorMessage ="تکرار رمز عبور را وارد کید")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "رمزهای عبور مطابقت ندارند.")]
+        public string ConfirmPassword { get; set; }
+
     }
 }
