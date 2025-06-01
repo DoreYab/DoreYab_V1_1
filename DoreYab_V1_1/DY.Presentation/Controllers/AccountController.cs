@@ -89,7 +89,7 @@ namespace DY.Presentation.Controllers
         }
 
         [HttpGet]
-        public  IActionResult ForgetPassword()
+        public IActionResult ForgetPassword()
         {
             return View();
         }
@@ -97,14 +97,14 @@ namespace DY.Presentation.Controllers
         [HttpPost]
         public IActionResult ForgetPassword(ForgetPasswordViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
 
             var user = _userManager.FindByEmailAsync(model.Email).Result;
 
             if (user == null)
                 ViewBag.Message = "اگر ایمیل معتبر باشد، لینک بازیابی برای شما ارسال خواهد شد";
-                return View();
+            return View();
 
             var token = _userManager.GeneratePasswordResetTokenAsync(user).Result;
             var resetLink = Url.Action("ResetPassword", "Account", new
@@ -155,6 +155,10 @@ namespace DY.Presentation.Controllers
 
             return View(model);
         }
+
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
     }
 }
-
