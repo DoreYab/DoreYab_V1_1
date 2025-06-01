@@ -17,5 +17,6 @@ namespace DY.Presentation.Models.Account
         [Compare("Password", ErrorMessage = "رمزهای عبور مطابقت ندارند.")]
         public string ConfirmPassword { get; set; }
 
+        public string Token { get; set; }
     }
 }
