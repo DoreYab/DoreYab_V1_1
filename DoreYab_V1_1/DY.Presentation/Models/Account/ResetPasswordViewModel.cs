@@ -8,5 +8,9 @@ namespace DY.Presentation.Models.Account
         [EmailAddress(ErrorMessage ="ایمیل معتبر نیست")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage ="رمز عبور جدید را وارد کنید")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
     }
 }
