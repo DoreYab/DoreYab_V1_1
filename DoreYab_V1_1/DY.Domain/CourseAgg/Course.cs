@@ -40,8 +40,9 @@ namespace DY.Domain.CourseAgg
                         string siteSource,
                         string slug,
                         string imageUrl,
+                        string ThumbnailUrl,
                             
-                        bool isFree,
+                        bool isFree,    
                         bool isFinished,
 
                         string metaTitle,
@@ -59,6 +60,8 @@ namespace DY.Domain.CourseAgg
             SiteSource = siteSource ?? throw new ArgumentNullException(nameof(siteSource));
             Slug = slug ?? throw new ArgumentNullException(nameof(slug));
             ImageUrl = imageUrl ?? throw new ArgumentNullException(nameof(imageUrl));
+            this.ThumbnailUrl = ThumbnailUrl;
+
             IsFree = isFree;
             IsFinished = isFinished;
 
